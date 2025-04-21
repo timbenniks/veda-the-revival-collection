@@ -3,19 +3,14 @@ import Hero from "./Hero";
 import NoComponent from "./NoComponent";
 import { ComponentEntry, mapComponentsToKV } from "@/lib/helpers";
 
-type ComponentMapping = Record<string, ComponentType<any>>;
 type ComponentsRendererProps = {
   components: ComponentEntry[];
   cslp: any;
 };
 
-const mappings: ComponentMapping = {
+const componentMap: Record<string, ComponentType<any>> = {
   hero: Hero,
 };
-
-export function getComponentForName(name: string) {
-  return mappings[name] ?? NoComponent;
-}
 
 export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
   components,
@@ -30,7 +25,7 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
       {...(cslp && cslp.components__parent)}
     >
       {mappedComponents.map((component, index) => {
-        const ComponentInstance = getComponentForName(component.name);
+        const ComponentInstance = componentMap[component.name] ?? NoComponent;
         return (
           <div
             key={component.props?._metadata.uid}
