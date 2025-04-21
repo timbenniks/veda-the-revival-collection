@@ -1,7 +1,7 @@
-import { Page } from "@/types/contentstack";
+import type { Page as PageType } from "@/types/contentstack";
 import { ComponentsRenderer } from "./ComponentRenderer";
 
-export default function LandingPage({ page }: { page: Page }) {
+export default function Page({ page }: { page: PageType }) {
   return (
     <main className="max-w-(--breakpoint-md) mx-auto">
       {page?.title ? (

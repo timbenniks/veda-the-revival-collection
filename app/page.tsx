@@ -1,5 +1,5 @@
 import { getPage, isPreview } from "@/lib/contentstack";
-import LandingPage from "../components/LandingPage";
+import Page from "../components/Page";
 import PreviewClient from "@/components/PreviewClient";
 
 export default async function Home() {
@@ -7,9 +7,11 @@ export default async function Home() {
   const variantParam = "";
 
   if (isPreview) {
-    return <PreviewClient path={path} variantParam={variantParam} />;
+    return (
+      <PreviewClient path={path} variantParam={variantParam} type="page" />
+    );
   } else {
     const page = await getPage(path, variantParam);
-    return <LandingPage page={page} />;
+    return <Page page={page} />;
   }
 }
