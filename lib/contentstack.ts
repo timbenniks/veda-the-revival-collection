@@ -39,8 +39,6 @@ export function initLivePreview() {
   });
 }
 
-export const isPreview = process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === "true";
-
 export async function getPage(url: string, variantParam?: string) {
   let result;
 

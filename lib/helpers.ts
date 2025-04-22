@@ -64,7 +64,7 @@ export function createOgTags(page: any) {
     openGraph: {
       title: page.title,
       description: page.description,
-      url: "/",
+      url: page.url,
       images: [
         {
           url: page?.image?.url ?? "",
@@ -76,3 +76,5 @@ export function createOgTags(page: any) {
     },
   };
 }
+
+export const isPreview = process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === "true";

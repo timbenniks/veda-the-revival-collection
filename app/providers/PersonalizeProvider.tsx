@@ -1,10 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import Personalize from "@contentstack/personalize-edge-sdk";
-import type { Sdk } from "@contentstack/personalize-edge-sdk/dist/sdk";
-
 import { getPersonalizeInstance } from "@/lib/helpers";
+import type { Sdk } from "@contentstack/personalize-edge-sdk/dist/sdk";
 
 const PersonalizeContext = createContext<Sdk | null>(null);
 

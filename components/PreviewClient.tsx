@@ -11,6 +11,7 @@ import {
   getProductLine,
   initLivePreview,
 } from "../lib/contentstack";
+
 import type {
   Page as PageType,
   Product,
