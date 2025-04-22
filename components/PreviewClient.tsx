@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
+import Page from "./Page";
+
 import {
   getPage,
   getCategory,
@@ -9,8 +11,12 @@ import {
   getProductLine,
   initLivePreview,
 } from "../lib/contentstack";
-import Page from "./Page";
-import type { Page as PageType } from "@/types/contentstack";
+import type {
+  Page as PageType,
+  Product,
+  ProductLine,
+  Category,
+} from "@/types/contentstack";
 
 export interface PreviewClientProps {
   path: string;
@@ -38,7 +44,9 @@ export default function PreviewClient({
   variantParam,
   type,
 }: PreviewClientProps) {
-  const [page, setPage] = useState<PageType>();
+  const [page, setPage] = useState<
+    PageType | Product | ProductLine | Category
+  >();
 
   const getContent = async () => {
     const data = await getPreviewData(type, path, variantParam);

@@ -1,9 +1,18 @@
 import { getPage, isPreview } from "@/lib/contentstack";
 import Page from "../components/Page";
 import PreviewClient from "@/components/PreviewClient";
+import { Metadata } from "next";
+import { createOgTags } from "@/lib/helpers";
 
-export default async function Home() {
-  const path = "/";
+export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage("/", "");
+  return createOgTags(page);
+}
+
+export default async function Home({ params }: { params: { slug: string[] } }) {
+  const path = "/" + (params.slug ?? []).join("/");
   const variantParam = "";
 
   if (isPreview) {

@@ -56,3 +56,23 @@ export function mapComponentsToKV(components: ComponentEntry[]) {
     return { name, props };
   });
 }
+
+export function createOgTags(page: any) {
+  return {
+    title: page.title,
+    description: page.description,
+    openGraph: {
+      title: page.title,
+      description: page.description,
+      url: "/",
+      images: [
+        {
+          url: page?.image?.url ?? "",
+          width: 1200,
+          height: 630,
+          alt: page.title,
+        },
+      ],
+    },
+  };
+}

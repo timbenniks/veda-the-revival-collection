@@ -3,14 +3,6 @@ import { ComponentsRenderer } from "./ComponentRenderer";
 
 export default function Page({ page }: { page: PageType }) {
   return (
-    <main className="max-w-(--breakpoint-md) mx-auto">
-      {page?.title ? (
-        <h1 className="text-4xl font-bold mb-4" {...(page?.$ && page?.$.title)}>
-          {page?.title}
-        </h1>
-      ) : null}
-
-      <ComponentsRenderer components={page?.components || []} cslp={page.$} />
-    </main>
+    <ComponentsRenderer components={page?.components || []} cslp={page.$} />
   );
 }
