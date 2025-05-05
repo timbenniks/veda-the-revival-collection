@@ -11,10 +11,10 @@ export function PersonalizeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [personalizeSdk, setPersonalizeSdkSdk] = useState<Sdk | null>(null);
+  const [personalizeSdk, setPersonalizeSdk] = useState<Sdk | null>(null);
 
   useEffect(() => {
-    getPersonalizeInstance().then(setPersonalizeSdkSdk);
+    getPersonalizeInstance().then(setPersonalizeSdk);
   }, []);
 
   return (

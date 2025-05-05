@@ -19,20 +19,16 @@ export async function getPersonalizeInstance({
 
   Personalize.setEdgeApiUrl(endpoints.personalizeEdge as string);
 
-  if (!Personalize.getInitializationStatus()) {
-    const options: { request?: NextRequest; userId?: string } = {
-      request,
-      userId,
-    };
+  const options: { request?: NextRequest; userId?: string } = {
+    request,
+    userId,
+  };
 
-    personalizeSdkInstance = await Personalize.init(projectUid, options);
-  }
-
-  return personalizeSdkInstance;
+  return await Personalize.init(projectUid, options);
 }
 
-export function useGetVariantParam(searchParams: Record<string, string>) {
-  return decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM]);
+export function useGetVariantParam(searchParams: { [key: string]: string | string[] | undefined }) {
+  return decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM] as string);
 }
 
 export type ComponentEntry = any

@@ -1,25 +1,38 @@
-import { getPage } from "@/lib/contentstack";
-import Page from "../components/Page";
-import PreviewClient from "@/components/PreviewClient";
 import { Metadata } from "next";
-import { createOgTags, isPreview } from "@/lib/helpers";
+import { getPage } from "@/lib/contentstack";
+import { createOgTags, isPreview, useGetVariantParam } from "@/lib/helpers";
+import Page from "@/components/Page";
+import PreviewClient from "@/components/PreviewClient";
 
 export const revalidate = 60;
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
-  params: { slug: string[] };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<Metadata> {
-  const path = "/" + (params.slug ?? []).join("/");
-  const variantParam = "";
+  const { slug } = await params;
+  const query = await searchParams;
+  const path = slug ? slug : "/";
+  const variantParam = useGetVariantParam(query);
+
   const page = await getPage(path, variantParam);
   return createOgTags(page);
 }
 
-export default async function Home({ params }: { params: { slug: string[] } }) {
-  const path = "/" + (params.slug ?? []).join("/");
-  const variantParam = "";
+export default async function Home({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { slug } = await params;
+  const query = await searchParams;
+  const path = slug ? slug : "/";
+  const variantParam = useGetVariantParam(query);
 
   if (isPreview) {
     return (
