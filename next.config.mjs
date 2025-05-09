@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        hostname: "eu-images.contentstack.com",
-      },
-    ],
+    remotePatterns: [new URL("https://eu-images.contentstack.com/**")],
   },
 };
 

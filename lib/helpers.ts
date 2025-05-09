@@ -1,23 +1,21 @@
 import Personalize from "@contentstack/personalize-edge-sdk";
-import type { Sdk } from "@contentstack/personalize-edge-sdk/dist/sdk";
 import { getContentstackEndpoints, getRegionForString } from "@timbenniks/contentstack-endpoints";
 import { NextRequest } from "next/server";
 
-let personalizeSdkInstance: Sdk | null = null;
+export const contentstackRregion = getRegionForString(
+  process.env.NEXT_PUBLIC_CONTENTSTACK_REGION || "eu"
+);
+
+export const contentstackEndpoints = getContentstackEndpoints(contentstackRregion, true);
 
 export async function getPersonalizeInstance({
   request,
   userId,
 }: { request?: NextRequest; userId?: string } = {}) {
-  const region = getRegionForString(
-    process.env.NEXT_PUBLIC_CONTENTSTACK_REGION as string
-  );
-
-  const endpoints = getContentstackEndpoints(region);
   const projectUid = process.env
     .NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_UID as string;
 
-  Personalize.setEdgeApiUrl(endpoints.personalizeEdge as string);
+  Personalize.setEdgeApiUrl(`https://${contentstackEndpoints.personalizeEdge}` as string);
 
   const options: { request?: NextRequest; userId?: string } = {
     request,

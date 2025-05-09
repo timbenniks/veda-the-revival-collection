@@ -1,21 +1,18 @@
 import contentstack, { QueryOperation } from "@contentstack/delivery-sdk"
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
-import { getContentstackEndpoints, getRegionForString } from "@timbenniks/contentstack-endpoints";
 import { Page, Product, ProductLine, Category } from "../types/contentstack";
 import Personalize from "@contentstack/personalize-edge-sdk";
-
-const region = getRegionForString(process.env.NEXT_PUBLIC_CONTENTSTACK_REGION as string)
-const endpoints = getContentstackEndpoints(region, true)
+import { contentstackEndpoints, contentstackRregion } from "./helpers";
 
 export const stack = contentstack.stack({
   apiKey: process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY as string,
   deliveryToken: process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN as string,
   environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT as string,
-  region,
+  region: contentstackRregion,
   live_preview: {
     enable: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true',
     preview_token: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW_TOKEN,
-    host: endpoints.preview,
+    host: contentstackEndpoints.preview,
   }
 });
 
@@ -30,7 +27,7 @@ export function initLivePreview() {
       environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT as string,
     },
     clientUrlParams: {
-      host: endpoints.application
+      host: contentstackEndpoints.application
     },
     editButton: {
       enable: true,
@@ -59,13 +56,13 @@ export async function getPage(url: string, variantParam?: string) {
     'url',
     'title',
     'description',
-    'image.url',
+    'image',
     'components.hero._metadata',
     'components.hero.title',
     'components.hero.description',
-    'components.hero.image.url',
-    'components.hero.video.url',
-    'components.hero.cta',
+    'components.hero.image',
+    'components.hero.video',
+    'components.hero.ctas',
     'components.hero.design',
   ])
 
@@ -148,7 +145,7 @@ export async function getProductLine(url: string) {
     'products.short_description',
     'products.price',
     'products.taxonomies.term_uid',
-    'products.media.url',
+    'products.media',
     'products.category.title',
     'products.category.url',
   ])
@@ -190,7 +187,7 @@ export async function getCategory(url: string) {
     'products.short_description',
     'products.price',
     'products.taxonomies.term_uid',
-    'products.media.url',
+    'products.media',
     'products.product_line.title',
     'products.product_line.url',
   ])

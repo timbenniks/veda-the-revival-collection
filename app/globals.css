@@ -25,4 +25,12 @@
   a {
     text-decoration: underline;
   }
+
+  .visual-builder__empty-block-title {
+    display: none;
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
 }

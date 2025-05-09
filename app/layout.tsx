@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { PersonalizeProvider } from "./providers/PersonalizeProvider";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["100", "300", "500", "700"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Veda: The Revival Collection",
@@ -22,9 +30,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body>
-        <main>
+        <main className="max-w-[1440px] mx-auto px-4 md:px-0">
           <PersonalizeProvider>{children}</PersonalizeProvider>
         </main>
       </body>
