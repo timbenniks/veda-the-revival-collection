@@ -10,15 +10,15 @@ interface HeroProps {
   title: string;
   video?: { $?: any; url: string };
   design: {
-    copy_location: string;
-    opacity: string;
+    copy_location: "left" | "right";
+    overlay_opacity: number;
+    theme: "light" | "dark";
     $?: any;
   };
   ctas: any[];
 }
 
 export default function Hero({
-  _metadata,
   description,
   design,
   image,
@@ -61,7 +61,24 @@ export default function Hero({
         </>
       )}
 
-      <article className="md:max-w-[400px] md:left-16 md:absolute md:top-2/4 md:-translate-y-2/4 mt-4 md:mt-0 px-6 md:px-0 text-center mx-auto">
+      {design.overlay_opacity > 0 && (
+        <div
+          className="bg-black absolute w-full h-full top-0 left-0"
+          style={{
+            opacity: design.overlay_opacity / 100,
+          }}
+        ></div>
+      )}
+
+      <article
+        className={`${
+          design.copy_location === "left"
+            ? "md:left-16 md:right-auto"
+            : "md:left-auto md:right-16"
+        } ${
+          design.theme === "light" ? "text-white" : "text-black"
+        } md:max-w-[400px] md:left-16 md:absolute md:top-2/4 md:-translate-y-2/4 mt-4 md:mt-0 px-6 md:px-0 text-center mx-auto`}
+      >
         {title ? (
           <h1 {...($ && $.title)} className="text-3xl font-light mb-2">
             {title}
