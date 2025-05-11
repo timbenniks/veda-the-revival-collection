@@ -8,6 +8,10 @@ type TuplePrefixes<T extends any[]> = T extends [any, ...infer Rest]
 
 type MaxTuple<T, N extends number> = TuplePrefixes<BuildTuple<T, N>>;
 
+export interface CSLPAttribute {
+  "data-cslp": string;
+}
+
 export interface PublishDetails {
   environment: string;
   locale: string;
@@ -49,14 +53,14 @@ export interface Taxonomy {
 
 export interface List {
   uid: string;
-  $: any;
+  $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title?: string;
   reference: (ProductLine | Product | Category)[];
 }
 
 export type Cta = {
-  $?: any;
+  $: { [key: string]: CSLPAttribute | undefined; }
   text?: string;
   link?: Link;
 };
@@ -66,7 +70,7 @@ export interface Ctas {
 
 export interface Hero {
   uid: string;
-  $: any;
+  $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title?: string;
   description?: string;
@@ -87,7 +91,7 @@ export interface Components {
 
 export interface Page {
   uid: string;
-  $: any;
+  $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title: string;
   url?: string;
@@ -98,7 +102,7 @@ export interface Page {
 
 export interface Category {
   uid: string;
-  $: any;
+  $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title: string;
   url?: string;
@@ -108,7 +112,7 @@ export interface Category {
 
 export interface ProductLine {
   uid: string;
-  $: any;
+  $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title: string;
   url?: string;
@@ -118,7 +122,7 @@ export interface ProductLine {
 
 export interface Product {
   uid: string;
-  $: any;
+  $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title: string;
   url?: string;

@@ -36,7 +36,7 @@ export function initLivePreview() {
   });
 }
 
-export async function getPage(url: string, variantParam?: string) {
+export async function getPage(url: string, variantParam?: string): Promise<Page> {
   let result;
 
   const pageQuery = await stack
@@ -89,7 +89,7 @@ export async function getPage(url: string, variantParam?: string) {
   }
 }
 
-export async function getProduct(url: string) {
+export async function getProduct(url: string): Promise<Product> {
   let result;
 
   const productQuery = await stack
@@ -131,7 +131,7 @@ export async function getProduct(url: string) {
   }
 }
 
-export async function getProductLine(url: string) {
+export async function getProductLine(url: string): Promise<ProductLine> {
   let result;
 
   const productQuery = await stack
@@ -173,7 +173,7 @@ export async function getProductLine(url: string) {
   }
 }
 
-export async function getCategory(url: string) {
+export async function getCategory(url: string): Promise<Category> {
   let result;
 
   const productQuery = await stack
