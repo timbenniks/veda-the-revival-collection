@@ -1,6 +1,8 @@
+import { Components, Page } from "@/types/contentstack";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { getContentstackEndpoints, getRegionForString } from "@timbenniks/contentstack-endpoints";
 import { NextRequest } from "next/server";
+import type { Metadata } from 'next';
 
 export const contentstackRregion = getRegionForString(
   process.env.NEXT_PUBLIC_CONTENTSTACK_REGION || "eu"
@@ -29,10 +31,8 @@ export function useGetVariantParam(searchParams: { [key: string]: string | strin
   return decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM] as string);
 }
 
-export type ComponentEntry = any
-
-export function mapComponentsToKV(components: ComponentEntry[]) {
-  return components.map((obj: any) => {
+export function mapComponentsToKV(components: Components[]) {
+  return components.map((obj: Components) => {
     const entries = Object.entries(obj);
     const componentNameAndProps = entries && entries[0];
 
@@ -51,7 +51,7 @@ export function mapComponentsToKV(components: ComponentEntry[]) {
   });
 }
 
-export function createOgTags(page: any) {
+export function createOgTags(page: Page): Metadata {
   return {
     title: page.title,
     description: page.description,

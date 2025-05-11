@@ -3,11 +3,12 @@ import Hero from "./Hero";
 import List from "./List";
 import Cta from "./atoms/Cta";
 import NoComponent from "./NoComponent";
-import { ComponentEntry, isPreview, mapComponentsToKV } from "@/lib/helpers";
+import { isPreview, mapComponentsToKV } from "@/lib/helpers";
 import { VB_EmptyBlockParentClass } from "@contentstack/live-preview-utils";
+import { Components } from "@/types/contentstack";
 
 type ComponentsRendererProps = {
-  components: ComponentEntry[];
+  components: Components[];
   cslp?: any;
   cslpWrapper?: string;
 };
