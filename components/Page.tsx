@@ -7,7 +7,7 @@ export default function Page({ page }: { page: PageType }) {
     <>
       {components ? (
         <ComponentsRenderer
-          components={page?.components || []}
+          components={components}
           cslp={page.$}
           cslpWrapper="components"
         />

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
 import { Hero as HeroProps } from "@/types/contentstack";
+import { twMerge } from "tailwind-merge";
 
 export default function Hero({
   description,
@@ -17,7 +18,6 @@ export default function Hero({
       {video?.url ? (
         <video
           {...($ && $.video)}
-          className="h-full w-full object-cover object-center"
           width={1440}
           height={635}
           autoPlay
@@ -26,6 +26,7 @@ export default function Hero({
           playsInline
           src={video?.url}
           poster={image?.url}
+          className="h-full w-full object-cover object-center"
         />
       ) : (
         <>
@@ -56,13 +57,16 @@ export default function Hero({
       )}
 
       <article
-        className={`${
+        className={twMerge(
+          "mt-4 md:mt-0 px-6 md:px-0 text-center mx-auto",
+          "md:max-w-[400px] md:absolute md:top-2/4 md:-translate-y-2/4",
+
           design.copy_location === "left"
             ? "md:left-16 md:right-auto"
-            : "md:left-auto md:right-16"
-        } ${
+            : "md:left-auto md:right-16",
+
           design.theme === "light" ? "text-white" : "text-black"
-        } md:max-w-[400px] md:left-16 md:absolute md:top-2/4 md:-translate-y-2/4 mt-4 md:mt-0 px-6 md:px-0 text-center mx-auto`}
+        )}
       >
         {title && (
           <Title

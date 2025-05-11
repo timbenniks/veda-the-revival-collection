@@ -1,6 +1,10 @@
+import { ElementType } from "react";
+import { twMerge } from "tailwind-merge";
+
 interface TitleProps {
   $?: any;
   text: string;
+  as?: ElementType;
   uppercase?: boolean;
   size?: "sm" | "lg";
   theme?: "light" | "dark";
@@ -8,9 +12,10 @@ interface TitleProps {
   weight?: "light" | "medium";
 }
 
-export default function Cta({
+export default function Title({
   $,
   text,
+  as: Component = "h1",
   uppercase,
   size,
   theme,
@@ -18,15 +23,17 @@ export default function Cta({
   weight,
 }: TitleProps) {
   return (
-    <h1
+    <Component
       {...($ && $)}
-      className={`${uppercase && "uppercase"} ${
-        theme === "light" ? "text-white" : "text-black"
-      } ${size === "sm" ? "text-md" : "text-3xl"} ${
-        weight === "medium" ? "font-medium" : "font-light"
-      }  ${classes}`}
+      className={twMerge(
+        uppercase && "uppercase",
+        theme === "light" ? "text-white" : "text-black",
+        size === "sm" ? "text-md" : "text-3xl",
+        weight === "medium" ? "font-medium" : "font-light",
+        classes
+      )}
     >
       {text}
-    </h1>
+    </Component>
   );
 }

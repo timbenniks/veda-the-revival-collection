@@ -8,7 +8,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ $, product }: ProductCardProps) {
   return (
-    <li className="">
+    <li className="text-left">
       <Title
         $={$.title}
         text={product.title}
@@ -17,6 +17,7 @@ export default function ProductCard({ $, product }: ProductCardProps) {
         size="sm"
         classes="mb-2"
         weight="medium"
+        as="h3"
       />
     </li>
   );
