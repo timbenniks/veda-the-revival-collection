@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
-import { Hero as HeroProps } from "@/types/contentstack";
+import { Ctas, Hero as HeroProps } from "@/types/contentstack";
 import { twMerge } from "tailwind-merge";
 
 export default function Hero({
@@ -78,19 +78,20 @@ export default function Hero({
             classes="mb-2"
           />
         )}
-        {description ? (
+
+        {description && (
           <p {...($ && $.description)} className="font-light">
             {description}
           </p>
-        ) : null}
+        )}
 
         {ctas && ctas.length && (
           <div
             className="mt-4 flex space-x-4 justify-center"
             {...($ && $.ctas)}
           >
-            {ctas.map((ctaInstance: any) => (
-              <Cta {...ctaInstance.cta} key={ctaInstance.cta._metadata.uid} />
+            {ctas.map((ctaInstance: Ctas, index) => (
+              <Cta {...ctaInstance.cta} key={`cta_${index}`} />
             ))}
           </div>
         )}

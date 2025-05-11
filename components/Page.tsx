@@ -5,13 +5,13 @@ export default function Page({ page }: { page: PageType }) {
   const components = page?.components || [];
   return (
     <>
-      {components ? (
+      {components && (
         <ComponentsRenderer
           components={components}
           cslp={page.$}
           cslpWrapper="components"
         />
-      ) : null}
+      )}
     </>
   );
 }
