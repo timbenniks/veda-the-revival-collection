@@ -42,6 +42,7 @@ export async function getPage(url: string, variantParam?: string) {
   const pageQuery = await stack
     .contentType("page")
     .entry()
+    .includeReference(['components.list.reference.product'])
 
   if (variantParam) {
     const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
@@ -64,6 +65,9 @@ export async function getPage(url: string, variantParam?: string) {
     'components.hero.video',
     'components.hero.ctas',
     'components.hero.design',
+    'components.list._metadata',
+    'components.list.title',
+    'components.list.reference'
   ])
 
   result = await pageQuery

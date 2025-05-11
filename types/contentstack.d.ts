@@ -113,4 +113,5 @@ export interface Product {
   product_line?: ProductLine[];
   media?: File[] | null;
   taxonomies?: Taxonomy[];
+  $: any;
 }

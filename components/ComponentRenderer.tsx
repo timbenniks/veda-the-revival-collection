@@ -1,6 +1,7 @@
 import { ComponentType } from "react";
 import Hero from "./Hero";
-import Cta from "./Cta";
+import List from "./List";
+import Cta from "./atoms/Cta";
 import NoComponent from "./NoComponent";
 import { ComponentEntry, isPreview, mapComponentsToKV } from "@/lib/helpers";
 import { VB_EmptyBlockParentClass } from "@contentstack/live-preview-utils";
@@ -14,6 +15,7 @@ type ComponentsRendererProps = {
 const componentMap: Record<string, ComponentType<any>> = {
   hero: Hero,
   cta: Cta,
+  list: List,
 };
 
 export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
@@ -53,7 +55,7 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
             return (
               <div
                 {...(cslp && cslpWrapper && cslp[`${cslpWrapper}__${index}`])}
-                key={component.props?._metadata.uid}
+                key={component.props?._metadata?.uid || index}
               >
                 <ComponentInstance {...component.props} />
               </div>

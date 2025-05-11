@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { ComponentsRenderer } from "./ComponentRenderer";
-import Cta from "./Cta";
+import Cta from "./atoms/Cta";
+import Title from "./atoms/Title";
 
 interface HeroProps {
   $?: any;
@@ -79,11 +79,16 @@ export default function Hero({
           design.theme === "light" ? "text-white" : "text-black"
         } md:max-w-[400px] md:left-16 md:absolute md:top-2/4 md:-translate-y-2/4 mt-4 md:mt-0 px-6 md:px-0 text-center mx-auto`}
       >
-        {title ? (
-          <h1 {...($ && $.title)} className="text-3xl font-light mb-2">
-            {title}
-          </h1>
-        ) : null}
+        {title && (
+          <Title
+            $={$.title}
+            text={title}
+            theme={design.theme}
+            uppercase={true}
+            size="lg"
+            classes="mb-2"
+          />
+        )}
         {description ? (
           <p {...($ && $.description)} className="font-light">
             {description}
