@@ -34,7 +34,7 @@ export default function Hero({
             <Image
               {...($ && $.image)}
               src={image?.url}
-              alt={title}
+              alt={title || image.title || ""}
               width={1440}
               height={635}
               loading="eager"
