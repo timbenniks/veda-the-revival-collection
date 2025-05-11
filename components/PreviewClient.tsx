@@ -57,7 +57,7 @@ export default function PreviewClient({
   useEffect(() => {
     initLivePreview();
     ContentstackLivePreview.onEntryChange(getContent);
-  }, [path]);
+  });
 
   if (!page) {
     return <p>Loading preview…</p>;

@@ -37,8 +37,6 @@ export function initLivePreview() {
 }
 
 export async function getPage(url: string, variantParam?: string): Promise<Page> {
-  let result;
-
   const pageQuery = await stack
     .contentType("page")
     .entry()
@@ -70,7 +68,7 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
     'components.list.reference'
   ])
 
-  result = await pageQuery
+  const result = await pageQuery
     .query()
     .where('url', QueryOperation.EQUALS, url)
     .find<Page>();
@@ -90,8 +88,6 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
 }
 
 export async function getProduct(url: string): Promise<Product> {
-  let result;
-
   const productQuery = await stack
     .contentType("product")
     .entry()
@@ -112,7 +108,7 @@ export async function getProduct(url: string): Promise<Product> {
     'product_line.url',
   ])
 
-  result = await productQuery
+  const result = await productQuery
     .query()
     .where('url', QueryOperation.EQUALS, url)
     .find<Product>();
@@ -132,8 +128,6 @@ export async function getProduct(url: string): Promise<Product> {
 }
 
 export async function getProductLine(url: string): Promise<ProductLine> {
-  let result;
-
   const productQuery = await stack
     .contentType("product_line")
     .entry()
@@ -154,7 +148,7 @@ export async function getProductLine(url: string): Promise<ProductLine> {
     'products.category.url',
   ])
 
-  result = await productQuery
+  const result = await productQuery
     .query()
     .where('url', QueryOperation.EQUALS, url)
     .find<ProductLine>();
@@ -174,8 +168,6 @@ export async function getProductLine(url: string): Promise<ProductLine> {
 }
 
 export async function getCategory(url: string): Promise<Category> {
-  let result;
-
   const productQuery = await stack
     .contentType("category")
     .entry()
@@ -196,7 +188,7 @@ export async function getCategory(url: string): Promise<Category> {
     'products.product_line.url',
   ])
 
-  result = await productQuery
+  const result = await productQuery
     .query()
     .where('url', QueryOperation.EQUALS, url)
     .find<Category>();

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getPage } from "@/lib/contentstack";
-import { createOgTags, isPreview, useGetVariantParam } from "@/lib/helpers";
+import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
 import Page from "@/components/Page";
 import PreviewClient from "@/components/PreviewClient";
 
@@ -16,7 +16,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const query = await searchParams;
   const path = slug ? slug : "/";
-  const variantParam = useGetVariantParam(query);
+  const variantParam = getVariantParam(query);
 
   const page = await getPage(path, variantParam);
   return createOgTags(page);
@@ -32,7 +32,7 @@ export default async function Home({
   const { slug } = await params;
   const query = await searchParams;
   const path = slug ? slug : "/";
-  const variantParam = useGetVariantParam(query);
+  const variantParam = getVariantParam(query);
 
   if (isPreview) {
     return (

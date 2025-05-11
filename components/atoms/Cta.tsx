@@ -5,7 +5,7 @@ export default function Cta({ link, text, $ }: CtaProps) {
   return (
     <Link
       {...($ && $.link)}
-      href={link?.href}
+      href={link?.href || "#"}
       title={link?.title}
       className="block px-2 py-1 border-b border-black no-underline uppercase hover:bg-black hover:text-white"
     >

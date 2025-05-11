@@ -27,7 +27,7 @@ export async function getPersonalizeInstance({
   return await Personalize.init(projectUid, options);
 }
 
-export function useGetVariantParam(searchParams: { [key: string]: string | string[] | undefined }) {
+export function getVariantParam(searchParams: { [key: string]: string | string[] | undefined }) {
   return decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM] as string);
 }
 
