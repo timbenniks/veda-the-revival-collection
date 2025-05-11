@@ -1,22 +1,7 @@
 import Image from "next/image";
 import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
-
-interface HeroProps {
-  $?: any;
-  _metadata: { $?: any; uid: string };
-  description: string;
-  image?: { $?: any; url: string };
-  title: string;
-  video?: { $?: any; url: string };
-  design: {
-    copy_location: "left" | "right";
-    overlay_opacity: number;
-    theme: "light" | "dark";
-    $?: any;
-  };
-  ctas: any[];
-}
+import { Hero as HeroProps } from "@/types/contentstack";
 
 export default function Hero({
   description,
@@ -61,7 +46,7 @@ export default function Hero({
         </>
       )}
 
-      {design.overlay_opacity > 0 && (
+      {design.overlay_opacity && design.overlay_opacity > 0 && (
         <div
           className="bg-black absolute w-full h-full top-0 left-0"
           style={{
@@ -95,12 +80,12 @@ export default function Hero({
           </p>
         ) : null}
 
-        {ctas.length && (
+        {ctas && ctas.length && (
           <div
             className="mt-4 flex space-x-4 justify-center"
             {...($ && $.ctas)}
           >
-            {ctas.map((ctaInstance) => (
+            {ctas.map((ctaInstance: any) => (
               <Cta {...ctaInstance.cta} key={ctaInstance.cta._metadata.uid} />
             ))}
           </div>

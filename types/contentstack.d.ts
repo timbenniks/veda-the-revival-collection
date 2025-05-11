@@ -47,34 +47,47 @@ export interface Taxonomy {
   non_localizable: boolean;
 }
 
+export interface List {
+  uid: string;
+  $: any;
+  _version: number;
+  title?: string;
+  reference: (ProductLine | Product | Category)[];
+}
+
+export type Cta = {
+  $?: any;
+  text?: string;
+  link?: Link;
+};
 export interface Ctas {
-  cta: {
-    text?: string;
-    link?: Link;
-  };
+  cta: Cta
 }
 
 export interface Hero {
   uid: string;
+  $: any;
   _version: number;
   title?: string;
   description?: string;
   ctas?: Ctas[];
   image?: File | null;
   video?: File | null;
-  design?: {
-    copy_location?: ("left" | "center" | "right") | null;
-    opacity?: string;
+  design: {
+    copy_location: "left" | "right";
+    overlay_opacity: number;
+    theme: "dark" | "light";
   };
 }
 
 export interface Components {
   hero: Hero;
+  list: List;
 }
 
 export interface Page {
-  $?: any;
   uid: string;
+  $: any;
   _version: number;
   title: string;
   url?: string;
@@ -85,6 +98,7 @@ export interface Page {
 
 export interface Category {
   uid: string;
+  $: any;
   _version: number;
   title: string;
   url?: string;
@@ -94,6 +108,7 @@ export interface Category {
 
 export interface ProductLine {
   uid: string;
+  $: any;
   _version: number;
   title: string;
   url?: string;
@@ -103,6 +118,7 @@ export interface ProductLine {
 
 export interface Product {
   uid: string;
+  $: any;
   _version: number;
   title: string;
   url?: string;
@@ -113,5 +129,4 @@ export interface Product {
   product_line?: ProductLine[];
   media?: File[] | null;
   taxonomies?: Taxonomy[];
-  $: any;
 }

@@ -1,10 +1,5 @@
 import Link from "next/link";
-
-interface CtaProps {
-  $?: any;
-  link: { $?: any; href?: string; title?: string };
-  text: string;
-}
+import { Cta as CtaProps } from "@/types/contentstack";
 
 export default function Cta({ link, text, $ }: CtaProps) {
   return (
