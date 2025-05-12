@@ -1,4 +1,4 @@
-import { Components, Page } from "@/types/contentstack";
+import { Components, Page } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { getContentstackEndpoints, getRegionForString } from "@timbenniks/contentstack-endpoints";
 import { NextRequest } from "next/server";

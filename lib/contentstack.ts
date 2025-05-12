@@ -1,6 +1,6 @@
 import contentstack, { QueryOperation } from "@contentstack/delivery-sdk"
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
-import { Page, Product, ProductLine, Category } from "../types/contentstack";
+import { Page, Product, ProductLine, Category } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { contentstackEndpoints, contentstackRregion } from "./helpers";
 

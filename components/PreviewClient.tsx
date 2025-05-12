@@ -17,7 +17,8 @@ import type {
   Product,
   ProductLine,
   Category,
-} from "@/types/contentstack";
+} from "@/types/types";
+import { get } from "http";
 
 export interface PreviewClientProps {
   path: string;
@@ -57,10 +58,21 @@ export default function PreviewClient({
   useEffect(() => {
     initLivePreview();
     ContentstackLivePreview.onEntryChange(getContent);
-  });
+  }, [path]);
 
   if (!page) {
-    return <p>Loading preview…</p>;
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <img
+          src="/images/veda.svg"
+          width={69}
+          height={26}
+          alt="Veda Logo"
+          className="mb-2"
+        />
+        <p className="text-xs font-light">loading preview</p>
+      </div>
+    );
   }
 
   return <Page page={page} />;

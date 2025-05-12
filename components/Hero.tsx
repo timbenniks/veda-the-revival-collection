@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
-import { Ctas, Hero as HeroProps } from "@/types/contentstack";
+import { Ctas, Hero as HeroProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 
 export default function Hero({
@@ -47,18 +47,18 @@ export default function Hero({
         </>
       )}
 
-      {design.overlay_opacity && design.overlay_opacity > 0 && (
+      {design.overlay_opacity > 0 && (
         <div
-          className="bg-black absolute w-full h-full top-0 left-0"
+          className="hidden md:block bg-black absolute w-full h-full top-0 left-0"
           style={{
             opacity: design.overlay_opacity / 100,
           }}
-        ></div>
+        />
       )}
 
       <article
         className={twMerge(
-          "mt-4 md:mt-0 px-6 md:px-0 text-center mx-auto",
+          "my-4 md:mt-0 px-6 md:px-0 text-center mx-auto",
           "md:max-w-[400px] md:absolute md:top-2/4 md:-translate-y-2/4",
 
           design.copy_location === "left"

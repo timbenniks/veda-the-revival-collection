@@ -5,7 +5,7 @@ import Cta from "./atoms/Cta";
 import NoComponent from "./NoComponent";
 import { isPreview, mapComponentsToKV } from "@/lib/helpers";
 import { VB_EmptyBlockParentClass } from "@contentstack/live-preview-utils";
-import { Components } from "@/types/contentstack";
+import { Components } from "@/types/types";
 
 type ComponentsRendererProps = {
   components: Components[];

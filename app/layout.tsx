@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <main className="max-w-[1440px] mx-auto px-4 md:px-0">
+        <main className="max-w-[1440px] mx-auto">
           <PersonalizeProvider>{children}</PersonalizeProvider>
         </main>
       </body>
