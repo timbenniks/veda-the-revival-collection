@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
 import { Ctas, Hero as HeroProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
+import MediaItem from "./MediaItem";
 
 export default function Hero({
   description,
@@ -31,12 +31,13 @@ export default function Hero({
       ) : (
         <>
           {image?.url && (
-            <Image
+            <MediaItem
               {...($ && $.image)}
               src={image?.url}
               alt={title || image.title || ""}
               width={1440}
               height={635}
+              ratio={1440 / 635}
               loading="eager"
               fetchPriority="high"
               quality={100}
@@ -70,7 +71,7 @@ export default function Hero({
       >
         {title && (
           <Title
-            $={$.title}
+            $={$ && $.title}
             text={title}
             theme={design.theme}
             uppercase={true}

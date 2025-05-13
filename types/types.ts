@@ -37,6 +37,10 @@ export interface File {
   title: string;
   _metadata?: object;
   publish_details: PublishDetails;
+  dimension: {
+    width: number;
+    height: number;
+  };
 }
 
 export interface Link {

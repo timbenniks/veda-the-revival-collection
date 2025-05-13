@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 export default function List({ title, reference, $ }: ListProps) {
   const getGridColumns = () => {
     if (reference.length <= 3) {
-      return `md:grid-cols-${reference.length}`;
+      return `md:grid-cols-3`;
     }
 
     return "md:grid-cols-4";
@@ -17,7 +17,7 @@ export default function List({ title, reference, $ }: ListProps) {
     <div className="mx-auto bg-white text-center p-10">
       {title && (
         <Title
-          $={$.title}
+          $={$ && $.title}
           text={title}
           theme={"dark"}
           uppercase={true}

@@ -30,12 +30,12 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
     <>
       {!isPreview &&
         mappedComponents.length > 0 &&
-        mappedComponents.map((component) => {
+        mappedComponents.map((component, index) => {
           const ComponentInstance = componentMap[component.name] ?? NoComponent;
           return (
             <ComponentInstance
               {...component.props}
-              key={component.props?._metadata.uid}
+              key={component.props?._metadata.uid || index}
             />
           );
         })}

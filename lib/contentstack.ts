@@ -65,7 +65,8 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
     'components.hero.design',
     'components.list._metadata',
     'components.list.title',
-    'components.list.reference'
+    'components.list.reference',
+    'components.two_column',
   ])
 
   const result = await pageQuery

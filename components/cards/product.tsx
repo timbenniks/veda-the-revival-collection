@@ -1,7 +1,7 @@
 import Title from "../atoms/Title";
 import { CSLPAttribute, Product } from "@/types/types";
-import Image from "next/image";
 import Link from "next/link";
+import MediaItem from "../MediaItem";
 
 interface ProductCardProps {
   $?: { [key: string]: CSLPAttribute | undefined };
@@ -15,14 +15,16 @@ export default function ProductCard({ $, product }: ProductCardProps) {
     <li className="text-left relative group">
       <div className="aspect-square bg-gray-200 mb-4 overflow-hidden">
         {media && media[0] && (
-          <Image
+          <MediaItem
+            {...($ && $.media)}
             src={media[0].url}
             alt={title}
-            loading="lazy"
             width={300}
             height={300}
+            ratio={300 / 300}
+            loading="lazy"
+            quality={100}
             className="w-full h-auto aspect-square transition-transform duration-1200 ease-out group-hover:scale-105"
-            {...($ && $.media)}
           />
         )}
       </div>
