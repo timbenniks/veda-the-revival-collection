@@ -5,7 +5,6 @@ import Image, { ImageLoaderProps, ImageProps } from "next/image";
 interface MediaItemProps extends Omit<ImageProps, "loader"> {
   src: string;
   width: number;
-  quality?: number;
   fit?: string;
   ratio: number;
 }
@@ -13,7 +12,6 @@ interface MediaItemProps extends Omit<ImageProps, "loader"> {
 export default function MediaItem({
   src,
   width,
-  quality,
   ratio,
   fit = "crop",
   ...props
@@ -24,11 +22,25 @@ export default function MediaItem({
 
     params.append("height", computedHeight);
     params.append("width", width.toString());
-    fit && params.append("fit", fit);
-    quality && params.append("quality", quality.toString());
+
+    if (fit) {
+      params.append("fit", fit);
+    }
+
+    if (quality) {
+      params.append("quality", quality.toString());
+    }
 
     return `${src}?${params.toString()}`;
   };
 
-  return <Image {...props} loader={loader} src={src} width={width} />;
+  return (
+    <Image
+      {...props}
+      loader={loader}
+      src={src}
+      width={width}
+      alt={props.alt || ""}
+    />
+  );
 }

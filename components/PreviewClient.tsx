@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
 import Page from "./Page";
+import Image from "next/image";
 
 import {
   getPage,
@@ -18,7 +19,6 @@ import type {
   ProductLine,
   Category,
 } from "@/types/types";
-import { get } from "http";
 
 export interface PreviewClientProps {
   path: string;
@@ -63,7 +63,7 @@ export default function PreviewClient({
   if (!page) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
-        <img
+        <Image
           src="/images/veda.svg"
           width={69}
           height={26}
