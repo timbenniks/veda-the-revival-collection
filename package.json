@@ -22,6 +22,7 @@
     "@contentstack/live-preview-utils": "^3.2.1",
     "@contentstack/personalize-edge-sdk": "^1.0.12",
     "@timbenniks/contentstack-endpoints": "^1.0.8",
+    "dompurify": "^3.2.5",
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

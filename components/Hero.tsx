@@ -2,7 +2,7 @@ import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
 import { Ctas, Hero as HeroProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
-import MediaItem from "./MediaItem";
+import MediaItem from "./atoms/MediaItem";
 
 export default function Hero({
   description,

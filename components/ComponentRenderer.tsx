@@ -2,6 +2,9 @@ import { ComponentType } from "react";
 import Hero from "./Hero";
 import List from "./List";
 import Cta from "./atoms/Cta";
+import TwoColumn from "./TwoColumn";
+import Media from "./Media";
+import RichText from "./RichText";
 import NoComponent from "./NoComponent";
 import { isPreview, mapComponentsToKV } from "@/lib/helpers";
 import { VB_EmptyBlockParentClass } from "@contentstack/live-preview-utils";
@@ -17,6 +20,9 @@ const componentMap: Record<string, ComponentType<any>> = {
   hero: Hero,
   cta: Cta,
   list: List,
+  two_column: TwoColumn,
+  media: Media,
+  rich_text: RichText,
 };
 
 export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({

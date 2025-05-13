@@ -1,7 +1,7 @@
 import Title from "../atoms/Title";
 import { CSLPAttribute, Product } from "@/types/types";
 import Link from "next/link";
-import MediaItem from "../MediaItem";
+import MediaItem from "../atoms/MediaItem";
 
 interface ProductCardProps {
   $?: { [key: string]: CSLPAttribute | undefined };

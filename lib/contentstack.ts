@@ -50,24 +50,25 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
     pageQuery.variants(variantAlias);
   }
 
-  pageQuery.only([
-    'uid',
-    'url',
-    'title',
-    'description',
-    'image',
-    'components.hero._metadata',
-    'components.hero.title',
-    'components.hero.description',
-    'components.hero.image',
-    'components.hero.video',
-    'components.hero.ctas',
-    'components.hero.design',
-    'components.list._metadata',
-    'components.list.title',
-    'components.list.reference',
-    'components.two_column',
-  ])
+  // pageQuery.only([
+  //   'uid',
+  //   'url',
+  //   'title',
+  //   'description',
+  //   'image',
+  //   'components.hero._metadata',
+  //   'components.hero.title',
+  //   'components.hero.description',
+  //   'components.hero.image',
+  //   'components.hero.video',
+  //   'components.hero.ctas',
+  //   'components.hero.design',
+  //   'components.list._metadata',
+  //   'components.list.title',
+  //   'components.list.reference',
+  //   'components.two_column',
+  //   'components.rich_text',
+  // ])
 
   const result = await pageQuery
     .query()
@@ -80,6 +81,11 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
     if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
       contentstack.Utils.addEditableTags(entry, 'page', true);
     }
+
+    // contentstack.Utils.jsonToHTML({
+    //   entry: entry,
+    //   paths: ["components.rich_text.content", "components.two_column.side_b.content"],
+    // })
 
     return entry
   }
