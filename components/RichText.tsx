@@ -26,22 +26,20 @@ export default function RichText({ title, content, ctas, $ }: RichTextProps) {
       )}
 
       {content && (
-        <RichTextRenderer json={content} />
-        // <div
-        //   {...($ && $.content)}
-        //   dangerouslySetInnerHTML={{
-        //     __html: DOMPurify.sanitize(content),
-        //   }}
-        // />
+        <RichTextRenderer
+          json={content}
+          {...($ && $.content)}
+          className="mb-4"
+        />
       )}
 
-      {ctas && (
+      {ctas?.length ? (
         <div className="mt-4 flex space-x-4 justify-center" {...($ && $.ctas)}>
           {ctas.map((ctaInstance: Ctas, index) => (
             <Cta {...ctaInstance.cta} key={`cta_${index}`} />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
