@@ -31,8 +31,8 @@ const getImageProps = (node: RTEElementNode) => {
   const alt = node.attrs?.alt || node.attrs?.["asset-alt"] || "";
   const width = node.attrs?.width || "auto";
   const height = node.attrs?.height || "auto";
-  const style = node.attrs?.style as React.CSSProperties;
-  const inline = node.attrs?.inline;
+  // const style = node.attrs?.style as React.CSSProperties;
+  // const inline = node.attrs?.inline;
 
   return {
     src,
@@ -75,7 +75,9 @@ const defaultSerializers: Record<
       {children}
     </Link>
   ),
-  img: (node, children, key) => <Image key={key} {...getImageProps(node)} />,
+  img: (node, children, key) => (
+    <Image key={key} {...getImageProps(node)} alt="" />
+  ),
   code: (node, children, key) => {
     const language = node.attrs?.language || "";
     return (
