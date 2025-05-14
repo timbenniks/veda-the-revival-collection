@@ -39,7 +39,6 @@ const getImageProps = (node: RTEElementNode) => {
     alt,
     width,
     height,
-    quality: 100,
     loading: "lazy" as const,
   };
 };

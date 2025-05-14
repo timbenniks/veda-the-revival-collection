@@ -24,7 +24,6 @@ export default function CategoryCard({ $, category }: CategoryCardProps) {
             height={440}
             ratio={293 / 440}
             loading="lazy"
-            quality={100}
             className="w-full h-auto aspect-[293/440] transition-transform duration-1200 ease-out group-hover:scale-105"
           />
         )}

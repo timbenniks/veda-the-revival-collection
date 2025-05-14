@@ -28,8 +28,11 @@ export default function MediaItem({
     }
 
     if (quality) {
-      params.append("quality", quality.toString());
+      params.append("quality", "90");
     }
+
+    params.append("auto", "avif");
+    params.append("format", "pjpg");
 
     return `${src}?${params.toString()}`;
   };

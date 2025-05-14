@@ -40,7 +40,6 @@ export default function Hero({
               ratio={1440 / 635}
               loading="eager"
               fetchPriority="high"
-              quality={100}
               priority={true}
               className="h-full w-full object-cover object-center"
             />

@@ -18,7 +18,6 @@ export default function Media({ image, width, height, $ }: MediaProps) {
         height={height}
         ratio={width / height}
         loading="lazy"
-        quality={100}
         fit={"crop"}
       />
     </>

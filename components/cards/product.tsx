@@ -23,7 +23,6 @@ export default function ProductCard({ $, product }: ProductCardProps) {
             height={300}
             ratio={300 / 300}
             loading="lazy"
-            quality={100}
             className="w-full h-auto aspect-square transition-transform duration-1200 ease-out group-hover:scale-105"
           />
         )}
