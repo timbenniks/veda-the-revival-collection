@@ -72,3 +72,4 @@ export function createOgTags(page: Page): Metadata {
 }
 
 export const isPreview = process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === "true";
+export const useCloudinary = process.env.NEXT_PUBLIC_CONTENTSTACK_CLOUDINARY === "true";

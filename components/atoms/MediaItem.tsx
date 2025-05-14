@@ -1,7 +1,7 @@
 "use client";
 
 import Image, { ImageLoaderProps, ImageProps } from "next/image";
-
+import { useCloudinary } from "@/lib/helpers";
 interface MediaItemProps extends Omit<ImageProps, "loader"> {
   src: string;
   width: number;
@@ -34,7 +34,11 @@ export default function MediaItem({
     params.append("auto", "avif");
     params.append("format", "pjpg");
 
-    return `${src}?${params.toString()}`;
+    return `${
+      useCloudinary
+        ? "https://res.cloudinary.com/dwfcofnrd/image/fetch/q_auto,f_auto/"
+        : ""
+    }${src}?${params.toString()}`;
   };
 
   return (
