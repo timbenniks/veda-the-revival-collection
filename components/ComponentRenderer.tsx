@@ -1,14 +1,17 @@
 import { ComponentType } from "react";
+import { isPreview, mapComponentsToKV } from "@/lib/helpers";
+import { VB_EmptyBlockParentClass } from "@contentstack/live-preview-utils";
+import { Components } from "@/types/types";
+
+import NoComponent from "./NoComponent";
+
 import Hero from "./Hero";
 import List from "./List";
 import Cta from "./atoms/Cta";
 import TwoColumn from "./TwoColumn";
 import Media from "./Media";
 import RichText from "./RichText";
-import NoComponent from "./NoComponent";
-import { isPreview, mapComponentsToKV } from "@/lib/helpers";
-import { VB_EmptyBlockParentClass } from "@contentstack/live-preview-utils";
-import { Components } from "@/types/types";
+import Header from "./Header";
 
 type ComponentsRendererProps = {
   components: Components[];
@@ -23,6 +26,7 @@ const componentMap: Record<string, ComponentType<any>> = {
   two_column: TwoColumn,
   media: Media,
   rich_text: RichText,
+  header: Header,
 };
 
 export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
@@ -38,9 +42,11 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
         mappedComponents.length > 0 &&
         mappedComponents.map((component, index) => {
           const ComponentInstance = componentMap[component.name] ?? NoComponent;
+
           return (
             <ComponentInstance
               {...component.props}
+              name={component.name}
               key={component.props?._metadata.uid || index}
             />
           );
@@ -64,7 +70,7 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
                 {...(cslp && cslpWrapper && cslp[`${cslpWrapper}__${index}`])}
                 key={component.props?._metadata?.uid || index}
               >
-                <ComponentInstance {...component.props} />
+                <ComponentInstance {...component.props} name={component.name} />
               </div>
             );
           })}

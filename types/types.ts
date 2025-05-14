@@ -60,6 +60,7 @@ export interface List {
   $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title?: string;
+  title_tag?: "h1" | "h2" | "h3" | "h4";
   reference: (ProductLine | Product | Category)[];
 }
 
@@ -77,6 +78,7 @@ export interface Hero {
   $: { [key: string]: CSLPAttribute | undefined; }
   _version: number;
   title?: string;
+  title_tag?: "h1" | "h2" | "h3" | "h4";
   description?: string;
   ctas?: Ctas[];
   image?: File | null;

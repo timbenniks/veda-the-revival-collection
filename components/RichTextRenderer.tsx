@@ -134,7 +134,28 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = memo(
   ({ json, ...htmlProps }) => {
     const renderedNodes = useMemo(() => {
       const nodes = json.children || json.content || [];
-      return nodes.map((node, index) => renderNode(node, `${index}`));
+
+      // Filter out empty paragraphs
+      const filteredNodes = nodes.filter((node) => {
+        // Check if it's a paragraph node with no content or only whitespace
+        if ("type" in node && node.type === "p") {
+          // If it has no children, or only has empty text nodes
+          if (!node.children || node.children.length === 0) {
+            return false;
+          }
+
+          // Check if all children are just empty text nodes
+          const hasOnlyEmptyText = node.children.every(
+            (child) => "text" in child && child.text.trim() === ""
+          );
+
+          return !hasOnlyEmptyText;
+        }
+
+        return true;
+      });
+
+      return filteredNodes.map((node, index) => renderNode(node, `${index}`));
     }, [json]);
 
     return <div {...htmlProps}>{renderedNodes}</div>;

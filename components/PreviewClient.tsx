@@ -11,6 +11,7 @@ import {
   getProduct,
   getProductLine,
   initLivePreview,
+  getHeader,
 } from "../lib/contentstack";
 
 import type {

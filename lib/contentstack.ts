@@ -40,13 +40,15 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
   const pageQuery = await stack
     .contentType("page")
     .entry()
-    .includeReference(['components.list.reference.product'])
+  // .includeReference(['components.list.reference.product', 'components.header.reference.links.link.reference'])
 
   if (variantParam) {
     const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
 
     pageQuery.addParams({ include_dimension: true });
     pageQuery.addParams({ include_applied_variants: true });
+    pageQuery.addParams({ include_all: true });
+    pageQuery.addParams({ include_all_depth: 2 });
     pageQuery.variants(variantAlias);
   }
 
@@ -82,11 +84,6 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
       contentstack.Utils.addEditableTags(entry, 'page', true);
     }
 
-    // contentstack.Utils.jsonToHTML({
-    //   entry: entry,
-    //   paths: ["components.rich_text.content", "components.two_column.side_b.content"],
-    // })
-
     return entry
   }
   else {
@@ -108,7 +105,7 @@ export async function getProduct(url: string): Promise<Product> {
     'description',
     'price',
     'taxonomies.term_uid',
-    'media.url',
+    'media',
     'category.title',
     'category.url',
     'product_line.title',
@@ -211,5 +208,25 @@ export async function getCategory(url: string): Promise<Category> {
   }
   else {
     throw new Error(`Category not found for url: ${url}`);
+  }
+}
+
+// @todo: add types - waitign for tsgen plugin to start working
+export async function getHeader(): Promise<any> {
+  const entry = await stack
+    .contentType("header")
+    .entry("bltb3e6ba1550869339")
+    .includeReference(['links.link.reference.product', 'links.link.reference.product_line', 'links.link.reference.page', 'links.link.reference.category'])
+    .fetch()
+
+  if (entry) {
+    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
+      contentstack.Utils.addEditableTags(entry as any, 'header', true);
+    }
+
+    return entry
+  }
+  else {
+    throw new Error(`Header not found for uid: bltb3e6ba1550869339`);
   }
 }

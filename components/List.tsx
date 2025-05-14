@@ -4,7 +4,7 @@ import ProductCard from "./cards/product";
 import { List as ListProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 
-export default function List({ title, reference, $ }: ListProps) {
+export default function List({ title, title_tag, reference, $ }: ListProps) {
   const getGridColumns = () => {
     if (reference.length <= 3) {
       return `md:grid-cols-3`;
@@ -23,7 +23,7 @@ export default function List({ title, reference, $ }: ListProps) {
           uppercase={true}
           size="lg"
           classes="mb-10 text-2xl"
-          as="h2"
+          as={title_tag || "h3"}
         />
       )}
       {reference && reference.length && (

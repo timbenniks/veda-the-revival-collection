@@ -1,19 +1,27 @@
 import { Ctas } from "@/types/types";
 import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
-import DOMPurify from "dompurify";
 import RichTextRenderer from "./RichTextRenderer";
 
 type RichTextProps = {
-  title: string;
+  title?: string;
+  title_tag?: "h1" | "h2" | "h3" | "h4";
   content: any;
+  alternative_content: any;
   ctas?: Ctas[];
   $?: any;
 };
 
-export default function RichText({ title, content, ctas, $ }: RichTextProps) {
+export default function RichText({
+  title,
+  title_tag,
+  content,
+  alternative_content,
+  ctas,
+  $,
+}: RichTextProps) {
   return (
-    <div>
+    <div className="text-center p-12">
       {title && (
         <Title
           $={$ && $.title}
@@ -22,6 +30,7 @@ export default function RichText({ title, content, ctas, $ }: RichTextProps) {
           uppercase={true}
           size="lg"
           classes="mb-2"
+          as={title_tag || "h3"}
         />
       )}
 
@@ -29,7 +38,15 @@ export default function RichText({ title, content, ctas, $ }: RichTextProps) {
         <RichTextRenderer
           json={content}
           {...($ && $.content)}
-          className="mb-4"
+          className="font-light"
+        />
+      )}
+
+      {alternative_content && (
+        <div
+          {...($ && $.alternative_content)}
+          dangerouslySetInnerHTML={{ __html: alternative_content }}
+          className="font-light"
         />
       )}
 
