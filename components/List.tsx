@@ -1,6 +1,7 @@
 import { isPreview } from "@/lib/helpers";
 import Title from "./atoms/Title";
 import ProductCard from "./cards/product";
+import CategoryCard from "./cards/category";
 import { List as ListProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 
@@ -38,10 +39,22 @@ export default function List({ title, title_tag, reference, $ }: ListProps) {
           {reference.map((item, index) =>
             isPreview ? (
               <div key={item.uid} {...($ && $[`reference__${index}`])}>
-                <ProductCard $={item.$} product={item} />
+                {item?._content_type_uid === "product" && (
+                  <ProductCard $={item.$} product={item} />
+                )}
+                {item?._content_type_uid === "category" && (
+                  <CategoryCard $={item.$} category={item} />
+                )}
               </div>
             ) : (
-              <ProductCard key={item.uid} $={item.$} product={item} />
+              <>
+                {item?._content_type_uid === "product" && (
+                  <ProductCard key={item.uid} $={item.$} product={item} />
+                )}
+                {item?._content_type_uid === "category" && (
+                  <CategoryCard key={item.uid} $={item.$} category={item} />
+                )}
+              </>
             )
           )}
         </ul>

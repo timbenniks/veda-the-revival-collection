@@ -14,7 +14,7 @@ export default function Hero({
   $,
 }: HeroProps) {
   return (
-    <div className="md:aspect-[1440/635] relative w-full overflow-hidden">
+    <div className="md:aspect-[1440/635] relative w-full overflow-hidden bg-white">
       {video?.url ? (
         <video
           {...($ && $.video)}
@@ -63,10 +63,10 @@ export default function Hero({
           "md:max-w-[400px] md:absolute md:top-2/4 md:-translate-y-2/4",
 
           design.copy_location === "left"
-            ? "md:left-16 md:right-auto"
-            : "md:left-auto md:right-16",
+            ? "md:left-40 md:right-auto"
+            : "md:left-auto md:right-40",
 
-          design.theme === "light" ? "text-white" : "text-black"
+          design.theme === "light" ? "text-black md:text-white" : "text-black"
         )}
       >
         {title && (
@@ -90,6 +90,7 @@ export default function Hero({
           <div
             className="mt-4 flex space-x-4 justify-center"
             {...($ && $.ctas)}
+            data-add-direction="horizontal"
           >
             {ctas.map((ctaInstance: Ctas, index) => (
               <Cta {...ctaInstance.cta} key={`cta_${index}`} />

@@ -35,12 +35,16 @@ export default function MediaItem({
   };
 
   return (
-    <Image
-      {...props}
-      loader={loader}
-      src={src}
-      width={width}
-      alt={props.alt || ""}
-    />
+    <>
+      {src && (
+        <Image
+          {...props}
+          loader={loader}
+          src={src}
+          width={width}
+          alt={props.alt || ""}
+        />
+      )}
+    </>
   );
 }

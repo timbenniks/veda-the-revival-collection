@@ -34,20 +34,22 @@ export default function RichText({
         />
       )}
 
-      {content && (
+      {content && alternative_content ? (
         <RichTextRenderer
           json={content}
           {...($ && $.content)}
           className="font-light"
         />
-      )}
-
-      {alternative_content && (
-        <div
-          {...($ && $.alternative_content)}
-          dangerouslySetInnerHTML={{ __html: alternative_content }}
-          className="font-light"
-        />
+      ) : (
+        <>
+          {alternative_content ? (
+            <div
+              {...($ && $.alternative_content)}
+              dangerouslySetInnerHTML={{ __html: alternative_content }}
+              className="font-light"
+            />
+          ) : null}
+        </>
       )}
 
       {ctas?.length ? (

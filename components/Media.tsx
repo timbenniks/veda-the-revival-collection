@@ -13,7 +13,7 @@ export default function Media({ image, width, height, $ }: MediaProps) {
       <MediaItem
         {...($ && $.image)}
         src={image?.url}
-        alt={image.title || ""}
+        alt={image?.title || ""}
         width={width}
         height={height}
         ratio={width / height}

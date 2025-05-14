@@ -27,7 +27,7 @@ export default function Title({
       {...($ && $)}
       className={twMerge(
         uppercase && "uppercase",
-        theme === "light" ? "text-white" : "text-black",
+        theme === "light" ? "text-black md:text-white" : "text-black",
         size === "sm" ? "text-md" : "text-3xl",
         weight === "medium" ? "font-medium" : "font-light",
         classes
