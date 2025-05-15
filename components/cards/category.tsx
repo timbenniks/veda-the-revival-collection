@@ -19,18 +19,19 @@ export default function CategoryCard({ $, category }: CategoryCardProps) {
             {...($ && $.media)}
             // @ts-expect-error the url property exists. types complain.
             src={media.url}
-            alt={title}
+            alt={`Category image for ${title}`}
             width={293}
             height={440}
             ratio={293 / 440}
-            loading="lazy"
+            sizes="100vw, md:20vw"
+            widths={[267, 480, 700]}
             className="w-full h-auto aspect-[293/440] transition-transform duration-1200 ease-out group-hover:scale-105"
           />
         )}
       </div>
 
       {url && (
-        <Link href={url}>
+        <Link href={url} title={`link to ${title}`} rel="noopener">
           <span className="absolute inset-0 z-10" aria-hidden="true"></span>
         </Link>
       )}

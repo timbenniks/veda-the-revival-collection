@@ -34,13 +34,14 @@ export default function Hero({
             <MediaItem
               {...($ && $.image)}
               src={image?.url}
-              alt={title || image.title || ""}
               width={1440}
               height={635}
               ratio={1440 / 635}
               loading="eager"
               fetchPriority="high"
-              priority={true}
+              sizes="100vw"
+              widths={[480, 960, 1440, 1800]}
+              alt={title || image.title || ""}
               className="h-full w-full object-cover object-center"
             />
           )}

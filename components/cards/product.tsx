@@ -18,18 +18,19 @@ export default function ProductCard({ $, product }: ProductCardProps) {
           <MediaItem
             {...($ && $.media)}
             src={media[0].url}
-            alt={title}
+            alt={`Product image for ${title}`}
             width={300}
             height={300}
-            ratio={300 / 300}
-            loading="lazy"
+            ratio={1}
+            sizes="100vw, md:20vw"
+            widths={[267, 480, 700]}
             className="w-full h-auto aspect-square transition-transform duration-1200 ease-out group-hover:scale-105"
           />
         )}
       </div>
 
       {url && (
-        <Link href={url}>
+        <Link href={url} title={`link to ${title}`} rel="noopener">
           <span className="absolute inset-0 z-10" aria-hidden="true"></span>
         </Link>
       )}
