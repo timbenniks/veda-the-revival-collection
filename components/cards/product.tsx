@@ -6,9 +6,14 @@ import MediaItem from "../atoms/MediaItem";
 interface ProductCardProps {
   $?: { [key: string]: CSLPAttribute | undefined };
   product: Product;
+  loading?: "lazy" | "eager";
 }
 
-export default function ProductCard({ $, product }: ProductCardProps) {
+export default function ProductCard({
+  $,
+  product,
+  loading = "lazy",
+}: ProductCardProps) {
   const { title, short_description, media, url } = product;
 
   return (
@@ -22,6 +27,7 @@ export default function ProductCard({ $, product }: ProductCardProps) {
             width={300}
             height={300}
             ratio={1}
+            loading={loading}
             sizes="100vw, md:20vw"
             widths={[267, 480, 700]}
             className="w-full h-auto aspect-square transition-transform duration-1200 ease-out group-hover:scale-105"

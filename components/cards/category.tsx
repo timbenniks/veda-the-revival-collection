@@ -6,9 +6,14 @@ import MediaItem from "../atoms/MediaItem";
 interface CategoryCardProps {
   $?: { [key: string]: CSLPAttribute | undefined };
   category: Category;
+  loading?: "lazy" | "eager";
 }
 
-export default function CategoryCard({ $, category }: CategoryCardProps) {
+export default function CategoryCard({
+  $,
+  category,
+  loading = "lazy",
+}: CategoryCardProps) {
   const { title, media, url } = category;
 
   return (
@@ -24,6 +29,7 @@ export default function CategoryCard({ $, category }: CategoryCardProps) {
             height={440}
             ratio={293 / 440}
             sizes="100vw, md:20vw"
+            loading={loading}
             widths={[267, 480, 700]}
             className="w-full h-auto aspect-[293/440] transition-transform duration-1200 ease-out group-hover:scale-105"
           />

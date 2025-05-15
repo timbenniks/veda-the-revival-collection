@@ -41,19 +41,37 @@ export default function List({ title, title_tag, reference, $ }: ListProps) {
             isPreview ? (
               <div key={item.uid} {...($ && $[`reference__${index}`])}>
                 {item?._content_type_uid === "product" && (
-                  <ProductCard $={item.$} product={item} />
+                  <ProductCard
+                    $={item.$}
+                    product={item}
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
                 )}
                 {item?._content_type_uid === "category" && (
-                  <CategoryCard $={item.$} category={item} />
+                  <CategoryCard
+                    $={item.$}
+                    category={item}
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
                 )}
               </div>
             ) : (
               <React.Fragment key={item.uid}>
                 {item?._content_type_uid === "product" && (
-                  <ProductCard key={item.uid} $={item.$} product={item} />
+                  <ProductCard
+                    key={item.uid}
+                    $={item.$}
+                    product={item}
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
                 )}
                 {item?._content_type_uid === "category" && (
-                  <CategoryCard key={item.uid} $={item.$} category={item} />
+                  <CategoryCard
+                    key={item.uid}
+                    $={item.$}
+                    category={item}
+                    loading={index === 0 ? "eager" : "lazy"}
+                  />
                 )}
               </React.Fragment>
             )
