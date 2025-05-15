@@ -99,7 +99,7 @@ const defaultSerializers: Record<
       );
     }
 
-    return <Image key={key} {...getImageProps(node)} />;
+    return <Image key={key} {...getImageProps(node)} alt="" />;
   },
 };
 

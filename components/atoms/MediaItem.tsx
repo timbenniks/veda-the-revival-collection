@@ -107,7 +107,7 @@ export default function MediaItem({
         return `${src}?${params.toString()}`;
       }
     };
-  }, [ratio, fit, cloudName, useCloudinary]);
+  }, [ratio, fit, cloudName]);
 
   const srcSet = useMemo(
     () => widths.map((w) => `${loader({ src, width: w })} ${w}w`).join(", "),
