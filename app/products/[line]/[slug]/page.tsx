@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import { getPage, getProduct } from "@/lib/contentstack";
-import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
-import Page from "@/components/Page";
-import PreviewClient from "@/components/PreviewClient";
+// import { Metadata } from "next";
+import { getProduct } from "@/lib/contentstack";
+// import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
+// import Page from "@/components/Page";
+// import PreviewClient from "@/components/PreviewClient";
 
 export const revalidate = 60;
 
@@ -42,5 +42,5 @@ export default async function SlugPage({
   const product = await getProduct(path);
   //   return <Page page={page} />;
   // }
-  return <pre>{JSON.stringify(product, null, 2)}</pre>;
+  return <pre>{JSON.stringify({ product, searchParams }, null, 2)}</pre>;
 }
