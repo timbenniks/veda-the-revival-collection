@@ -2,11 +2,13 @@
 
 import Image, { ImageLoaderProps, ImageProps } from "next/image";
 import { useCloudinary } from "@/lib/helpers";
+
 interface MediaItemProps extends Omit<ImageProps, "loader"> {
   src: string;
   width: number;
   fit?: string;
   ratio: number;
+  cloudName?: string;
 }
 
 export default function MediaItem({
@@ -14,31 +16,35 @@ export default function MediaItem({
   width,
   ratio,
   fit = "crop",
+  cloudName = "dwfcofnrd",
   ...props
 }: MediaItemProps) {
   const loader = ({ src, width, quality }: ImageLoaderProps): string => {
-    const params = new URLSearchParams();
-    const computedHeight = (width / ratio).toFixed(0);
+    const computedHeight = Math.round(width / ratio);
 
-    params.append("height", computedHeight);
-    params.append("width", width.toString());
+    if (useCloudinary) {
+      const encodedSrc = encodeURIComponent(src);
+      const transformations = `w_${width},h_${computedHeight},c_thumb`;
 
-    if (fit) {
-      params.append("fit", fit);
+      return `https://res.cloudinary.com/${cloudName}/image/fetch/f_auto,q_auto/${transformations}/${encodedSrc}`;
+    } else {
+      const params = new URLSearchParams();
+      params.append("height", computedHeight.toString());
+      params.append("width", width.toString());
+
+      if (fit) {
+        params.append("fit", fit);
+      }
+
+      if (quality) {
+        params.append("quality", "90");
+      }
+
+      params.append("auto", "avif");
+      params.append("format", "pjpg");
+
+      return `${src}?${params.toString()}`;
     }
-
-    if (quality) {
-      params.append("quality", "90");
-    }
-
-    params.append("auto", "avif");
-    params.append("format", "pjpg");
-
-    return `${
-      useCloudinary
-        ? "https://res.cloudinary.com/dwfcofnrd/image/fetch/q_auto,f_auto/"
-        : ""
-    }${src}?${params.toString()}`;
   };
 
   return (
