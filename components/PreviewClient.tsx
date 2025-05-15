@@ -69,6 +69,7 @@ export default function PreviewClient({
           height={26}
           alt="Veda Logo"
           className="mb-2"
+          priority={true}
         />
         <p className="text-xs font-light">loading preview</p>
       </div>
