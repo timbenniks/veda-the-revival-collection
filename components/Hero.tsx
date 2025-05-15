@@ -86,16 +86,20 @@ export default function Hero({
           </p>
         )}
 
-        {ctas && ctas.length && (
-          <div
-            className="mt-4 flex space-x-4 justify-center"
-            {...($ && $.ctas)}
-            data-add-direction="horizontal"
-          >
-            {ctas.map((ctaInstance: Ctas, index) => (
-              <Cta {...ctaInstance.cta} key={`cta_${index}`} />
-            ))}
-          </div>
+        {ctas && (
+          <>
+            {ctas.length > 0 && (
+              <div
+                className="mt-4 flex space-x-4 justify-center"
+                {...($ && $.ctas)}
+                data-add-direction="horizontal"
+              >
+                {ctas.map((ctaInstance: Ctas, index) => (
+                  <Cta {...ctaInstance.cta} key={`cta_${index}`} />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </article>
     </div>

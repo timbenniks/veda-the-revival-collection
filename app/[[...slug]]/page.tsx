@@ -15,14 +15,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const query = await searchParams;
-  const path = slug ? slug : "/";
+  const path = slug ? `/${slug}` : "/";
   const variantParam = getVariantParam(query);
 
   const page = await getPage(path, variantParam);
   return createOgTags(page);
 }
 
-export default async function Home({
+export default async function SlugPage({
   params,
   searchParams,
 }: {
@@ -31,7 +31,7 @@ export default async function Home({
 }) {
   const { slug } = await params;
   const query = await searchParams;
-  const path = slug ? slug : "/";
+  const path = slug ? `/${slug}` : "/";
   const variantParam = getVariantParam(query);
 
   if (isPreview) {
