@@ -70,50 +70,59 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
   }
 }
 
-export async function getProduct(url: string, variantParam?: string) {
+export async function getProduct(url: string, variantParam?: string): Promise<Pdp | Product> {
   const pdpQuery = stack
     .contentType("pdp")
     .entry()
-    .includeReference(['product'])
+    .includeReference(['product']);
+
+  const productQuery = stack
+    .contentType("product")
+    .entry()
+    .includeReference(['category', 'product_line']);
 
   if (variantParam) {
     const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
+    const variantParams = {
+      include_dimension: true,
+      include_applied_variants: true,
+      include_all: true,
+      include_all_depth: 2
+    };
 
-    pdpQuery.addParams({ include_dimension: true });
-    pdpQuery.addParams({ include_applied_variants: true });
-    pdpQuery.addParams({ include_all: true });
-    pdpQuery.addParams({ include_all_depth: 2 });
-    pdpQuery.variants(variantAlias);
+    [pdpQuery, productQuery].forEach(query => {
+      Object.entries(variantParams).forEach(([key, value]) => {
+        query.addParams({ [key]: value });
+      });
+
+      query.variants(variantAlias);
+    });
   }
 
-  const pdp = await pdpQuery
-    .query()
-    .where('url', QueryOperation.EQUALS, url)
-    .find<Pdp>();
+  const [pdpResult, productResult] = await Promise.all([
+    pdpQuery.query().where('url', QueryOperation.EQUALS, url).find<Pdp>(),
+    productQuery.query().where('url', QueryOperation.EQUALS, url).find<Product>()
+  ]);
 
-  const product = await stack
-    .contentType("product")
-    .entry()
-    .includeReference(['category', 'product_line'])
-    .query()
-    .where('url', QueryOperation.EQUALS, url)
-    .find<Product>();
+  let entry = null;
+  let contentType = null;
 
-  if (pdp && pdp.entries && pdp.entries.length) {
-    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
-      contentstack.Utils.addEditableTags(pdp.entries[0], 'pdp', true);
-    }
-
-    return pdp
+  if (pdpResult?.entries?.length) {
+    entry = pdpResult.entries[0];
+    contentType = 'pdp';
   }
-  else if (product && product.entries && product.entries.length) {
-    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
-      contentstack.Utils.addEditableTags(product.entries[0], 'product', true);
-    }
-
-    return product
+  else if (productResult?.entries?.length) {
+    entry = productResult.entries[0];
+    contentType = 'product';
   }
-  else {
+
+  if (entry && process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true' && contentType) {
+    contentstack.Utils.addEditableTags(entry, contentType, true);
+  }
+
+  if (entry) {
+    return entry;
+  } else {
     throw new Error(`Product not found for url: ${url}`);
   }
 }

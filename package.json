@@ -1,6 +1,6 @@
 {
   "name": "veda-jewelry",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "repository": {
     "type": "git",
@@ -19,24 +19,23 @@
   },
   "dependencies": {
     "@contentstack/delivery-sdk": "^4.7.0",
-    "@contentstack/live-preview-utils": "^3.2.1",
+    "@contentstack/live-preview-utils": "^3.2.2",
     "@contentstack/personalize-edge-sdk": "^1.0.12",
-    "@timbenniks/contentstack-endpoints": "^1.0.8",
-    "dompurify": "^3.2.5",
+    "@timbenniks/contentstack-endpoints": "^1.0.9",
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.6",
+    "@tailwindcss/postcss": "^4.1.7",
     "@types/node": "^22.15.18",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "eslint": "^9.26.0",
     "eslint-config-next": "^15.3.2",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.6",
+    "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3"
   }
 }
