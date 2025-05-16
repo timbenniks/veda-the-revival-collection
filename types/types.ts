@@ -201,3 +201,13 @@ export interface Product {
   taxonomies?: Taxonomy[];
   _content_type_uid: string;
 }
+
+export interface Pdp {
+  uid: string;
+  $: { [key: string]: CSLPAttribute | undefined; }
+  _version?: number;
+  title: string;
+  url?: string;
+  product?: Product[];
+  components?: Components[];
+}

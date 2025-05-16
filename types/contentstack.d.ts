@@ -38,12 +38,12 @@ export interface Taxonomy {
 
 export interface Media {
   /** Version */
-  _version?: 9;
+  _version?: 10;
   image: File;
   width?: number | null;
   height?: number | null;
   crop?: boolean;
-  widths?: string[];
+  widths?: number[] | null;
 }
 
 export interface List {
@@ -113,6 +113,24 @@ export interface TwoColumn {
   side_b?: SideB[];
 }
 
+export interface Components {
+  header: PageHeader;
+  list: List;
+  media: Media;
+  richt_text: RichText;
+  two_column: TwoColumn;
+  hero: Hero;
+}
+
+export interface Pdp {
+  /** Version */
+  _version?: 6;
+  title: string;
+  url?: string;
+  product?: Product[];
+  components?: Components[];
+}
+
 export interface Links {
   link: {
     label: string;
@@ -127,14 +145,6 @@ export interface Header {
   title: string;
   logo?: File | null;
   links?: Links[];
-}
-
-export interface Components {
-  hero: Hero;
-  list: List;
-  two_column: TwoColumn;
-  rich_text: RichText;
-  header: PageHeader;
 }
 
 export interface Page {

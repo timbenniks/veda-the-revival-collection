@@ -1,6 +1,6 @@
 import contentstack, { QueryOperation } from "@contentstack/delivery-sdk"
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
-import { Page, Product, ProductLine, Category } from "@/types/types";
+import { Page, Product, ProductLine, Category, Pdp } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { contentstackEndpoints, contentstackRregion } from "./helpers";
 
@@ -37,10 +37,9 @@ export function initLivePreview() {
 }
 
 export async function getPage(url: string, variantParam?: string): Promise<Page> {
-  const pageQuery = await stack
+  const pageQuery = stack
     .contentType("page")
     .entry()
-  // .includeReference(['components.list.reference.product', 'components.header.reference.links.link.reference'])
 
   if (variantParam) {
     const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
@@ -51,26 +50,6 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
     pageQuery.addParams({ include_all_depth: 2 });
     pageQuery.variants(variantAlias);
   }
-
-  // pageQuery.only([
-  //   'uid',
-  //   'url',
-  //   'title',
-  //   'description',
-  //   'image',
-  //   'components.hero._metadata',
-  //   'components.hero.title',
-  //   'components.hero.description',
-  //   'components.hero.image',
-  //   'components.hero.video',
-  //   'components.hero.ctas',
-  //   'components.hero.design',
-  //   'components.list._metadata',
-  //   'components.list.title',
-  //   'components.list.reference',
-  //   'components.two_column',
-  //   'components.rich_text',
-  // ])
 
   const result = await pageQuery
     .query()
@@ -91,40 +70,48 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
   }
 }
 
-export async function getProduct(url: string): Promise<Product> {
-  const productQuery = await stack
+export async function getProduct(url: string, variantParam?: string) {
+  const pdpQuery = stack
+    .contentType("pdp")
+    .entry()
+    .includeReference(['product'])
+
+  if (variantParam) {
+    const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
+
+    pdpQuery.addParams({ include_dimension: true });
+    pdpQuery.addParams({ include_applied_variants: true });
+    pdpQuery.addParams({ include_all: true });
+    pdpQuery.addParams({ include_all_depth: 2 });
+    pdpQuery.variants(variantAlias);
+  }
+
+  const pdp = await pdpQuery
+    .query()
+    .where('url', QueryOperation.EQUALS, url)
+    .find<Pdp>();
+
+  const product = await stack
     .contentType("product")
     .entry()
     .includeReference(['category', 'product_line'])
-
-  productQuery.only([
-    'uid',
-    'url',
-    'title',
-    'short_description',
-    'description',
-    'price',
-    'taxonomies.term_uid',
-    'media',
-    'category.title',
-    'category.url',
-    'product_line.title',
-    'product_line.url',
-  ])
-
-  const result = await productQuery
     .query()
     .where('url', QueryOperation.EQUALS, url)
     .find<Product>();
 
-  if (result.entries) {
-    const entry = result.entries[0] as Product
-
+  if (pdp && pdp.entries && pdp.entries.length) {
     if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
-      contentstack.Utils.addEditableTags(entry, 'product', true);
+      contentstack.Utils.addEditableTags(pdp.entries[0], 'pdp', true);
     }
 
-    return entry
+    return pdp
+  }
+  else if (product && product.entries && product.entries.length) {
+    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
+      contentstack.Utils.addEditableTags(product.entries[0], 'product', true);
+    }
+
+    return product
   }
   else {
     throw new Error(`Product not found for url: ${url}`);

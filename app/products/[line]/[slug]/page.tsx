@@ -24,7 +24,7 @@ export const revalidate = 60;
 //   return createOgTags(page);
 // }
 
-export default async function SlugPage({
+export default async function Pdp({
   params,
   searchParams,
 }: {
@@ -32,6 +32,7 @@ export default async function SlugPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { line, slug } = await params;
+  const query = await searchParams;
   const path = `/products/${line}/${slug}`;
 
   // if (isPreview) {
@@ -42,5 +43,5 @@ export default async function SlugPage({
   const product = await getProduct(path);
   //   return <Page page={page} />;
   // }
-  return <pre>{JSON.stringify({ product, searchParams }, null, 2)}</pre>;
+  return <pre>{JSON.stringify({ product, query }, null, 2)}</pre>;
 }
