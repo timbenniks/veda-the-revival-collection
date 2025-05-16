@@ -18,12 +18,13 @@ import type {
   Product,
   ProductLine,
   Category,
+  Pdp,
 } from "@/types/types";
 
 export interface PreviewClientProps {
   path: string;
   variantParam?: string;
-  type: "page" | "product" | "category" | "product_line";
+  type: "page" | "product" | "pdp" | "category" | "product_line";
 }
 
 function getPreviewData(type: string, path: string, variantParam?: string) {
@@ -31,6 +32,7 @@ function getPreviewData(type: string, path: string, variantParam?: string) {
     case "page":
       return getPage(path, variantParam);
     case "product":
+    case "pdp":
       return getProduct(path);
     case "category":
       return getCategory(path);
@@ -47,7 +49,7 @@ export default function PreviewClient({
   type,
 }: PreviewClientProps) {
   const [page, setPage] = useState<
-    PageType | Product | ProductLine | Category
+    PageType | Product | ProductLine | Category | Pdp
   >();
 
   const getContent = async () => {

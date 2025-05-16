@@ -1,6 +1,6 @@
 import contentstack, { QueryOperation } from "@contentstack/delivery-sdk"
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
-import { Page, Product, ProductLine, Category, Pdp } from "@/types/types";
+import { Page, Product, ProductLine, Category, Pdp, Header } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { contentstackEndpoints, contentstackRregion } from "./helpers";
 
@@ -204,5 +204,24 @@ export async function getCategory(url: string): Promise<Category> {
   }
   else {
     throw new Error(`Category not found for url: ${url}`);
+  }
+}
+
+export async function getHeader(): Promise<Header> {
+  const entry = await stack
+    .contentType("header")
+    .entry("bltb3e6ba1550869339")
+    .includeReference(['links.link.reference.product', 'links.link.reference.product_line', 'links.link.reference.page', 'links.link.reference.category'])
+    .fetch<Header>()
+
+  if (entry) {
+    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
+      contentstack.Utils.addEditableTags(entry, 'header', true);
+    }
+
+    return entry
+  }
+  else {
+    throw new Error(`Header not found for uid: bltb3e6ba1550869339`);
   }
 }

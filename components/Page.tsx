@@ -1,7 +1,7 @@
-import type { Page as PageType } from "@/types/types";
+import type { Page as PageType, Pdp } from "@/types/types";
 import { ComponentsRenderer } from "./ComponentRenderer";
 
-export default function Page({ page }: { page: PageType }) {
+export default function Page({ page }: { page: PageType | Pdp }) {
   const components = page?.components || [];
   return (
     <>
