@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { memo, useMemo, HTMLAttributes } from "react";
 import Image from "next/image";
+import MediaItem from "./atoms/MediaItem";
 
 export interface RTETextNode {
   text: string;
@@ -31,14 +32,14 @@ const getImageProps = (node: RTEElementNode) => {
   const alt = node.attrs?.alt || node.attrs?.["asset-alt"] || "";
   const width = node.attrs?.width || "auto";
   const height = node.attrs?.height || "auto";
-  // const style = node.attrs?.style as React.CSSProperties;
-  // const inline = node.attrs?.inline;
+  const ratio = width / height;
 
   return {
     src,
     alt,
     width,
     height,
+    ratio,
     loading: "lazy" as const,
   };
 };
@@ -75,7 +76,7 @@ const defaultSerializers: Record<
     </Link>
   ),
   img: (node, children, key) => (
-    <Image key={key} {...getImageProps(node)} alt="" />
+    <MediaItem key={key} {...getImageProps(node)} />
   ),
   code: (node, children, key) => {
     const language = node.attrs?.language || "";
@@ -99,7 +100,7 @@ const defaultSerializers: Record<
       );
     }
 
-    return <Image key={key} {...getImageProps(node)} alt="" />;
+    return <MediaItem key={key} {...getImageProps(node)} />;
   },
 };
 

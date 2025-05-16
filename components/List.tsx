@@ -6,7 +6,13 @@ import { List as ListProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 import React from "react";
 
-export default function List({ title, title_tag, reference, $ }: ListProps) {
+export default function List({
+  title,
+  title_tag,
+  reference,
+  load_first_image_eager,
+  $,
+}: ListProps) {
   const getGridColumns = () => {
     if (reference.length <= 3) {
       return `md:grid-cols-3`;
@@ -44,14 +50,18 @@ export default function List({ title, title_tag, reference, $ }: ListProps) {
                   <ProductCard
                     $={item.$}
                     product={item}
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading={
+                      index === 0 && load_first_image_eager ? "eager" : "lazy"
+                    }
                   />
                 )}
                 {item?._content_type_uid === "category" && (
                   <CategoryCard
                     $={item.$}
                     category={item}
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading={
+                      index === 0 && load_first_image_eager ? "eager" : "lazy"
+                    }
                   />
                 )}
               </div>
@@ -62,7 +72,9 @@ export default function List({ title, title_tag, reference, $ }: ListProps) {
                     key={item.uid}
                     $={item.$}
                     product={item}
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading={
+                      index === 0 && load_first_image_eager ? "eager" : "lazy"
+                    }
                   />
                 )}
                 {item?._content_type_uid === "category" && (
@@ -70,7 +82,9 @@ export default function List({ title, title_tag, reference, $ }: ListProps) {
                     key={item.uid}
                     $={item.$}
                     category={item}
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading={
+                      index === 0 && load_first_image_eager ? "eager" : "lazy"
+                    }
                   />
                 )}
               </React.Fragment>

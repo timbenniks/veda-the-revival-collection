@@ -210,23 +210,3 @@ export async function getCategory(url: string): Promise<Category> {
     throw new Error(`Category not found for url: ${url}`);
   }
 }
-
-// @todo: add types - waitign for tsgen plugin to start working
-export async function getHeader(): Promise<any> {
-  const entry = await stack
-    .contentType("header")
-    .entry("bltb3e6ba1550869339")
-    .includeReference(['links.link.reference.product', 'links.link.reference.product_line', 'links.link.reference.page', 'links.link.reference.category'])
-    .fetch()
-
-  if (entry) {
-    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
-      contentstack.Utils.addEditableTags(entry as any, 'header', true);
-    }
-
-    return entry
-  }
-  else {
-    throw new Error(`Header not found for uid: bltb3e6ba1550869339`);
-  }
-}

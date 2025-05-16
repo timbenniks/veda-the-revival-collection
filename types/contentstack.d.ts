@@ -1,7 +1,3 @@
-export interface CSLPAttribute {
-  "data-cslp": string;
-}
-
 export interface PublishDetails {
   environment: string;
   locale: string;
@@ -20,17 +16,12 @@ export interface File {
   tags: string[];
   filename: string;
   url: string;
-  ACL: any[] | object;
+  ACL: any[];
   is_dir: boolean;
   parent_uid: string;
   _version: number;
   title: string;
-  _metadata?: object;
   publish_details: PublishDetails;
-  dimension: {
-    width: number;
-    height: number;
-  };
 }
 
 export interface Link {
@@ -45,47 +36,58 @@ export interface Taxonomy {
   non_localizable: boolean;
 }
 
-export interface List {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version: number;
-  title?: string;
-  title_tag?: "h1" | "h2" | "h3" | "h4";
-  load_first_image_eager: boolean;
-  reference: (ProductLine | Product | Category)[];
-}
-
 export interface Media {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version?: number;
+  /** Version */
+  _version?: 9;
   image: File;
   width?: number | null;
   height?: number | null;
   crop?: boolean;
-  widths?: number[];
+  widths?: string[];
 }
 
-export type Cta = {
-  $: { [key: string]: CSLPAttribute | undefined; }
-  text?: string;
-  link?: Link;
-};
+export interface List {
+  /** Version */
+  _version?: 6;
+  title?: string;
+  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
+  load_first_image_eager?: boolean;
+  reference: (ProductLine | Product | Category)[];
+}
+
 export interface Ctas {
-  cta: Cta
+  cta: {
+    text?: string;
+    link?: Link;
+  };
+}
+
+export interface RichText {
+  /** Version */
+  _version?: 18;
+  title?: string;
+  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
+  content?: any;
+  alternative_content?: string;
+  ctas?: Ctas[];
+}
+
+export interface PageHeader {
+  /** Version */
+  _version?: 2;
+  reference: Header[];
 }
 
 export interface Hero {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version: number;
+  /** Version */
+  _version?: 19;
   title?: string;
-  title_tag?: "h1" | "h2" | "h3" | "h4";
+  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
   description?: string;
   ctas?: Ctas[];
   image?: File | null;
   video?: File | null;
-  design: {
+  design?: {
     copy_location: "left" | "right";
     overlay_opacity: number;
     theme: "dark" | "light";
@@ -105,21 +107,10 @@ export interface SideB {
 }
 
 export interface TwoColumn {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
+  /** Version */
+  _version?: 12;
   side_a?: SideA[];
   side_b?: SideB[];
-}
-
-export interface RichText {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version?: number;
-  title?: string;
-  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
-  content?: any;
-  alternative_content?: string;
-  ctas?: Ctas[];
 }
 
 export interface Links {
@@ -131,17 +122,11 @@ export interface Links {
 }
 
 export interface Header {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version?: number;
+  /** Version */
+  _version?: 9;
   title: string;
   logo?: File | null;
   links?: Links[];
-}
-
-export interface PageHeader {
-  _version?: number;
-  reference: Header[];
 }
 
 export interface Components {
@@ -153,9 +138,8 @@ export interface Components {
 }
 
 export interface Page {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version: number;
+  /** Version */
+  _version?: 9;
   title: string;
   url?: string;
   description?: string;
@@ -164,32 +148,27 @@ export interface Page {
 }
 
 export interface Category {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version: number;
+  /** Version */
+  _version?: 5;
   title: string;
   url?: string;
   description?: string;
+  media?: File | null;
   products?: Product[];
-  media?: File[] | null;
-  _content_type_uid: string;
 }
 
 export interface ProductLine {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version: number;
+  /** Version */
+  _version?: 7;
   title: string;
   url?: string;
   description?: string;
   products?: Product[];
-  _content_type_uid: string;
 }
 
 export interface Product {
-  uid: string;
-  $: { [key: string]: CSLPAttribute | undefined; }
-  _version: number;
+  /** Version */
+  _version?: 13;
   title: string;
   url?: string;
   short_description?: string;
@@ -199,5 +178,4 @@ export interface Product {
   product_line?: ProductLine[];
   media?: File[] | null;
   taxonomies?: Taxonomy[];
-  _content_type_uid: string;
 }

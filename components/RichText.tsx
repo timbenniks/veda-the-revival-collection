@@ -2,15 +2,7 @@ import { Ctas } from "@/types/types";
 import Cta from "./atoms/Cta";
 import Title from "./atoms/Title";
 import RichTextRenderer from "./RichTextRenderer";
-
-type RichTextProps = {
-  title?: string;
-  title_tag?: "h1" | "h2" | "h3" | "h4";
-  content: any;
-  alternative_content: any;
-  ctas?: Ctas[];
-  $?: any;
-};
+import { RichText as RichTextProps } from "@/types/types";
 
 export default function RichText({
   title,
