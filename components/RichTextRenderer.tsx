@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React, { memo, useMemo, HTMLAttributes } from "react";
-import Image from "next/image";
 import MediaItem from "./atoms/MediaItem";
 
 export interface RTETextNode {
