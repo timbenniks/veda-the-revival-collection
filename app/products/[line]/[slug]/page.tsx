@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getProduct } from "@/lib/contentstack";
-import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
-// import Page from "@/components/Page";
+import { createOgTags, getVariantParam } from "@/lib/helpers";
+import Product from "@/components/Product";
 // import PreviewClient from "@/components/PreviewClient";
 
 export const revalidate = 60;
@@ -39,7 +39,6 @@ export default async function ProductPage({
   //   );
   // } else {
   const product = await getProduct(path, variantParam);
-  //   return <Page page={page} />;
+  return <Product product={product} />;
   // }
-  return <pre>{JSON.stringify({ product, query }, null, 2)}</pre>;
 }

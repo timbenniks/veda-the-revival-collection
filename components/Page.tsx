@@ -1,7 +1,7 @@
-import type { Page as PageType, Pdp } from "@/types/types";
+import type { Page as PageProps } from "@/types/types";
 import { ComponentsRenderer } from "./ComponentRenderer";
 
-export default function Page({ page }: { page: PageType | Pdp }) {
+export default function Page({ page }: { page: PageProps }) {
   const components = page?.components || [];
   return (
     <>
