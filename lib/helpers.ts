@@ -31,21 +31,23 @@ export function getVariantParam(searchParams: { [key: string]: string | string[]
   return decodeURIComponent(searchParams[Personalize.VARIANT_QUERY_PARAM] as string);
 }
 
-export function mapComponentsToKV(components: Components[]) {
-  return components.map((obj: Components) => {
-    const entries = Object.entries(obj);
-    const componentNameAndProps = entries && entries[0];
+type ComponentName = keyof Components;
+type ComponentProps<T extends ComponentName> = Components[T];
 
-    let name = "";
-    let props = null;
+interface ComponentKV {
+  name: ComponentName;
+  props: ComponentProps<ComponentName> | null;
+}
 
-    if (componentNameAndProps && componentNameAndProps[0]) {
-      name = componentNameAndProps[0];
+export function mapComponentsToKV(components: Components[]): ComponentKV[] {
+  return components.map((component) => {
+    const entries = Object.entries(component) as [ComponentName, any][];
+
+    if (entries.length === 0) {
+      return { name: "" as ComponentName, props: null };
     }
 
-    if (componentNameAndProps && componentNameAndProps[1]) {
-      props = componentNameAndProps[1];
-    }
+    const [name, props] = entries[0];
 
     return { name, props };
   });

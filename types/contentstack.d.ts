@@ -117,7 +117,7 @@ export interface Components {
   header: PageHeader;
   list: List;
   media: Media;
-  richt_text: RichText;
+  rich_text: RichText;
   two_column: TwoColumn;
   hero: Hero;
 }

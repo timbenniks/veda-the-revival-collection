@@ -145,11 +145,12 @@ export interface PageHeader {
 }
 
 export interface Components {
-  hero: Hero;
-  list: List;
-  two_column: TwoColumn;
-  rich_text: RichText;
   header: PageHeader;
+  list: List;
+  media: Media;
+  rich_text: RichText;
+  two_column: TwoColumn;
+  hero: Hero;
 }
 
 export interface Page {
