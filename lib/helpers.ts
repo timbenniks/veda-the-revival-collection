@@ -1,4 +1,4 @@
-import { Components, Page } from "@/types/types";
+import { Components, Page, Pdp, Product } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { getContentstackEndpoints, getRegionForString } from "@timbenniks/contentstack-endpoints";
 import { NextRequest } from "next/server";
@@ -51,20 +51,20 @@ export function mapComponentsToKV(components: Components[]) {
   });
 }
 
-export function createOgTags(page: Page): Metadata {
+export function createOgTags(content: Page | Pdp | Product): Metadata {
   return {
-    title: page.title,
-    description: page.description,
+    title: content.title,
+    description: content.description,
     openGraph: {
-      title: page.title,
-      description: page.description,
-      url: page.url,
+      title: content.title,
+      description: content.description,
+      url: content.url,
       images: [
         {
-          url: page?.image?.url ?? "",
+          url: 'image' in content && content.image ? content.image.url : 'media' in content && content.media && content.media.length > 0 ? content.media[0].url : '',
           width: 1200,
           height: 630,
-          alt: page.title,
+          alt: content.title,
         },
       ],
     },

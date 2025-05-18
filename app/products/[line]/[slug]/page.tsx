@@ -1,30 +1,27 @@
-// import { Metadata } from "next";
+import { Metadata } from "next";
 import { getProduct } from "@/lib/contentstack";
-// import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
+import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
 // import Page from "@/components/Page";
 // import PreviewClient from "@/components/PreviewClient";
 
 export const revalidate = 60;
 
-// export async function generateMetadata({
-//   params,
-//   searchParams,
-// }: {
-//   params: Promise<{ line: string; slug: string }>;
-//   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-// }): Promise<Metadata> {
-//   const { slug } = await params;
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ line: string; slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<Metadata> {
+  const { line, slug } = await params;
+  const query = await searchParams;
+  const variantParam = getVariantParam(query);
+  const path = `/products/${line}/${slug}`;
+  const product = await getProduct(path, variantParam);
+  return createOgTags(product);
+}
 
-//   console.log(params);
-//   const query = await searchParams;
-//   const path = slug ? `/${slug}` : "/";
-//   const variantParam = getVariantParam(query);
-
-//   const page = await getPage(path, variantParam);
-//   return createOgTags(page);
-// }
-
-export default async function Pdp({
+export default async function ProductPage({
   params,
   searchParams,
 }: {
@@ -33,6 +30,7 @@ export default async function Pdp({
 }) {
   const { line, slug } = await params;
   const query = await searchParams;
+  const variantParam = getVariantParam(query);
   const path = `/products/${line}/${slug}`;
 
   // if (isPreview) {
@@ -40,7 +38,7 @@ export default async function Pdp({
   //     <PreviewClient path={path} variantParam={variantParam} type="page" />
   //   );
   // } else {
-  const product = await getProduct(path);
+  const product = await getProduct(path, variantParam);
   //   return <Page page={page} />;
   // }
   return <pre>{JSON.stringify({ product, query }, null, 2)}</pre>;

@@ -208,6 +208,8 @@ export interface Pdp {
   _version?: number;
   title: string;
   url?: string;
+  description?: string;
+  image?: File | null;
   product?: Product[];
   components?: Components[];
 }
