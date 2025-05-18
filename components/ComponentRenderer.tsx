@@ -27,12 +27,9 @@ interface ComponentKV {
     | null;
 }
 
-type NoComponentProps = {
-  name: string;
-  [key: string]: any;
-};
-
-const componentMap: Record<string, ComponentType<any>> = {
+const componentMap: {
+  [K in keyof Components]: ComponentType<Components[K]>;
+} = {
   hero: HeroComponent,
   list: ListComponent,
   two_column: TwoColumnComponent,
@@ -57,24 +54,36 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
       return null;
     }
 
-    const ComponentInstance =
-      component.name in componentMap
-        ? componentMap[component.name]
-        : (NoComponent as ComponentType<NoComponentProps>);
+    if (component.name in componentMap) {
+      const ComponentInstance = componentMap[component.name];
+      const key = component.props?._metadata?.uid || `component--${index}`;
 
-    const key = component.props?._metadata?.uid || `component--${index}`;
+      const componentElement = (
+        <ComponentInstance
+          {...(component.props as any)}
+          key={key}
+          name={component.name}
+        />
+      );
 
-    const componentElement = (
-      <ComponentInstance {...component.props} key={key} name={component.name} />
-    );
+      return withWrapper && cslp && cslpWrapper ? (
+        <div {...cslp[`${cslpWrapper}__${index}`]} key={key}>
+          {componentElement}
+        </div>
+      ) : (
+        componentElement
+      );
+    } else {
+      const key = component.props?._metadata?.uid || `component--${index}`;
 
-    return withWrapper && cslp && cslpWrapper ? (
-      <div {...cslp[`${cslpWrapper}__${index}`]} key={key}>
-        {componentElement}
-      </div>
-    ) : (
-      componentElement
-    );
+      return (
+        <NoComponent
+          {...(component.props as any)}
+          name={component.name.toString()}
+          key={key}
+        />
+      );
+    }
   };
 
   if (mappedComponents.length === 0 && isPreview) {
@@ -99,7 +108,7 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
   return (
     <>
       {mappedComponents.map((component, index) =>
-        renderComponent(component, index)
+        renderComponent(component, index, false)
       )}
     </>
   );

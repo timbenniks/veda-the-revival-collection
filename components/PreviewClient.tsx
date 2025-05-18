@@ -100,11 +100,11 @@ export default function PreviewClient({
   }
 
   if (error) {
-    return <div className="text-red-600 p-4">Error: {error}</div>;
+    return <p className="text-red-600 p-4">Error: {error}</p>;
   }
 
   if (!content) {
-    return <div className="p-4">No content found for this path.</div>;
+    return <p className="p-4">No content found for this path.</p>;
   }
 
   switch (type) {
