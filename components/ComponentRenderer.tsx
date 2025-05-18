@@ -47,7 +47,7 @@ export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({
             <ComponentInstance
               {...component.props}
               name={component.name}
-              key={component.props?._metadata.uid || index}
+              key={component.props?._metadata.uid || `component--${index}`}
             />
           );
         })}

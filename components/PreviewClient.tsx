@@ -1,60 +1,70 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ContentstackLivePreview from "@contentstack/live-preview-utils";
-import Page from "./Page";
 import Image from "next/image";
+import ContentstackLivePreview from "@contentstack/live-preview-utils";
 
 import {
+  getHeader,
   getPage,
-  getCategory,
   getProduct,
-  getProductLine,
   initLivePreview,
 } from "../lib/contentstack";
 
 import type {
-  Page as PageType,
-  Product,
-  ProductLine,
-  Category,
-  Pdp,
+  Page as PageProps,
+  Product as ProductProps,
+  Pdp as PdpProps,
+  Header as HeaderProps,
 } from "@/types/types";
 
-export interface PreviewClientProps {
-  path: string;
-  variantParam?: string;
-  type: "page" | "product" | "pdp" | "category" | "product_line";
-}
+import Page from "./Page";
+import Product from "./Product";
 
-function getPreviewData(type: string, path: string, variantParam?: string) {
+function getPreviewData(
+  type: "page" | "productOrPdp",
+  path: string,
+  variantParam?: string
+) {
   switch (type) {
     case "page":
       return getPage(path, variantParam);
-    case "product":
-    case "pdp":
-      return getProduct(path);
-    case "category":
-      return getCategory(path);
-    case "product_line":
-      return getProductLine(path);
+    case "productOrPdp":
+      return getProduct(path, variantParam);
     default:
       throw new Error("Invalid type");
   }
 }
 
+export interface PreviewClientProps {
+  type: "page" | "productOrPdp";
+  path: string;
+  variantParam?: string;
+}
+
 export default function PreviewClient({
+  type,
   path,
   variantParam,
-  type,
 }: PreviewClientProps) {
-  const [page, setPage] = useState<
-    PageType | Product | ProductLine | Category | Pdp
+  const [content, setContent] = useState<PageProps | ProductProps | PdpProps>();
+  const [contentType, setContentType] = useState<
+    "product" | "pdp" | undefined
   >();
+
+  const [header, setHeader] = useState<HeaderProps>();
 
   const getContent = async () => {
     const data = await getPreviewData(type, path, variantParam);
-    setPage(data);
+
+    if ("contentType" in data) {
+      const headerContent = await getHeader();
+      setHeader(headerContent);
+      setContentType(data.contentType);
+      setContent(data.entry);
+    } else {
+      setContent(data);
+    }
   };
 
   useEffect(() => {
@@ -62,7 +72,7 @@ export default function PreviewClient({
     ContentstackLivePreview.onEntryChange(getContent);
   }, [path]);
 
-  if (!page) {
+  if (!content) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <Image
@@ -78,5 +88,17 @@ export default function PreviewClient({
     );
   }
 
-  return <Page page={page} />;
+  if (type === "page") {
+    return <Page page={content as PageProps} />;
+  } else if (type === "productOrPdp") {
+    return (
+      <Product
+        entry={content as ProductProps | PdpProps}
+        contentType={contentType}
+        header={header}
+      />
+    );
+  } else {
+    return <p>TODO: add code for category and product_line</p>;
+  }
 }

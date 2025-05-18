@@ -205,11 +205,12 @@ export interface Product {
 export interface Pdp {
   uid: string;
   $: { [key: string]: CSLPAttribute | undefined; }
-  _version?: number;
+  _version: number;
   title: string;
   url?: string;
   description?: string;
   image?: File | null;
   product?: Product[];
   components?: Components[];
+  _content_type_uid: string;
 }

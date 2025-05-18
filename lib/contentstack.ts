@@ -70,7 +70,7 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
   }
 }
 
-export async function getProduct(url: string, variantParam?: string): Promise<Pdp | Product> {
+export async function getProduct(url: string, variantParam?: string): Promise<{ entry: Pdp | Product, contentType: "pdp" | "product" }> {
   const pdpQuery = stack
     .contentType("pdp")
     .entry()
@@ -105,7 +105,7 @@ export async function getProduct(url: string, variantParam?: string): Promise<Pd
   ]);
 
   let entry = null;
-  let contentType = null;
+  let contentType: "pdp" | "product" = "pdp";
 
   if (pdpResult?.entries?.length) {
     entry = pdpResult.entries[0];
@@ -121,9 +121,12 @@ export async function getProduct(url: string, variantParam?: string): Promise<Pd
   }
 
   if (entry) {
-    return entry;
+    return {
+      entry,
+      contentType
+    }
   } else {
-    throw new Error(`Product not found for url: ${url}`);
+    throw new Error(`The product info was not found for url: ${url}`);
   }
 }
 
