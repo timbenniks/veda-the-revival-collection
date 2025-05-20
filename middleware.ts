@@ -11,7 +11,7 @@ export const config = {
 export default async function middleware(request: NextRequest) {
   const region = getRegionForString(process.env.NEXT_PUBLIC_CONTENTSTACK_REGION as string);
   const endpoints = getContentstackEndpoints(region, true)
-  const projectUid = process.env.NEXT_PUBLIC_CONTENTSTACK_P13N_PROJECT_ID as string;
+  const projectUid = process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_UID as string;
   const edgeApiUrl = `https://${endpoints.personalizeEdge as string}`;
 
   Personalize.setEdgeApiUrl(edgeApiUrl);
