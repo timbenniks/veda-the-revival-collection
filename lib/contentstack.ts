@@ -1,14 +1,14 @@
-import contentstack, { QueryOperation, Policy } from "@contentstack/delivery-sdk"
+import contentstack, { QueryOperation, Policy, BaseEntry } from "@contentstack/delivery-sdk"
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
 import { Page, Product, ProductLine, Category, Pdp, Header } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
-import { contentstackEndpoints, contentstackRregion } from "./helpers";
+import { contentstackEndpoints, contentstackRegion } from "./helpers";
 
 export const stack = contentstack.stack({
   apiKey: process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY as string,
   deliveryToken: process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN as string,
   environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT as string,
-  region: contentstackRregion,
+  region: contentstackRegion,
   cacheOptions: {
     policy: Policy.CACHE_ELSE_NETWORK,
     storeType: "memoryStorage",
@@ -232,4 +232,46 @@ export async function getHeader(): Promise<Header> {
   else {
     throw new Error(`Header not found for uid: bltb3e6ba1550869339`);
   }
+}
+
+interface LinkEntry extends BaseEntry {
+  url: string
+}
+
+export async function getAllLinks(): Promise<string[]> {
+  const [pages, products, productLines] = await Promise.all([
+    stack
+      .contentType('page')
+      .entry()
+      .only(['url'])
+      .query()
+      .find<LinkEntry>(),
+
+    stack
+      .contentType('product')
+      .entry()
+      .only(['url'])
+      .query()
+      .find<LinkEntry>(),
+
+    stack
+      .contentType('product_line')
+      .entry()
+      .only(['url'])
+      .query()
+      .find<LinkEntry>(),
+
+    stack
+      .contentType('category')
+      .entry()
+      .only(['url'])
+      .query()
+      .find<LinkEntry>(),
+  ])
+
+  const pageUrls = pages.entries?.map(e => e.url) || []
+  const productUrls = products.entries?.map(e => e.url) || []
+  const productLineUrls = productLines.entries?.map(e => e.url) || []
+
+  return [...pageUrls, ...productUrls, ...productLineUrls]
 }

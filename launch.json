@@ -1,7 +1,46 @@
 {
   "cache": {
     "cachePriming": {
-      "urls": ["/"]
+      "urls": [
+        "/",
+        "/our-story",
+        "/products/digital-dawn/power-pendant-necklace",
+        "/products/elegant-rebellion/chain-reaction-bracelet",
+        "/products/elegant-rebellion/lock-and-key-necklace",
+        "/products/elegant-rebellion/riot-cuff-bracelet",
+        "/products/elegant-rebellion/safety-pin-earrings",
+        "/products/elegant-rebellion/studded-choker-necklace",
+        "/products/elegant-rebellion/lightning-stud-earrings",
+        "/products/elegant-rebellion/spike-ring",
+        "/products/elegant-rebellion/razor-ring",
+        "/products/urban-armor/graffiti-tag-necklace",
+        "/products/urban-armor/bling-cuff-bracelet",
+        "/products/urban-armor/dynasty-link-bracelet",
+        "/products/urban-armor/frost-stud-earrings",
+        "/products/urban-armor/legacy-chain-necklace",
+        "/products/urban-armor/tag-drop-earrings",
+        "/products/urban-armor/cuban-link-ring",
+        "/products/urban-armor/ice-signet-ring",
+        "/products/charmed-revival/chart-topper-pendant",
+        "/products/charmed-revival/unity-band-bracelet",
+        "/products/charmed-revival/papillon-choker-necklace",
+        "/products/charmed-revival/memory-charm-bracelet",
+        "/products/charmed-revival/spotlight-stud-earrings",
+        "/products/charmed-revival/butterfly-effect-ring",
+        "/products/charmed-revival/starlight-hoop-earrings",
+        "/products/digital-dawn/binary-band",
+        "/products/digital-dawn/orbit-ring",
+        "/products/digital-dawn/data-drop-earrings",
+        "/products/digital-dawn/pixel-stud-earrings",
+        "products/digital-dawn/circuit-collar-necklace",
+        "/products/digital-dawn/fusion-cuff-bracelet",
+        "/products/digital-dawn/matrix-link-bracelet",
+        "/products/charmed-revival/lovestruck-ring",
+        "/category/rings",
+        "/category/bracelets",
+        "/category/necklaces",
+        "/category/earrings"
+      ]
     }
   }
 }

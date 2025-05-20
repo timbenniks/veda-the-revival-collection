@@ -15,13 +15,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "tsgen": "npx @contentstack/cli tsgen -o ./types/contentstack.d.ts -a delivery --no-doc --include-system-fields"
+    "tsgen": "npx @contentstack/cli tsgen -o ./types/contentstack.d.ts -a delivery --no-doc --include-system-fields",
+    "update-launch-config": "node updateLaunchConfig.mjs",
+    "prebuild": "npm run update-launch-config"
   },
   "dependencies": {
     "@contentstack/delivery-sdk": "^4.7.0",
     "@contentstack/live-preview-utils": "^3.2.2",
     "@contentstack/personalize-edge-sdk": "^1.0.12",
     "@timbenniks/contentstack-endpoints": "^1.0.9",
+    "dotenv": "^16.5.0",
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

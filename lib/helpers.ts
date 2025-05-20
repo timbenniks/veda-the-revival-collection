@@ -4,11 +4,11 @@ import { getContentstackEndpoints, getRegionForString } from "@timbenniks/conten
 import { NextRequest } from "next/server";
 import type { Metadata } from 'next';
 
-export const contentstackRregion = getRegionForString(
+export const contentstackRegion = getRegionForString(
   process.env.NEXT_PUBLIC_CONTENTSTACK_REGION || "eu"
 );
 
-export const contentstackEndpoints = getContentstackEndpoints(contentstackRregion, true);
+export const contentstackEndpoints = getContentstackEndpoints(contentstackRegion, true);
 
 export async function getPersonalizeInstance({
   request,
