@@ -15,7 +15,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "tsgen": "npx @contentstack/cli tsgen -o ./types/contentstack.d.ts -a delivery --no-doc"
+    "tsgen": "npx @contentstack/cli tsgen -o ./types/contentstack.d.ts -a delivery --no-doc --include-system-fields"
   },
   "dependencies": {
     "@contentstack/delivery-sdk": "^4.7.0",

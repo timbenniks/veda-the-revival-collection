@@ -6,6 +6,8 @@ import { List as ListProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 import React from "react";
 
+// @TODO: add modular block for custom static cards, add references, or add add query.
+
 export default function List({
   title,
   title_tag,

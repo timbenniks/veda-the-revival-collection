@@ -36,6 +36,22 @@ export interface Taxonomy {
   non_localizable: boolean;
 }
 
+export interface SystemFields {
+  uid?: string;
+  created_at?: string;
+  updated_at?: string;
+  created_by?: string;
+  updated_by?: string;
+  _content_type_uid?: string;
+  tags?: string[];
+  ACL?: any[];
+  _version?: number;
+  _in_progress?: boolean;
+  locale?: string;
+  publish_details?: PublishDetails[];
+  title?: string;
+}
+
 export interface Media {
   /** Version */
   _version?: 10;
@@ -117,16 +133,18 @@ export interface Components {
   header: PageHeader;
   list: List;
   media: Media;
-  rich_text: RichText;
+  richt_text: RichText;
   two_column: TwoColumn;
   hero: Hero;
 }
 
-export interface Pdp {
+export interface Pdp extends SystemFields {
   /** Version */
-  _version?: 6;
+  _version?: 8;
   title: string;
   url?: string;
+  description?: string;
+  image?: File | null;
   product?: Product[];
   components?: Components[];
 }
@@ -139,7 +157,7 @@ export interface Links {
   };
 }
 
-export interface Header {
+export interface Header extends SystemFields {
   /** Version */
   _version?: 9;
   title: string;
@@ -147,7 +165,7 @@ export interface Header {
   links?: Links[];
 }
 
-export interface Page {
+export interface Page extends SystemFields {
   /** Version */
   _version?: 9;
   title: string;
@@ -157,7 +175,7 @@ export interface Page {
   components?: Components[];
 }
 
-export interface Category {
+export interface Category extends SystemFields {
   /** Version */
   _version?: 5;
   title: string;
@@ -167,7 +185,7 @@ export interface Category {
   products?: Product[];
 }
 
-export interface ProductLine {
+export interface ProductLine extends SystemFields {
   /** Version */
   _version?: 7;
   title: string;
@@ -176,7 +194,7 @@ export interface ProductLine {
   products?: Product[];
 }
 
-export interface Product {
+export interface Product extends SystemFields {
   /** Version */
   _version?: 13;
   title: string;
