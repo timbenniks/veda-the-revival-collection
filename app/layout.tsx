@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { PersonalizeProvider } from "./providers/PersonalizeProvider";
 import { Inter } from "next/font/google";
+import { LyticsTracking } from "@/components/lytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,7 +34,10 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <main className="max-w-[1440px] mx-auto">
-          <PersonalizeProvider>{children}</PersonalizeProvider>
+          <PersonalizeProvider>
+            {children}
+            <LyticsTracking />
+          </PersonalizeProvider>
         </main>
       </body>
     </html>
