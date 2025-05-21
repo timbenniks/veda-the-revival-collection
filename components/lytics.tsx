@@ -36,7 +36,7 @@ export const useJstag = (): Jstag => {
     document.head.appendChild(script);
 
     // Initialize the jstag global object
-    window.jstag = {} as Jstag;
+    // @ts-expect-error jstag seems not to be defined, but it is!
     window.jstag.init({
       src: `https://c.lytics.io/api/tag/${process.env.NEXT_PUBLIC_CONTENTSTACK_LYTICS_TAG}/latest.min.js`,
       contentstack: {
