@@ -1,4 +1,4 @@
-import contentstack, { QueryOperation, Policy, BaseEntry } from "@contentstack/delivery-sdk"
+import contentstack, { QueryOperation, BaseEntry } from "@contentstack/delivery-sdk"
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
 import { Page, Product, ProductLine, Category, Pdp, Header } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
@@ -9,11 +9,6 @@ export const stack = contentstack.stack({
   deliveryToken: process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN as string,
   environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT as string,
   region: contentstackRegion,
-  // cacheOptions: {
-  //   policy: Policy.CACHE_ELSE_NETWORK,
-  //   storeType: "memoryStorage",
-  //   maxAge: 60
-  // },
   live_preview: {
     enable: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true',
     preview_token: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW_TOKEN,
