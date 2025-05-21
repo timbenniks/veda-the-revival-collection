@@ -9,11 +9,11 @@ export const stack = contentstack.stack({
   deliveryToken: process.env.NEXT_PUBLIC_CONTENTSTACK_DELIVERY_TOKEN as string,
   environment: process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT as string,
   region: contentstackRegion,
-  cacheOptions: {
-    policy: Policy.CACHE_ELSE_NETWORK,
-    storeType: "memoryStorage",
-    maxAge: 60
-  },
+  // cacheOptions: {
+  //   policy: Policy.CACHE_ELSE_NETWORK,
+  //   storeType: "memoryStorage",
+  //   maxAge: 60
+  // },
   live_preview: {
     enable: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true',
     preview_token: process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW_TOKEN,
@@ -216,18 +216,18 @@ export async function getCategory(url: string): Promise<Category> {
 }
 
 export async function getHeader(): Promise<Header> {
-  const entry = await stack
+  const header = await stack
     .contentType("header")
     .entry("bltb3e6ba1550869339")
     .includeReference(['links.link.reference.product', 'links.link.reference.product_line', 'links.link.reference.page', 'links.link.reference.category'])
     .fetch<Header>()
 
-  if (entry) {
+  if (header) {
     if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
-      contentstack.Utils.addEditableTags(entry, 'header', true);
+      contentstack.Utils.addEditableTags(header, 'header', true);
     }
 
-    return entry
+    return header
   }
   else {
     throw new Error(`Header not found for uid: bltb3e6ba1550869339`);

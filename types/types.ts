@@ -40,6 +40,7 @@ export interface Link {
 
 export interface Taxonomy {
   taxonomy_uid: string;
+  term_uid?: string;
   max_terms?: number;
   mandatory: boolean;
   non_localizable: boolean;
