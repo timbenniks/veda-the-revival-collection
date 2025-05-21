@@ -15,6 +15,8 @@ export default function Header({ reference }: HeaderProps) {
             alt="Veda Logo"
             width={69}
             height={26}
+            loading="eager"
+            priority={true}
           />
         </Link>
       )}
