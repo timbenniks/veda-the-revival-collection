@@ -52,6 +52,7 @@ export interface List {
   _version: number;
   title?: string;
   title_tag?: "h1" | "h2" | "h3" | "h4";
+  description?: string;
   load_first_image_eager: boolean;
   reference: (ProductLine | Product | Category)[];
 }
@@ -184,6 +185,7 @@ export interface ProductLine {
   title: string;
   url?: string;
   description?: string;
+  image?: File[] | null;
   products?: Product[];
   _content_type_uid: string;
 }

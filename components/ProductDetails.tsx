@@ -9,8 +9,6 @@ export default function ProductDetails({ product }: { product: ProductProps }) {
   const { title, description, media, price, product_line, taxonomies, $ } =
     product;
 
-  console.log($);
-
   const materials = taxonomies
     ?.filter((taxonomy) => taxonomy?.taxonomy_uid === "materials")
     .map((taxonomy) => taxonomy?.term_uid);

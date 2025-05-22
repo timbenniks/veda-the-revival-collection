@@ -10,6 +10,7 @@ import React from "react";
 export default function List({
   title,
   title_tag,
+  description,
   reference,
   load_first_image_eager,
   $,
@@ -31,14 +32,21 @@ export default function List({
           theme={"dark"}
           uppercase={true}
           size="lg"
-          classes="mb-10 text-2xl"
+          classes="mb-2 text-2xl"
           as={title_tag || "h3"}
         />
       )}
+
+      {description && (
+        <p className="font-light text-center mb-8 max-w-prose mx-auto">
+          {description}
+        </p>
+      )}
+
       {reference && reference.length && (
         <ul
           className={twMerge(
-            "grid grid-cols-1",
+            "mt-8 grid grid-cols-1",
             getGridColumns(),
             "gap-10 justify-around md:px-24"
           )}

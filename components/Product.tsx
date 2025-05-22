@@ -6,6 +6,7 @@ import type {
 import ProductDetails from "./ProductDetails";
 import { ComponentsRenderer } from "./ComponentRenderer";
 import Header from "./Header";
+import List from "./List";
 
 export default function Page({
   entry,
@@ -19,11 +20,25 @@ export default function Page({
   return (
     <>
       {header && <Header reference={[header]} />}
-
       {entry && (
         <ProductDetails
           product={"product" in entry ? entry.product?.[0] || entry : entry}
         />
+      )}
+
+      {contentType === "product" && entry && "product_line" in entry && (
+        <>
+          <List
+            uid="test"
+            _version={1}
+            reference={entry.product_line?.[0].products || []}
+            title={`Explore ${entry.product_line?.[0].title}`}
+            title_tag="h2"
+            description={entry.product_line?.[0].description}
+            load_first_image_eager={true}
+            $={entry.$}
+          />
+        </>
       )}
 
       {contentType === "pdp" && entry && (

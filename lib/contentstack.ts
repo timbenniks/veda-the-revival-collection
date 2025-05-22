@@ -136,21 +136,6 @@ export async function getProductLine(url: string): Promise<ProductLine> {
     .entry()
     .includeReference(['products', 'products.category'])
 
-  productQuery.only([
-    'uid',
-    'url',
-    'title',
-    'description',
-    'products.uid',
-    'products.title',
-    'products.short_description',
-    'products.price',
-    'products.taxonomies.term_uid',
-    'products.media',
-    'products.category.title',
-    'products.category.url',
-  ])
-
   const result = await productQuery
     .query()
     .where('url', QueryOperation.EQUALS, url)

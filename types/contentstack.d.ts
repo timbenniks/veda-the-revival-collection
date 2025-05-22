@@ -67,6 +67,7 @@ export interface List {
   _version?: 6;
   title?: string;
   title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
+  description?: string;
   load_first_image_eager?: boolean;
   reference: (ProductLine | Product | Category)[];
 }
