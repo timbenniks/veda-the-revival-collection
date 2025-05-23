@@ -8,6 +8,7 @@ import { ComponentsRenderer } from "@/components/ComponentRenderer";
 import Header from "@/components/Header";
 import List from "@/components/List";
 import Breadcrumb from "@/components/Breadcrumb";
+import MegaMenu from "../MegaMenu";
 
 export default function Page({
   entry,
@@ -37,6 +38,9 @@ export default function Page({
   return (
     <>
       {header && <Header reference={[header]} />}
+
+      <MegaMenu />
+
       <Breadcrumb links={breadcrumbLinks} />
       {entry && (
         <ProductDetails
