@@ -131,12 +131,16 @@ export async function getProduct(url: string, variantParam?: string): Promise<{ 
 }
 
 export async function getProductLine(url: string): Promise<ProductLine> {
-  const productQuery = await stack
+  const productLineQuery = await stack
     .contentType("product_line")
     .entry()
-    .includeReference(['products', 'products.category'])
 
-  const result = await productQuery
+  productLineQuery.addParams({ include_dimension: true });
+  productLineQuery.addParams({ include_applied_variants: true });
+  productLineQuery.addParams({ include_all: true });
+  productLineQuery.addParams({ include_all_depth: 2 });
+
+  const result = await productLineQuery
     .query()
     .where('url', QueryOperation.EQUALS, url)
     .find<ProductLine>();

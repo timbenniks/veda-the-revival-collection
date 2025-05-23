@@ -185,7 +185,7 @@ export interface ProductLine {
   title: string;
   url?: string;
   description?: string;
-  image?: File[] | null;
+  image?: File | null;
   products?: Product[];
   _content_type_uid: string;
 }

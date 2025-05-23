@@ -25,7 +25,6 @@ export async function generateMetadata({
     const query = await searchParams;
     const path = slug ? `/${slug.join("/")}` : "/";
     const variantParam = getVariantParam(query);
-
     const page = await getPage(path, variantParam);
 
     if (!page) {

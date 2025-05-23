@@ -7,6 +7,7 @@ import ProductDetails from "./ProductDetails";
 import { ComponentsRenderer } from "./ComponentRenderer";
 import Header from "./Header";
 import List from "./List";
+import Breadcrumb from "./Breadcrumb";
 
 export default function Page({
   entry,
@@ -17,9 +18,26 @@ export default function Page({
   contentType?: "pdp" | "product";
   header?: Headerprops;
 }) {
+  const breadcrumbLinks = [{ title: "Home", url: "/" }];
+
+  if (entry && "product_line" in entry && entry.product_line?.[0]) {
+    breadcrumbLinks.push({
+      title: entry.product_line[0].title,
+      url: entry.product_line[0].url || "",
+    });
+  }
+
+  if (entry?.title && entry?.url) {
+    breadcrumbLinks.push({
+      title: entry.title,
+      url: entry.url || "",
+    });
+  }
+
   return (
     <>
       {header && <Header reference={[header]} />}
+      <Breadcrumb links={breadcrumbLinks} />
       {entry && (
         <ProductDetails
           product={"product" in entry ? entry.product?.[0] || entry : entry}

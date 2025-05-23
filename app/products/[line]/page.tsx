@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getHeader, getProductLine } from "@/lib/contentstack";
 import { createOgTags, isPreview } from "@/lib/helpers";
-// import PreviewClient from "@/components/PreviewClient";
+import PreviewClient from "@/components/PreviewClient";
 import ProductLine from "@/components/ProductLine";
 
 export const revalidate = 60;
@@ -12,13 +12,13 @@ interface ProductParams {
   slug: string;
 }
 
-interface ProductPageProps {
+interface ProductLinePageProps {
   params: Promise<ProductParams>;
 }
 
 export async function generateMetadata({
   params,
-}: ProductPageProps): Promise<Metadata> {
+}: ProductLinePageProps): Promise<Metadata> {
   try {
     const { line } = await params;
     const path = `/products/${line}`;
@@ -41,15 +41,18 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
+export default async function ProductLinePage({
+  params,
+}: ProductLinePageProps) {
   try {
     const { line } = await params;
     const path = `/products/${line}`;
-    const entry = await getProductLine(path);
 
-    // if (isPreview) {
-    //   return <PreviewClient path={path} type="productLine" />;
-    // }
+    if (isPreview) {
+      return <PreviewClient path={path} type="productLine" />;
+    }
+
+    const entry = await getProductLine(path);
 
     if (!entry) {
       return notFound();

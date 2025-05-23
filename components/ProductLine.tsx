@@ -6,6 +6,7 @@ import type {
 import Header from "./Header";
 import List from "./List";
 import MediaItem from "./atoms/MediaItem";
+import Breadcrumb from "./Breadcrumb";
 
 export default function ProductLine({
   entry,
@@ -17,7 +18,12 @@ export default function ProductLine({
   return (
     <>
       {header && <Header reference={[header]} />}
-
+      <Breadcrumb
+        links={[
+          { title: "Home", url: "/" },
+          { title: entry?.title || "", url: entry?.url || "" },
+        ]}
+      />
       {entry && (
         <>
           <div className="md:aspect-[1440/635] relative w-full overflow-hidden bg-white">
