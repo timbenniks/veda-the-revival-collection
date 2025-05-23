@@ -2,9 +2,13 @@ import { isPreview } from "@/lib/helpers";
 import Title from "./atoms/Title";
 import ProductCard from "./cards/product";
 import CategoryCard from "./cards/category";
-import { List as ListProps } from "@/types/types";
+import { List as BaseListProps } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 import React from "react";
+
+interface ListProps extends BaseListProps {
+  cslpName?: string;
+}
 
 // @TODO: add modular block for custom static cards, add references, or add add query.
 export default function List({
@@ -14,6 +18,7 @@ export default function List({
   reference,
   load_first_image_eager,
   $,
+  cslpName = "reference",
 }: ListProps) {
   const getGridColumns = () => {
     if (reference.length <= 3) {
@@ -38,7 +43,10 @@ export default function List({
       )}
 
       {description && (
-        <p className="font-light text-center mb-8 max-w-prose mx-auto">
+        <p
+          {...($ && $.description)}
+          className="font-light text-center mb-8 max-w-prose mx-auto"
+        >
           {description}
         </p>
       )}
@@ -50,11 +58,14 @@ export default function List({
             getGridColumns(),
             "gap-10 justify-around md:px-24"
           )}
-          {...($ && $.reference)}
+          {...($ && $[cslpName ? cslpName : "reference"])}
         >
           {reference.map((item, index) =>
             isPreview ? (
-              <div key={item.uid} {...($ && $[`reference__${index}`])}>
+              <div
+                key={item.uid}
+                {...($ && $[`${cslpName ? cslpName : "reference"}__${index}`])}
+              >
                 {item?._content_type_uid === "product" && (
                   <ProductCard
                     $={item.$}

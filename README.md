@@ -2,6 +2,6 @@
 
 ## TODO
 
-- /products is an algolia faceted list
-- editable version of product page list
 - category page
+- /products is an algolia faceted list
+- footer

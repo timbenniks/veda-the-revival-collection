@@ -52,6 +52,7 @@ export default function ProductLine({
             description={entry.description}
             load_first_image_eager={true}
             $={entry.$}
+            cslpName="products"
           />
         </>
       )}
