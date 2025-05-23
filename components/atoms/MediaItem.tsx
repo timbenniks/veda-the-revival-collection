@@ -92,6 +92,9 @@ export default function MediaItem({
         const encoded = encodeURIComponent(src);
         const transformation = `w_${width},h_${imageHeight},c_thumb`;
         return `https://res.cloudinary.com/${cloudName}/image/fetch/f_auto,q_auto/${transformation}/${encoded}`;
+        //  return `https://res.cloudinary.com/${cloudName}/image/fetch/f_auto,q_auto/${
+        //   fit ? `${fit}/` : ""
+        // }${transformation}/${encoded}`;
       } else {
         const params = new URLSearchParams();
         params.append("width", width.toString());
@@ -101,7 +104,7 @@ export default function MediaItem({
         params.append("format", "pjpg");
 
         if (fit) {
-          params.append("fit", fit);
+          params.append("fit", fit || "crop");
         }
 
         return `${src}?${params.toString()}`;

@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useEffect } from "react";
+import { JSX, useEffect, useState } from "react";
 
 interface Jstag {
   init: (config: any) => Jstag;
@@ -52,26 +52,26 @@ export const useJstag = (): Jstag => {
   return typeof window !== "undefined" ? window.jstag : ({} as Jstag);
 };
 
-// type Entity = any;
+type Entity = any;
 
-// export const useEntity = (): Entity | null => {
-//   const jstag = useJstag();
-//   const [entity, setEntity] = useState<Entity | null>(null);
+export const useEntity = (): Entity | null => {
+  const jstag = useJstag();
+  const [entity, setEntity] = useState<Entity | null>(null);
 
-//   useEffect(() => {
-//     if (typeof window !== "undefined") {
-//       const off = jstag.on("entity.loaded", (_, entity: Entity) => {
-//         setEntity(entity);
-//       });
-//       return () => {
-//         off();
-//       };
-//     }
-//     return undefined;
-//   }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const off = jstag.on("entity.loaded", (_, entity: Entity) => {
+        setEntity(entity);
+      });
+      return () => {
+        off();
+      };
+    }
+    return undefined;
+  }, []);
 
-//   return entity;
-// };
+  return entity;
+};
 
 export function LyticsTracking(): JSX.Element {
   const jstag = useJstag();

@@ -2,7 +2,7 @@ import { isPreview } from "@/lib/helpers";
 import Title from "./atoms/Title";
 import ProductCard from "./cards/product";
 import CategoryCard from "./cards/category";
-import { List as BaseListProps } from "@/types/types";
+import { List as BaseListProps, Product, Category } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 import React from "react";
 
@@ -66,7 +66,7 @@ export default function List({
                 {item?._content_type_uid === "product" && (
                   <ProductCard
                     $={item.$}
-                    product={item}
+                    product={item as Product}
                     loading={
                       index === 0 && load_first_image_eager ? "eager" : "lazy"
                     }
@@ -75,7 +75,7 @@ export default function List({
                 {item?._content_type_uid === "category" && (
                   <CategoryCard
                     $={item.$}
-                    category={item}
+                    category={item as Category}
                     loading={
                       index === 0 && load_first_image_eager ? "eager" : "lazy"
                     }
@@ -88,7 +88,7 @@ export default function List({
                   <ProductCard
                     key={item.uid}
                     $={item.$}
-                    product={item}
+                    product={item as Product}
                     loading={
                       index === 0 && load_first_image_eager ? "eager" : "lazy"
                     }
@@ -98,7 +98,7 @@ export default function List({
                   <CategoryCard
                     key={item.uid}
                     $={item.$}
-                    category={item}
+                    category={item as Category}
                     loading={
                       index === 0 && load_first_image_eager ? "eager" : "lazy"
                     }

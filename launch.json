@@ -4,8 +4,8 @@
       "urls": [
         "/",
         "/our-story",
+        "/products/digital-dawn/circuit-collar-necklace",
         "/products/digital-dawn/fusion-cuff-bracelet",
-        "products/digital-dawn/circuit-collar-necklace",
         "/products/digital-dawn/pixel-stud-earrings",
         "/products/digital-dawn/data-drop-earrings",
         "/products/digital-dawn/orbit-ring",
@@ -36,10 +36,10 @@
         "/products/urban-armor/dynasty-link-bracelet",
         "/products/digital-dawn/matrix-link-bracelet",
         "/products/charmed-revival/lovestruck-ring",
-        "/category/earrings",
-        "/category/necklaces",
+        "/category/rings",
         "/category/bracelets",
-        "/category/rings"
+        "/category/earrings",
+        "/category/necklaces"
       ]
     }
   }
