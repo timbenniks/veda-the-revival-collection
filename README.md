@@ -2,6 +2,7 @@
 
 ## TODO
 
-- category page
 - /products is an algolia faceted list
 - footer
+- navigation
+- Lytics

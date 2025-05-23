@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getHeader, getProduct } from "@/lib/contentstack";
 import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
-import Product from "@/components/Product";
-import PreviewClient from "@/components/PreviewClient";
+import Product from "@/components/pages/Product";
+import PreviewClient from "@/components/pages/PreviewClient";
 
 export const revalidate = 60;
 

@@ -58,14 +58,11 @@ export default function List({
             getGridColumns(),
             "gap-10 justify-around md:px-24"
           )}
-          {...($ && $[cslpName ? cslpName : "reference"])}
+          {...($ && $[cslpName])}
         >
           {reference.map((item, index) =>
             isPreview ? (
-              <div
-                key={item.uid}
-                {...($ && $[`${cslpName ? cslpName : "reference"}__${index}`])}
-              >
+              <div key={item.uid} {...($ && $[`${cslpName}__${index}`])}>
                 {item?._content_type_uid === "product" && (
                   <ProductCard
                     $={item.$}

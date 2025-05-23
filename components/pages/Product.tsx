@@ -3,11 +3,11 @@ import type {
   Product as ProductProps,
   Header as Headerprops,
 } from "@/types/types";
-import ProductDetails from "./ProductDetails";
-import { ComponentsRenderer } from "./ComponentRenderer";
-import Header from "./Header";
-import List from "./List";
-import Breadcrumb from "./Breadcrumb";
+import ProductDetails from "@/components/ProductDetails";
+import { ComponentsRenderer } from "@/components/ComponentRenderer";
+import Header from "@/components/Header";
+import List from "@/components/List";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function Page({
   entry,
@@ -47,12 +47,23 @@ export default function Page({
       {contentType === "product" && entry && "product_line" in entry && (
         <>
           <List
-            uid="test"
+            uid="product_line"
             _version={1}
             reference={entry.product_line?.[0].products || []}
             title={`Explore ${entry.product_line?.[0].title}`}
             title_tag="h2"
             description={entry.product_line?.[0].description}
+            load_first_image_eager={true}
+            $={entry.$}
+          />
+
+          <List
+            uid="category"
+            _version={1}
+            reference={entry.category?.[0].products || []}
+            title={`More ${entry.category?.[0].title}`}
+            title_tag="h2"
+            description={entry.category?.[0].description}
             load_first_image_eager={true}
             $={entry.$}
           />

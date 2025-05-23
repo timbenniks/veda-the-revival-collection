@@ -1,18 +1,18 @@
 import type {
-  ProductLine as ProductLineProps,
+  Category as CategoryProps,
   Header as Headerprops,
 } from "@/types/types";
 
-import Header from "./Header";
-import List from "./List";
-import MediaItem from "./atoms/MediaItem";
-import Breadcrumb from "./Breadcrumb";
+import Header from "@/components/Header";
+import List from "@/components/List";
+import MediaItem from "@/components/atoms/MediaItem";
+import Breadcrumb from "@/components/Breadcrumb";
 
-export default function ProductLine({
+export default function Category({
   entry,
   header,
 }: {
-  entry: ProductLineProps;
+  entry: CategoryProps;
   header?: Headerprops;
 }) {
   return (
@@ -21,16 +21,17 @@ export default function ProductLine({
       <Breadcrumb
         links={[
           { title: "Home", url: "/" },
+          { title: "Categories", url: "/categories" },
           { title: entry?.title || "", url: entry?.url || "" },
         ]}
       />
       {entry && (
         <>
           <div className="md:aspect-[1440/635] relative w-full overflow-hidden bg-white">
-            {entry.image?.url && (
+            {entry.media?.url && (
               <MediaItem
-                {...(entry.$ && entry.$.image)}
-                src={entry.image?.url}
+                {...(entry.$ && entry.$.media)}
+                src={entry.media?.url}
                 width={1440}
                 height={635}
                 ratio={1440 / 635}
@@ -44,12 +45,12 @@ export default function ProductLine({
             )}
           </div>
           <List
-            uid="test"
+            uid="category"
             _version={1}
             reference={entry.products || []}
             title={`${entry.title}`}
             title_tag="h2"
-            description={entry.description}
+            description={entry.description || ""}
             load_first_image_eager={true}
             $={entry.$}
             cslpName="products"

@@ -174,7 +174,7 @@ export interface Category {
   url?: string;
   description?: string;
   products?: Product[];
-  media?: File[] | null;
+  media?: File | null;
   _content_type_uid: string;
 }
 

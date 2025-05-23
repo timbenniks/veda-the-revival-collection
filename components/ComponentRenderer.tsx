@@ -3,13 +3,13 @@ import { isPreview, mapComponentsToKV } from "@/lib/helpers";
 import { VB_EmptyBlockParentClass } from "@contentstack/live-preview-utils";
 import { Components, CSLPAttribute } from "@/types/types";
 
-import NoComponent from "./NoComponent";
-import HeroComponent from "./Hero";
-import ListComponent from "./List";
-import TwoColumnComponent from "./TwoColumn";
-import MediaComponent from "./Media";
-import RichTextComponent from "./RichText";
-import HeaderComponent from "./Header";
+import NoComponent from "@/components/NoComponent";
+import HeroComponent from "@/components/Hero";
+import ListComponent from "@/components/List";
+import TwoColumnComponent from "@/components/TwoColumn";
+import MediaComponent from "@/components/Media";
+import RichTextComponent from "@/components/RichText";
+import HeaderComponent from "@/components/Header";
 
 type ComponentsRendererProps = {
   components: Components[];

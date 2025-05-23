@@ -163,22 +163,11 @@ export async function getCategory(url: string): Promise<Category> {
   const productQuery = await stack
     .contentType("category")
     .entry()
-    .includeReference(['products', 'products.product_line'])
 
-  productQuery.only([
-    'uid',
-    'url',
-    'title',
-    'description',
-    'products.uid',
-    'products.title',
-    'products.short_description',
-    'products.price',
-    'products.taxonomies.term_uid',
-    'products.media',
-    'products.product_line.title',
-    'products.product_line.url',
-  ])
+  productQuery.addParams({ include_dimension: true });
+  productQuery.addParams({ include_applied_variants: true });
+  productQuery.addParams({ include_all: true });
+  productQuery.addParams({ include_all_depth: 2 });
 
   const result = await productQuery
     .query()

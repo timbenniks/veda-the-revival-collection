@@ -9,20 +9,23 @@ import {
   getPage,
   getProduct,
   getProductLine,
+  getCategory,
   initLivePreview,
-} from "../lib/contentstack";
+} from "@/lib/contentstack";
 
 import type {
   Page as PageProps,
   Product as ProductProps,
   Pdp as PdpProps,
   ProductLine as ProductLineProps,
+  Category as CategoryProps,
   Header as HeaderProps,
 } from "@/types/types";
 
 import Page from "./Page";
 import Product from "./Product";
 import ProductLine from "./ProductLine";
+import Category from "./Category";
 
 const LoadingState = () => (
   <div className="flex flex-col items-center justify-center h-screen">
@@ -39,7 +42,7 @@ const LoadingState = () => (
 );
 
 function getPreviewData(
-  type: "page" | "productOrPdp" | "productLine",
+  type: "page" | "productOrPdp" | "productLine" | "category",
   path: string,
   variantParam?: string
 ) {
@@ -50,13 +53,15 @@ function getPreviewData(
       return getProduct(path, variantParam);
     case "productLine":
       return getProductLine(path);
+    case "category":
+      return getCategory(path);
     default:
       throw new Error(`Invalid type: ${type}`);
   }
 }
 
 export interface PreviewClientProps {
-  type: "page" | "productOrPdp" | "productLine";
+  type: "page" | "productOrPdp" | "productLine" | "category";
   path: string;
   variantParam?: string;
 }
@@ -78,7 +83,6 @@ export default function PreviewClient({
       setError(null);
 
       const data = await getPreviewData(type, path, variantParam);
-
       const headerContent = await getHeader();
       setHeader(headerContent);
 
@@ -120,6 +124,8 @@ export default function PreviewClient({
       return (
         <ProductLine entry={content as ProductLineProps} header={header} />
       );
+    case "category":
+      return <Category entry={content as CategoryProps} header={header} />;
     case "productOrPdp":
       return (
         <Product

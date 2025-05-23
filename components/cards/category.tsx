@@ -22,7 +22,6 @@ export default function CategoryCard({
         {media && (
           <MediaItem
             {...($ && $.media)}
-            // @ts-expect-error the url property exists. types complain.
             src={media.url}
             alt={`Category image for ${title}`}
             width={293}
