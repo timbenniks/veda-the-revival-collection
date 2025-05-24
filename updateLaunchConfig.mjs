@@ -24,7 +24,7 @@ async function getAllLinks() {
   const productUrls = products.entries?.map((e) => e.url) || [];
   const productLineUrls = productLines.entries?.map((e) => e.url) || [];
 
-  return [...pageUrls, ...productUrls, ...productLineUrls];
+  return [...pageUrls, ...productUrls, ...productLineUrls, "/products"];
 }
 
 async function updateLaunchJson() {

@@ -6,7 +6,6 @@
 - content assets
 - footer
 - shopping cart
-- navigation
 - Lytics
 
 Personalization
