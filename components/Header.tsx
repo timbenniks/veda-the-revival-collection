@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PageHeader as HeaderProps } from "@/types/types";
+import { MegaMenu as MegaMenuProps } from "@/types/types";
 
-export default function Header({ reference }: HeaderProps) {
-  const { $, logo, links } = reference[0];
+export default function Header({ header, product_lines }: MegaMenuProps) {
+  const { $, logo, links } = header;
 
   const megaMenuStrcuture = links?.map((link: any) => {
     return {
@@ -12,12 +12,13 @@ export default function Header({ reference }: HeaderProps) {
       show_product_lines: link.link.show_product_lines,
       show_all_products_links: link.link.show_all_products_links,
       featured_product: link.link.featured_product[0],
+      product_lines,
     };
   });
 
   return (
     <>
-      <pre>{JSON.stringify(megaMenuStrcuture, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(megaMenuStrcuture, null, 2)}</pre> */}
       <div className="sticky top-0 z-50">
         <div className="header flex items-center justify-between p-4 bg-[#3b2607]/90 text-white">
           {logo && (

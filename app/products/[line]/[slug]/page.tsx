@@ -8,8 +8,6 @@ import { cache } from "react";
 
 export const revalidate = 60;
 
-const getHeaderCached = cache(getHeader);
-
 interface ProductParams {
   line: string;
   slug: string;
@@ -19,6 +17,9 @@ interface ProductPageProps {
   params: Promise<ProductParams>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
+
+const getHeaderCached = cache(getHeader);
+const getProductCached = cache(getProduct);
 
 export async function generateMetadata({
   params,
@@ -30,7 +31,7 @@ export async function generateMetadata({
     const path = `/products/${line}/${slug}`;
     const variantParam = getVariantParam(query);
 
-    const response = await getProduct(path, variantParam);
+    const response = await getProductCached(path, variantParam);
 
     if (!response || !response.entry) {
       return {
@@ -69,7 +70,7 @@ export default async function ProductPage({
       );
     }
 
-    const response = await getProduct(path, variantParam);
+    const response = await getProductCached(path, variantParam);
 
     if (!response || !response.entry) {
       return notFound();

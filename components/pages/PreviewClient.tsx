@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
+import { cache } from "react";
 
 import {
   getHeader,
@@ -19,13 +20,15 @@ import type {
   Pdp as PdpProps,
   ProductLine as ProductLineProps,
   Category as CategoryProps,
-  Header as HeaderProps,
+  MegaMenu as MegaMenuProps,
 } from "@/types/types";
 
 import Page from "./Page";
 import Product from "./Product";
 import ProductLine from "./ProductLine";
 import Category from "./Category";
+
+const getHeaderCached = cache(getHeader);
 
 const LoadingState = () => (
   <div className="flex flex-col items-center justify-center h-screen">
@@ -73,7 +76,7 @@ export default function PreviewClient({
 }: PreviewClientProps) {
   const [content, setContent] = useState<PageProps | ProductProps | PdpProps>();
   const [contentType, setContentType] = useState<"product" | "pdp">();
-  const [header, setHeader] = useState<HeaderProps>();
+  const [header, setHeader] = useState<MegaMenuProps>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -83,7 +86,7 @@ export default function PreviewClient({
       setError(null);
 
       const data = await getPreviewData(type, path, variantParam);
-      const headerContent = await getHeader();
+      const headerContent = await getHeaderCached();
       setHeader(headerContent);
 
       if ("contentType" in data) {
@@ -119,7 +122,7 @@ export default function PreviewClient({
 
   switch (type) {
     case "page":
-      return <Page page={content as PageProps} />;
+      return <Page page={content as PageProps} header={header} />;
     case "productLine":
       return (
         <ProductLine entry={content as ProductLineProps} header={header} />

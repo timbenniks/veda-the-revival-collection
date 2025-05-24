@@ -17,6 +17,7 @@ interface CategoryPageProps {
 }
 
 const getHeaderCached = cache(getHeader);
+const getCategoryCached = cache(getCategory);
 
 export async function generateMetadata({
   params,
@@ -24,7 +25,7 @@ export async function generateMetadata({
   try {
     const { category } = await params;
     const path = `/category/${category}`;
-    const entry = await getCategory(path);
+    const entry = await getCategoryCached(path);
 
     if (!entry) {
       return {
@@ -52,7 +53,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       return <PreviewClient path={path} type="category" />;
     }
 
-    const entry = await getCategory(path);
+    const entry = await getCategoryCached(path);
 
     if (!entry) {
       return notFound();

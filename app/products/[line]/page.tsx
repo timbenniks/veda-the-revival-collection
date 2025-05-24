@@ -18,6 +18,7 @@ interface ProductLinePageProps {
 }
 
 const getHeaderCached = cache(getHeader);
+const getProductLineCached = cache(getProductLine);
 
 export async function generateMetadata({
   params,
@@ -25,7 +26,7 @@ export async function generateMetadata({
   try {
     const { line } = await params;
     const path = `/products/${line}`;
-    const entry = await getProductLine(path);
+    const entry = await getProductLineCached(path);
 
     if (!entry) {
       return {
@@ -55,7 +56,7 @@ export default async function ProductLinePage({
       return <PreviewClient path={path} type="productLine" />;
     }
 
-    const entry = await getProductLine(path);
+    const entry = await getProductLineCached(path);
 
     if (!entry) {
       return notFound();

@@ -75,7 +75,7 @@ export default function MediaItem({
   width,
   ratio,
   alt,
-  fit = "crop",
+  fit = "c_auto,g_auto",
   cloudName = "dwfcofnrd",
   widths = [320, 640, 960, 1280, 1600, 1920],
   sizes = "100vw",
@@ -90,11 +90,11 @@ export default function MediaItem({
 
       if (useCloudinary) {
         const encoded = encodeURIComponent(src);
-        const transformation = `w_${width},h_${imageHeight},c_thumb`;
-        return `https://res.cloudinary.com/${cloudName}/image/fetch/f_auto,q_auto/${transformation}/${encoded}`;
-        //  return `https://res.cloudinary.com/${cloudName}/image/fetch/f_auto,q_auto/${
-        //   fit ? `${fit}/` : ""
-        // }${transformation}/${encoded}`;
+        const transformation = `w_${width},h_${imageHeight}`;
+
+        return `https://res.cloudinary.com/${cloudName}/image/fetch/f_auto,q_auto/${transformation}${
+          fit ? `,${fit === "crop" ? "c_auto,g_auto" : fit}` : ",c_thumb"
+        }/${encoded}`;
       } else {
         const params = new URLSearchParams();
         params.append("width", width.toString());

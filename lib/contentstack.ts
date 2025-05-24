@@ -1,6 +1,6 @@
 import contentstack, { QueryOperation, BaseEntry } from "@contentstack/delivery-sdk"
 import ContentstackLivePreview, { IStackSdk } from "@contentstack/live-preview-utils";
-import { Page, Product, ProductLine, Category, Pdp, Header } from "@/types/types";
+import { Page, Product, ProductLine, Category, Pdp, Header, MegaMenu } from "@/types/types";
 import Personalize from "@contentstack/personalize-edge-sdk";
 import { contentstackEndpoints, contentstackRegion } from "./helpers";
 
@@ -188,23 +188,47 @@ export async function getCategory(url: string): Promise<Category> {
   }
 }
 
-export async function getHeader(): Promise<Header> {
-  const header = await stack
-    .contentType("header")
-    .entry("bltb3e6ba1550869339")
-    .addParams({ include_all: "true" })
-    .addParams({ include_all_depth: 1 })
-    .fetch<Header>()
+export async function getHeader(): Promise<MegaMenu> {
+  const [header, productLines] = await Promise.all([
+    stack
+      .contentType("header")
+      .entry("bltb3e6ba1550869339")
+      .addParams({ include_all: "true" })
+      .addParams({ include_all_depth: 1 })
+      .fetch<Header>(),
+
+    stack
+      .contentType("product_line")
+      .entry()
+      .only(['url', 'title'])
+      .query()
+      .find<ProductLine>()
+  ])
 
   if (header) {
     if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
       contentstack.Utils.addEditableTags(header, 'header', true);
     }
-
-    return header
   }
   else {
-    throw new Error(`Header not found for uid: bltb3e6ba1550869339`);
+    throw new Error("Header not found");
+  }
+
+  if (productLines) {
+    if (process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === 'true') {
+      productLines.entries?.map((productLine) => {
+        contentstack.Utils.addEditableTags(productLine, 'product_line', true);
+      });
+    }
+  }
+
+  else {
+    throw new Error("Product lines not found");
+  }
+
+  return {
+    header,
+    product_lines: productLines.entries as ProductLine[]
   }
 }
 

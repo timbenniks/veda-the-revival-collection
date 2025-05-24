@@ -1,10 +1,24 @@
-import type { Page as PageProps } from "@/types/types";
-import { ComponentsRenderer } from "@/components/ComponentRenderer";
+import type {
+  Page as PageProps,
+  MegaMenu as MegaMenuProps,
+} from "@/types/types";
 
-export default function Page({ page }: { page: PageProps }) {
+import { ComponentsRenderer } from "@/components/ComponentRenderer";
+import MegaMenu from "../MegaMenu";
+
+export default function Page({
+  page,
+  header,
+}: {
+  page: PageProps;
+  header?: MegaMenuProps;
+}) {
   const components = page?.components || [];
   return (
     <>
+      {header && (
+        <MegaMenu header={header.header} product_lines={header.product_lines} />
+      )}
       {components && (
         <ComponentsRenderer
           components={components}

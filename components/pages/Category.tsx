@@ -1,27 +1,30 @@
 import type {
   Category as CategoryProps,
-  Header as Headerprops,
+  MegaMenu as MegaMenuProps,
 } from "@/types/types";
 
-import Header from "@/components/Header";
 import List from "@/components/List";
 import MediaItem from "@/components/atoms/MediaItem";
 import Breadcrumb from "@/components/Breadcrumb";
+import MegaMenu from "../MegaMenu";
 
 export default function Category({
   entry,
   header,
 }: {
   entry: CategoryProps;
-  header?: Headerprops;
+  header?: MegaMenuProps;
 }) {
   return (
     <>
-      {header && <Header reference={[header]} />}
+      {header && (
+        <MegaMenu header={header.header} product_lines={header.product_lines} />
+      )}
+
       <Breadcrumb
         links={[
           { title: "Home", url: "/" },
-          { title: "Categories", url: "/categories" },
+          { title: "Products", url: "/products" },
           { title: entry?.title || "", url: entry?.url || "" },
         ]}
       />

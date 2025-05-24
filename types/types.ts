@@ -148,6 +148,7 @@ export interface Header {
 export interface PageHeader {
   _version?: number;
   reference: Header[];
+  product_lines: ProductLine[];
 }
 
 export interface Components {
@@ -221,4 +222,9 @@ export interface Pdp {
   product?: Product[];
   components?: Components[];
   _content_type_uid: string;
+}
+
+export interface MegaMenu {
+  header: Header,
+  product_lines: ProductLine[]
 }

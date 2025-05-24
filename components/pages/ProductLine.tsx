@@ -1,26 +1,29 @@
 import type {
   ProductLine as ProductLineProps,
-  Header as Headerprops,
+  MegaMenu as megaMenuProps,
 } from "@/types/types";
 
-import Header from "@/components/Header";
 import List from "@/components/List";
 import MediaItem from "@/components/atoms/MediaItem";
 import Breadcrumb from "@/components/Breadcrumb";
+import MegaMenu from "@/components/MegaMenu";
 
 export default function ProductLine({
   entry,
   header,
 }: {
   entry: ProductLineProps;
-  header?: Headerprops;
+  header?: megaMenuProps;
 }) {
   return (
     <>
-      {header && <Header reference={[header]} />}
+      {header && (
+        <MegaMenu header={header.header} product_lines={header.product_lines} />
+      )}
       <Breadcrumb
         links={[
           { title: "Home", url: "/" },
+          { title: "Products", url: "/products" },
           { title: entry?.title || "", url: entry?.url || "" },
         ]}
       />

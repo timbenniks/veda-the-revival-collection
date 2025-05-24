@@ -1,11 +1,10 @@
 import type {
   Pdp as PdpProps,
   Product as ProductProps,
-  Header as Headerprops,
+  MegaMenu as MegaMenuProps,
 } from "@/types/types";
 import ProductDetails from "@/components/ProductDetails";
 import { ComponentsRenderer } from "@/components/ComponentRenderer";
-import Header from "@/components/Header";
 import List from "@/components/List";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "../MegaMenu";
@@ -17,9 +16,12 @@ export default function Page({
 }: {
   entry?: ProductProps | PdpProps;
   contentType?: "pdp" | "product";
-  header?: Headerprops;
+  header?: MegaMenuProps;
 }) {
-  const breadcrumbLinks = [{ title: "Home", url: "/" }];
+  const breadcrumbLinks = [
+    { title: "Home", url: "/" },
+    { title: "Products", url: "/products" },
+  ];
 
   if (entry && "product_line" in entry && entry.product_line?.[0]) {
     breadcrumbLinks.push({
@@ -37,9 +39,9 @@ export default function Page({
 
   return (
     <>
-      {header && <Header reference={[header]} />}
-
-      <MegaMenu />
+      {header && (
+        <MegaMenu header={header.header} product_lines={header.product_lines} />
+      )}
 
       <Breadcrumb links={breadcrumbLinks} />
       {entry && (

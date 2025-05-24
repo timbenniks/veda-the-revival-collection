@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPage } from "@/lib/contentstack";
+import { getPage, getHeader } from "@/lib/contentstack";
 import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
 import Page from "@/components/pages/Page";
 import PreviewClient from "@/components/pages/PreviewClient";
+import { cache } from "react";
 
 export const revalidate = 60;
 
@@ -16,6 +17,9 @@ interface SlugPageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
+const getHeaderCached = cache(getHeader);
+const getPageCached = cache(getPage);
+
 export async function generateMetadata({
   params,
   searchParams,
@@ -25,7 +29,7 @@ export async function generateMetadata({
     const query = await searchParams;
     const path = slug ? `/${slug.join("/")}` : "/";
     const variantParam = getVariantParam(query);
-    const page = await getPage(path, variantParam);
+    const page = await getPageCached(path, variantParam);
 
     if (!page) {
       return {
@@ -60,13 +64,15 @@ export default async function SlugPage({
       );
     }
 
-    const page = await getPage(path, variantParam);
+    const page = await getPageCached(path, variantParam);
 
     if (!page) {
       return notFound();
     }
 
-    return <Page page={page} />;
+    const header = await getHeaderCached();
+
+    return <Page page={page} header={header} />;
   } catch (error) {
     console.error("Error loading page:", error);
     throw error;
