@@ -192,7 +192,8 @@ export async function getHeader(): Promise<Header> {
   const header = await stack
     .contentType("header")
     .entry("bltb3e6ba1550869339")
-    .includeReference(['links.link.reference.product', 'links.link.reference.product_line', 'links.link.reference.page', 'links.link.reference.category'])
+    .addParams({ include_all: "true" })
+    .addParams({ include_all_depth: 1 })
     .fetch<Header>()
 
   if (header) {

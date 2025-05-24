@@ -4,8 +4,11 @@ import { getHeader, getProduct } from "@/lib/contentstack";
 import { createOgTags, isPreview, getVariantParam } from "@/lib/helpers";
 import Product from "@/components/pages/Product";
 import PreviewClient from "@/components/pages/PreviewClient";
+import { cache } from "react";
 
 export const revalidate = 60;
+
+const getHeaderCached = cache(getHeader);
 
 interface ProductParams {
   line: string;
@@ -73,7 +76,7 @@ export default async function ProductPage({
     }
 
     const { entry, contentType } = response;
-    const header = await getHeader();
+    const header = await getHeaderCached();
 
     return <Product entry={entry} contentType={contentType} header={header} />;
   } catch (error) {

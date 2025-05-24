@@ -129,6 +129,10 @@ export interface Links {
     label: string;
     item?: Link;
     reference?: (ProductLine | Product | Page | Category)[];
+    featured_product?: Product;
+    show_product_lines: boolean;
+    show_all_products_links: boolean;
+    $: { [key: string]: CSLPAttribute | undefined; }
   };
 }
 

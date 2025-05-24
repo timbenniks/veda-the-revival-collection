@@ -4,6 +4,7 @@ import { getHeader, getProductLine } from "@/lib/contentstack";
 import { createOgTags, isPreview } from "@/lib/helpers";
 import PreviewClient from "@/components/pages/PreviewClient";
 import ProductLine from "@/components/pages/ProductLine";
+import { cache } from "react";
 
 export const revalidate = 60;
 
@@ -15,6 +16,8 @@ interface ProductParams {
 interface ProductLinePageProps {
   params: Promise<ProductParams>;
 }
+
+const getHeaderCached = cache(getHeader);
 
 export async function generateMetadata({
   params,
@@ -58,7 +61,7 @@ export default async function ProductLinePage({
       return notFound();
     }
 
-    const header = await getHeader();
+    const header = await getHeaderCached();
 
     return <ProductLine entry={entry} header={header} />;
   } catch (error) {

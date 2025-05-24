@@ -4,6 +4,7 @@ import { getHeader, getCategory } from "@/lib/contentstack";
 import { createOgTags, isPreview } from "@/lib/helpers";
 import PreviewClient from "@/components/pages/PreviewClient";
 import Category from "@/components/pages/Category";
+import { cache } from "react";
 
 export const revalidate = 60;
 
@@ -14,6 +15,8 @@ interface CategoryParams {
 interface CategoryPageProps {
   params: Promise<CategoryParams>;
 }
+
+const getHeaderCached = cache(getHeader);
 
 export async function generateMetadata({
   params,
@@ -55,7 +58,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       return notFound();
     }
 
-    const header = await getHeader();
+    const header = await getHeaderCached();
 
     return <Category entry={entry} header={header} />;
   } catch (error) {
