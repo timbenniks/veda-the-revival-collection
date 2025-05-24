@@ -9,7 +9,6 @@ import ListComponent from "@/components/List";
 import TwoColumnComponent from "@/components/TwoColumn";
 import MediaComponent from "@/components/Media";
 import RichTextComponent from "@/components/RichText";
-import HeaderComponent from "@/components/Header";
 
 type ComponentsRendererProps = {
   components: Components[];
@@ -35,7 +34,6 @@ const componentMap: {
   two_column: TwoColumnComponent,
   media: MediaComponent,
   rich_text: RichTextComponent,
-  header: HeaderComponent,
 };
 
 export const ComponentsRenderer: React.FC<ComponentsRendererProps> = ({

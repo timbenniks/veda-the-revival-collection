@@ -14,11 +14,9 @@ import MediaItem from "./atoms/MediaItem";
 function FeaturedProductDisplay({
   featuredProduct,
   productLines,
-  formatPrice,
 }: {
   featuredProduct: any;
   productLines: any[];
-  formatPrice: (price: number | null | undefined) => string;
 }) {
   const productLineTitle =
     productLines.find((pl) =>
@@ -99,14 +97,6 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
 
   const featuredProduct = activeMenuObj?.featured_product || null;
   const productLines = activeMenuObj?.product_lines || [];
-
-  const formatPrice = (priceCents: number | null | undefined) => {
-    if (!priceCents) return "";
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(priceCents / 100);
-  };
 
   const handleDesktopMenuClick = (menuId: string) => {
     if (activeMenu === menuId) {
@@ -294,7 +284,6 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
                 <FeaturedProductDisplay
                   featuredProduct={featuredProduct}
                   productLines={productLines}
-                  formatPrice={formatPrice}
                 />
               </div>
             </div>

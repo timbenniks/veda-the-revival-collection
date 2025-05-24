@@ -152,7 +152,6 @@ export interface PageHeader {
 }
 
 export interface Components {
-  header: PageHeader;
   list: List;
   media: Media;
   rich_text: RichText;
