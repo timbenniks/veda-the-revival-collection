@@ -7,6 +7,7 @@ import List from "@/components/List";
 import MediaItem from "@/components/atoms/MediaItem";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "@/components/MegaMenu";
+import Footer from "../Footer";
 
 export default function ProductLine({
   entry,
@@ -59,6 +60,7 @@ export default function ProductLine({
           />
         </>
       )}
+      <Footer />
     </>
   );
 }

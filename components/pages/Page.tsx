@@ -5,6 +5,7 @@ import type {
 
 import { ComponentsRenderer } from "@/components/ComponentRenderer";
 import MegaMenu from "../MegaMenu";
+import Footer from "../Footer";
 
 export default function Page({
   page,
@@ -26,6 +27,7 @@ export default function Page({
           cslpWrapper="components"
         />
       )}
+      <Footer />
     </>
   );
 }

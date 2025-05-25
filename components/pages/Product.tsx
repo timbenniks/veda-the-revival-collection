@@ -8,6 +8,7 @@ import { ComponentsRenderer } from "@/components/ComponentRenderer";
 import List from "@/components/List";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "../MegaMenu";
+import Footer from "../Footer";
 
 export default function Page({
   entry,
@@ -87,6 +88,7 @@ export default function Page({
           )}
         </>
       )}
+      <Footer />
     </>
   );
 }

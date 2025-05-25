@@ -54,9 +54,9 @@ export default function List({
       {reference && reference.length && (
         <ul
           className={twMerge(
-            "mt-8 grid grid-cols-1",
+            "mt-8 grid grid-cols-2 gap-5 md:gap-10",
             getGridColumns(),
-            "gap-10 justify-around md:px-24"
+            "justify-around md:px-24"
           )}
           {...($ && $[cslpName])}
         >

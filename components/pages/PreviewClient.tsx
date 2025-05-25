@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-// import Image from "next/image";
+import Image from "next/image";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
 import { cache } from "react";
 
@@ -30,19 +30,19 @@ import Category from "./Category";
 
 const getHeaderCached = cache(getHeader);
 
-// const LoadingState = () => (
-//   <div className="flex flex-col items-center justify-center h-screen">
-//     <Image
-//       src="/images/veda.svg"
-//       width={69}
-//       height={26}
-//       alt="Veda Logo"
-//       className="mb-2"
-//       priority={true}
-//     />
-//     <p className="text-xs font-light">loading preview</p>
-//   </div>
-// );
+const LoadingState = () => (
+  <div className="flex flex-col items-center justify-center h-screen">
+    <Image
+      src="/images/veda.svg"
+      width={69}
+      height={26}
+      alt="Veda Logo"
+      className="mb-2"
+      priority={true}
+    />
+    <p className="text-xs font-light">Something went wrong</p>
+  </div>
+);
 
 function getPreviewData(
   type: "page" | "productOrPdp" | "productLine" | "category",
@@ -108,16 +108,12 @@ export default function PreviewClient({
     ContentstackLivePreview.onEntryChange(getContent);
   }, [path]);
 
-  // if (isLoading) {
-  //   return <LoadingState />;
-  // }
-
   if (error) {
-    return <p className="text-red-600 p-4">Error: {error}</p>;
+    return <LoadingState />;
   }
 
   if (!content) {
-    return <p className="p-4">No content found for this path.</p>;
+    return <LoadingState />;
   }
 
   switch (type) {
