@@ -4,6 +4,7 @@ import { PersonalizeProvider } from "./providers/PersonalizeProvider";
 import { Inter } from "next/font/google";
 import { LyticsTracking } from "@/components/lytics";
 import { Suspense } from "react";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default function RootLayout({
             <Suspense fallback={null}>
               <LyticsTracking />
             </Suspense>
+            <Footer />
           </PersonalizeProvider>
         </main>
       </body>
