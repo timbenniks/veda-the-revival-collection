@@ -61,6 +61,7 @@ export default function Hero({
         className={twMerge(
           "my-4 md:mt-0 px-6 md:px-0 text-center mx-auto",
           "md:max-w-[400px] md:absolute md:top-2/4 md:-translate-y-2/4",
+          "md:text-shadow-sm",
 
           design.copy_location === "left"
             ? "md:left-40 md:right-auto"
@@ -81,7 +82,7 @@ export default function Hero({
         )}
 
         {description && (
-          <p {...($ && $.description)} className="font-light">
+          <p {...($ && $.description)} className="font-light text-lg">
             {description}
           </p>
         )}
@@ -95,7 +96,11 @@ export default function Hero({
                 data-add-direction="horizontal"
               >
                 {ctas.map((ctaInstance: Ctas, index) => (
-                  <Cta {...ctaInstance.cta} key={`cta_${index}`} />
+                  <Cta
+                    {...ctaInstance.cta}
+                    key={`cta_${index}`}
+                    theme={design.theme}
+                  />
                 ))}
               </div>
             )}
