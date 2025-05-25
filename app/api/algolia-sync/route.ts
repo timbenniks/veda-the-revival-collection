@@ -31,13 +31,15 @@ export async function GET() {
         ?.filter((taxonomy) => taxonomy?.taxonomy_uid === "materials")
         .map((taxonomy) => taxonomy?.term_uid);
 
+      const media = product.media && product.media?.[0]?.url;
+
       return {
         objectID: product.uid,
         title: product.title,
         url: product.url,
         description: product.description,
         short_description: product.description,
-        media: `https://res.cloudinary.com/dwfcofnrd/image/fetch/f_auto,q_auto/w_700,h_700,c_auto,g_auto/${product.media?.[0]?.url}` || null,
+        media: media && `https://res.cloudinary.com/dwfcofnrd/image/fetch/f_auto,q_auto/w_700,h_700,c_auto,g_auto/${product.media?.[0]?.url}`,
         price: product.price || null,
         category: product.category?.[0]?.title || null,
         product_line: product.product_line?.[0]?.title || null,

@@ -18,6 +18,13 @@
     border-color: var(--color-gray-200, currentColor);
   }
 
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+  }
+
   body {
     background: #e9e9e9;
   }

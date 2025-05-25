@@ -4,6 +4,7 @@
 
 - /products is an algolia faceted list
 - content assets
+- add to bag
 - footer
 - shopping cart
 - Lytics

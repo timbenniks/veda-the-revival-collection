@@ -2,27 +2,34 @@ import Title from "../atoms/Title";
 import { CSLPAttribute, Product } from "@/types/types";
 import Link from "next/link";
 import MediaItem from "../atoms/MediaItem";
+import { ElementType } from "react";
 
 interface ProductCardProps {
   $?: { [key: string]: CSLPAttribute | undefined };
   product: Product;
   loading?: "lazy" | "eager";
+  algolia?: boolean;
+  as?: ElementType;
 }
 
 export default function ProductCard({
   $,
   product,
   loading = "lazy",
+  algolia = false,
+  as: Component = "li",
 }: ProductCardProps) {
   const { title, short_description, media, url } = product;
 
+  const mediaUrl = algolia ? media : media && media[0].url;
+
   return (
-    <li className="text-left relative group">
-      <div className="aspect-square bg-gray-200 mb-4 overflow-hidden">
-        {media && media[0] && (
+    <Component className="text-left relative group">
+      <div className="aspect-square bg-[#e9e9e9] mb-4 overflow-hidden">
+        {mediaUrl && (
           <MediaItem
             {...($ && $.media)}
-            src={media[0].url}
+            src={mediaUrl as string}
             alt={`Product image for ${title}`}
             width={300}
             height={300}
@@ -59,6 +66,6 @@ export default function ProductCard({
           {short_description}
         </p>
       )}
-    </li>
+    </Component>
   );
 }

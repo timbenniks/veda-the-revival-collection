@@ -2,14 +2,17 @@
 
 import React, { useState } from "react";
 import { LiteClient, liteClient } from "algoliasearch/lite";
-
-import { SearchBox, Hits, RefinementList } from "react-instantsearch";
-
+import {
+  SearchBox,
+  Hits,
+  RefinementList,
+  Configure,
+} from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
-
 import { MegaMenu as MegaMenuProps } from "@/types/types";
 import MegaMenu from "@/components/MegaMenu";
 import Breadcrumb from "@/components/Breadcrumb";
+import ProductCard from "./cards/product";
 interface AlgoliaSearchProps {
   header?: MegaMenuProps;
 }
@@ -20,11 +23,7 @@ const searchClient: LiteClient = liteClient(
 );
 
 function Hit({ hit }: { hit: any }) {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
-      <h3 className="font-medium text-lg">{hit.title}</h3>
-    </div>
-  );
+  return <ProductCard product={hit} algolia={true} as="div" />;
 }
 
 export default function AlgoliaSearch({ header }: AlgoliaSearchProps) {
@@ -47,13 +46,15 @@ export default function AlgoliaSearch({ header }: AlgoliaSearchProps) {
 
       <Breadcrumb links={breadcrumbLinks} />
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="mx-auto p-4 pt-8 bg-white">
         <InstantSearchNext searchClient={searchClient} indexName="products">
-          <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex flex-col md:flex-row gap-4">
             <aside className="w-full md:w-64 shrink-0">
               {facetFilters.map((facet) => (
                 <div key={facet.attribute} className="mb-6">
-                  <h4 className="font-medium text-lg mb-2">{facet.label}</h4>
+                  <h4 className="font-light uppercase text-lg mb-2">
+                    {facet.label}
+                  </h4>
                   <RefinementList
                     attribute={facet.attribute}
                     classNames={{ root: "text-sm" }}
@@ -61,18 +62,22 @@ export default function AlgoliaSearch({ header }: AlgoliaSearchProps) {
                 </div>
               ))}
             </aside>
-            <main className="flex-1">
+            <main className="flex-1 ">
+              <Configure hitsPerPage={100} />
               <SearchBox
                 placeholder="Search products..."
                 classNames={{
-                  root: "w-full mb-6",
-                  form: "p-2 border rounded",
+                  root: "w-full mb-4",
+                  form: "flex space-x-2",
+                  input: "w-80 p-1 bg-white border border-[#3b2e1e]",
+                  submitIcon: "h-4 w-4 relative -left-8",
+                  resetIcon: "h-4 w-4 relative -left-6 cursor-pointer",
                 }}
               />
               <Hits
                 hitComponent={Hit}
                 classNames={{
-                  root: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4",
+                  list: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10",
                 }}
               />
             </main>

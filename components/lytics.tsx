@@ -1,6 +1,7 @@
 "use client";
 
 import { JSX, useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface Jstag {
   init: (config: any) => Jstag;
@@ -44,6 +45,9 @@ export const useJstag = (): Jstag => {
           poll: {
             disabled: false,
           },
+          disabled: false,
+          personalizeProjectId: process.env.NEXT_PUBLIC_CONTENTSTACK_LYTICS_TAG,
+          baseUrl: "https://eu-personalize-edge.contentstack.com",
         },
       },
     });
@@ -75,12 +79,14 @@ export const useEntity = (): Entity | null => {
 
 export function LyticsTracking(): JSX.Element {
   const jstag = useJstag();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       jstag.pageView();
     }
-  }, [jstag]);
+  }, [jstag, pathname, searchParams]);
 
   return <></>;
 }

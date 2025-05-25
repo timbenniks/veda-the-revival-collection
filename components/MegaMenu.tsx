@@ -202,9 +202,9 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
             </div>
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <button>
+              <Link href="/products">
                 <Search className="w-5 h-5" />
-              </button>
+              </Link>
               <button>
                 <User className="w-5 h-5" />
               </button>
@@ -250,7 +250,7 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
                   uppercase={true}
                   size="lg"
                   classes="mb-4 text-2xl"
-                  as={"h3"}
+                  as={"p"}
                 />
 
                 <div className="space-y-4">
