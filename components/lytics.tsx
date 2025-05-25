@@ -72,7 +72,7 @@ export const useEntity = (): Entity | null => {
       };
     }
     return undefined;
-  }, []);
+  }, [jstag]);
 
   return entity;
 };

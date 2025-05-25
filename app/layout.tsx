@@ -3,6 +3,7 @@ import "./globals.css";
 import { PersonalizeProvider } from "./providers/PersonalizeProvider";
 import { Inter } from "next/font/google";
 import { LyticsTracking } from "@/components/lytics";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,7 +37,9 @@ export default function RootLayout({
         <main className="max-w-[1440px] mx-auto">
           <PersonalizeProvider>
             {children}
-            <LyticsTracking />
+            <Suspense fallback={null}>
+              <LyticsTracking />
+            </Suspense>
           </PersonalizeProvider>
         </main>
       </body>
