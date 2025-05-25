@@ -48,7 +48,7 @@ export default function AlgoliaSearch({ header }: AlgoliaSearchProps) {
 
       <div className="mx-auto p-4 pt-8 bg-white">
         <InstantSearchNext searchClient={searchClient} indexName="products">
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col md:flex-row gap-10">
             <aside className="w-full md:w-64 shrink-0">
               {facetFilters.map((facet) => (
                 <div key={facet.attribute} className="mb-6">
@@ -57,7 +57,15 @@ export default function AlgoliaSearch({ header }: AlgoliaSearchProps) {
                   </h4>
                   <RefinementList
                     attribute={facet.attribute}
-                    classNames={{ root: "text-sm" }}
+                    sortBy={["name"]}
+                    classNames={{
+                      root: "text-sm",
+                      item: "mb-1",
+                      label: "flex w-full cursor-pointer font-light",
+                      checkbox: "mr-1",
+                      count:
+                        "ml-2 bg-[#e9e9e9] items-center justify-center text-xs rounded-full font-light h-4 px-1 space-x-1 relative top-[3px]",
+                    }}
                   />
                 </div>
               ))}

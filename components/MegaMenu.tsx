@@ -51,7 +51,7 @@ function FeaturedProductDisplay({
           uppercase={true}
           size="lg"
           classes="mb-2 text-2xl"
-          as={"h3"}
+          as={"p"}
         />
 
         <p className="text-white font-light text-sm mb-6">
@@ -337,9 +337,9 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
           </div>
           {/* Mobile Collections Section */}
           <div className="pt-8 border-t border-[#4a3b29]">
-            <h3 className="text-lg tracking-widest text-white mb-8">
-              COLLECTIONS
-            </h3>
+            <p className="text-lg tracking-widest text-white mb-8">
+              Product Lines
+            </p>
             <div className="space-y-6">
               {(
                 (megaMenuData &&

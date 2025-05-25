@@ -21,7 +21,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   const { title, short_description, media, url } = product;
 
-  const mediaUrl = algolia ? media : media && media[0].url;
+  const mediaUrl = algolia ? media : media && media[0] && media[0]?.url;
 
   return (
     <Component className="text-left relative group">
