@@ -305,10 +305,20 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
         <div className="p-6 h-full overflow-y-auto">
           {/* Mobile Header */}
           <div className="flex items-center justify-between mb-12">
-            <h1 className="text-2xl font-normal tracking-wider text-white">
-              VEDA
-            </h1>
+            {logo && (
+              <Link href="/">
+                <Image
+                  {...($ && $.logo)}
+                  src={logo.url}
+                  alt="Veda Logo"
+                  width={69}
+                  height={26}
+                  loading="lazy"
+                />
+              </Link>
+            )}
             <button
+              name="close menu icon"
               className="text-white hover:bg-[#4a3b29]"
               onClick={() => setIsMobileMenuOpen(false)}
             >
