@@ -26,9 +26,9 @@ export default function Footer() {
                 className="mb-4"
               />
               <p className="text-white font-light mt-3 text-sm leading-relaxed">
-                Crafting timeless jewelry pieces that celebrate life's most
-                precious moments. Discover our collection of handcrafted luxury
-                jewelry.
+                An upscale unisex jewelry line featuring four distinct sets
+                inspired by early 2000s pop culture, each reinterpreted with
+                modern, understated luxury.
               </p>
             </div>
           </div>
