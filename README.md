@@ -2,11 +2,11 @@
 
 ## TODO
 
-- content assets
+- content and assets for all product lines
+- better homepage content and assets
 - add to bag
-- shopping cart
-- become known user
-- Lytics
+- become known user and send data to Lytics
+- Let Lytics inform audiences and variants
 
 Personalization
 
