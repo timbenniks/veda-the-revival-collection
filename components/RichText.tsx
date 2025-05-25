@@ -22,7 +22,7 @@ export default function RichText({
           uppercase={true}
           size="lg"
           classes="mb-2"
-          as={title_tag || "h3"}
+          as={title_tag || "p"}
         />
       )}
 
