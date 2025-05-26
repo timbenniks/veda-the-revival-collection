@@ -2,7 +2,6 @@
 
 ## TODO
 
-- content and assets for all product lines
 - better homepage content and assets
 - add to bag
 - become known user and send data to Lytics

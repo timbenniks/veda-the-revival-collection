@@ -1,3 +1,13 @@
+type BuildTuple<T, N extends number, R extends T[] = []> = R["length"] extends N
+  ? R
+  : BuildTuple<T, N, [...R, T]>;
+
+type TuplePrefixes<T extends any[]> = T extends [any, ...infer Rest]
+  ? T | TuplePrefixes<Rest extends any[] ? Rest : []>
+  : [];
+
+type MaxTuple<T, N extends number> = TuplePrefixes<BuildTuple<T, N>>;
+
 export interface PublishDetails {
   environment: string;
   locale: string;
@@ -16,11 +26,12 @@ export interface File {
   tags: string[];
   filename: string;
   url: string;
-  ACL: any[];
+  ACL: any[] | object;
   is_dir: boolean;
   parent_uid: string;
   _version: number;
   title: string;
+  _metadata?: object;
   publish_details: PublishDetails;
 }
 
@@ -36,6 +47,28 @@ export interface Taxonomy {
   non_localizable: boolean;
 }
 
+export interface JSONRTENode {
+  type: string;
+  uid: string;
+  _version: number;
+  attrs: Record<string, any>;
+  children?: JSONRTENode[];
+  text?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  src?: string;
+  alt?: string;
+  href?: string;
+  target?: string;
+  embed?: {
+    type: string;
+    uid: string;
+    _version: number;
+    attrs: Record<string, any>;
+  };
+}
+
 export interface SystemFields {
   uid?: string;
   created_at?: string;
@@ -48,67 +81,23 @@ export interface SystemFields {
   _version?: number;
   _in_progress?: boolean;
   locale?: string;
-  publish_details?: PublishDetails[];
+  publish_details?: PublishDetails;
   title?: string;
 }
 
-export interface Media {
-  /** Version */
-  _version?: 10;
-  image: File;
-  width?: number | null;
-  height?: number | null;
-  crop?: boolean;
-  widths?: number[] | null;
+export interface Cards {
+  card: Card;
 }
 
 export interface List {
   /** Version */
-  _version?: 6;
+  _version: number;
   title?: string;
   title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
   description?: string;
-  load_first_image_eager?: boolean;
+  load_first_image_eager: boolean;
   reference: (ProductLine | Product | Category)[];
-}
-
-export interface Ctas {
-  cta: {
-    text?: string;
-    link?: Link;
-  };
-}
-
-export interface RichText {
-  /** Version */
-  _version?: 18;
-  title?: string;
-  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
-  content?: any;
-  alternative_content?: string;
-  ctas?: Ctas[];
-}
-
-export interface PageHeader {
-  /** Version */
-  _version?: 2;
-  reference: Header[];
-}
-
-export interface Hero {
-  /** Version */
-  _version?: 19;
-  title?: string;
-  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
-  description?: string;
-  ctas?: Ctas[];
-  image?: File | null;
-  video?: File | null;
-  design?: {
-    copy_location: "left" | "right";
-    overlay_opacity: number;
-    theme: "dark" | "light";
-  };
+  cards?: Cards[];
 }
 
 export interface SideA {
@@ -125,9 +114,80 @@ export interface SideB {
 
 export interface TwoColumn {
   /** Version */
-  _version?: 12;
+  _version: number;
   side_a?: SideA[];
   side_b?: SideB[];
+}
+
+export interface Card {
+  /** Version */
+  _version: number;
+  title?: string;
+  description?: string;
+  image?: File | null;
+  link?: Link;
+}
+
+export interface Media {
+  /** Version */
+  _version: number;
+  image: File;
+  width?: number | null;
+  height?: number | null;
+  crop: boolean;
+  widths?: number[] | null;
+}
+
+export interface Ctas {
+  cta: {
+    text?: string;
+    link?: Link;
+  };
+}
+
+export interface RichText {
+  /** Version */
+  _version: number;
+  title?: string;
+  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
+  content?: {
+    type: string;
+    uid: string;
+    _version: number;
+    attrs: Record<string, any>;
+    children: JSONRTENode[];
+  };
+  alternative_content?: string;
+  ctas?: Ctas[];
+}
+
+export interface PageHeader {
+  /** Version */
+  _version: number;
+  reference: Header[];
+}
+
+export interface Ctas {
+  cta: {
+    text?: string;
+    link?: Link;
+  };
+}
+
+export interface Hero {
+  /** Version */
+  _version: number;
+  title?: string;
+  title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
+  description?: string;
+  ctas?: Ctas[];
+  image?: File | null;
+  video?: File | null;
+  design?: {
+    copy_location: "left" | "right";
+    overlay_opacity: number;
+    theme: "dark" | "light";
+  };
 }
 
 export interface Components {
@@ -141,7 +201,7 @@ export interface Components {
 
 export interface Pdp extends SystemFields {
   /** Version */
-  _version?: 8;
+  _version: number;
   title: string;
   url?: string;
   description?: string;
@@ -155,49 +215,62 @@ export interface Links {
     label: string;
     item?: Link;
     reference?: (ProductLine | Product | Page | Category)[];
+    featured_product?: Product[];
+    show_product_lines: boolean;
+    show_all_products_links: boolean;
   };
 }
 
 export interface Header extends SystemFields {
   /** Version */
-  _version?: 9;
+  _version: number;
   title: string;
   logo?: File | null;
   links?: Links[];
 }
 
+export interface Components1 {
+  hero: Hero;
+  list: List;
+  two_column: TwoColumn;
+  rich_text: RichText;
+}
+
 export interface Page extends SystemFields {
   /** Version */
-  _version?: 9;
+  _version: number;
   title: string;
   url?: string;
   description?: string;
   image?: File | null;
-  components?: Components[];
+  components?: Components1[];
 }
 
 export interface Category extends SystemFields {
   /** Version */
-  _version?: 5;
+  _version: number;
   title: string;
   url?: string;
   description?: string;
   media?: File | null;
   products?: Product[];
+  taxonomies?: Taxonomy[];
 }
 
 export interface ProductLine extends SystemFields {
   /** Version */
-  _version?: 7;
+  _version: number;
   title: string;
   url?: string;
   description?: string;
+  image?: File | null;
   products?: Product[];
+  taxonomies?: Taxonomy[];
 }
 
 export interface Product extends SystemFields {
   /** Version */
-  _version?: 13;
+  _version: number;
   title: string;
   url?: string;
   short_description?: string;

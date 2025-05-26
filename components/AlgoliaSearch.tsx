@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { LiteClient, liteClient } from "algoliasearch/lite";
 import {
-  SearchBox,
+  //SearchBox,
   Hits,
   RefinementList,
   Configure,

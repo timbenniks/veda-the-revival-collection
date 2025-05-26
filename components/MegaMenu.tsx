@@ -379,19 +379,19 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
           <div className="pt-8 mt-12 border-t border-[#4a3b29]">
             <div className="space-y-4">
               <Link
-                href="/customer-service"
+                href="#"
                 className="block text-white text-sm tracking-wide hover:text-gray-300 transition-colors no-underline hover:underline"
               >
                 CUSTOMER SERVICE
               </Link>
               <Link
-                href="/size-guide"
+                href="#"
                 className="block text-white text-sm tracking-wide hover:text-gray-300 transition-colors no-underline hover:underline"
               >
                 SIZE GUIDE
               </Link>
               <Link
-                href="/care-instructions"
+                href="#"
                 className="block text-white text-sm tracking-wide hover:text-gray-300 transition-colors no-underline hover:underline"
               >
                 CARE INSTRUCTIONS
