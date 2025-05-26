@@ -1,11 +1,15 @@
+"use client";
+
 import { Product as ProductProps } from "@/types/types";
 import Title from "./atoms/Title";
 import MediaItem from "./atoms/MediaItem";
 import Link from "next/link";
-import { isPreview } from "@/lib/helpers";
+import { isPreview, renderCurrency } from "@/lib/helpers";
 import React from "react";
+import { useCart } from "@/app/providers/cartContext";
 
 export default function ProductDetails({ product }: { product: ProductProps }) {
+  const { addToCart } = useCart();
   const { title, description, media, price, product_line, taxonomies, $ } =
     product;
 
@@ -13,12 +17,9 @@ export default function ProductDetails({ product }: { product: ProductProps }) {
     ?.filter((taxonomy) => taxonomy?.taxonomy_uid === "materials")
     .map((taxonomy) => taxonomy?.term_uid);
 
-  function renderCurrency(price: number) {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(price / 100);
-  }
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -64,7 +65,10 @@ export default function ProductDetails({ product }: { product: ProductProps }) {
             </p>
           )}
           <div className="flex justify-around mb-4 px-12 items-center">
-            <button className="block px-2 py-1 border-b border-black no-underline uppercase bg-black text-white hover:text-black hover:bg-white cursor-pointer">
+            <button
+              className="block px-2 py-1 border-b border-black no-underline uppercase bg-black text-white hover:text-black hover:bg-white cursor-pointer"
+              onClick={handleAddToCart}
+            >
               BUY NOW
             </button>
             {price && (

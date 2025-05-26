@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { PersonalizeProvider } from "./providers/PersonalizeProvider";
+import { CartProvider } from "@/app/providers/cartContext";
 import { Inter } from "next/font/google";
 import { LyticsTracking } from "@/components/lytics";
 import { Suspense } from "react";
@@ -36,10 +37,12 @@ export default function RootLayout({
       <body>
         <main className="max-w-[1440px] mx-auto">
           <PersonalizeProvider>
-            {children}
-            <Suspense fallback={null}>
-              <LyticsTracking />
-            </Suspense>
+            <CartProvider>
+              {children}
+              <Suspense fallback={null}>
+                <LyticsTracking />
+              </Suspense>
+            </CartProvider>
           </PersonalizeProvider>
         </main>
       </body>

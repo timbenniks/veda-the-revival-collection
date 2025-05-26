@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-import { ChevronDown, Search, ShoppingBag, User, Menu, X } from "lucide-react";
-
+import { ChevronDown, Search, User, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { MegaMenu as MegaMenuProps } from "@/types/types";
 import React from "react";
 import Title from "./atoms/Title";
 import MediaItem from "./atoms/MediaItem";
+import { useCart } from "@/app/providers/cartContext";
+import ShoppingCart from "./ShoppingCart";
 
 function FeaturedProductDisplay({
   featuredProduct,
@@ -72,6 +72,7 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const { $, logo, links } = header;
   const megaMenuData = links?.map((link: any) => {
@@ -108,6 +109,11 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
     }
   };
 
+  const handleOverlayClick = () => {
+    setActiveMenu(null);
+    setIsMenuOpen(false);
+  };
+
   const menuPanelRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
 
@@ -121,33 +127,26 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
       }
     };
 
-    const handleClickOutside = (e: MouseEvent) => {
-      const menuPanel = menuPanelRef.current;
-      const nav = navRef.current;
-      if (
-        menuPanel &&
-        nav &&
-        !menuPanel.contains(e.target as Node) &&
-        !nav.contains(e.target as Node)
-      ) {
-        setActiveMenu(null);
-        setIsMenuOpen(false);
-      }
-    };
-
     document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMenuOpen]);
 
   return (
     <div className={`bg-[#3b2e1e] text-white font-light sticky top-0 z-50`}>
+      {/* Full-page overlay when mega menu is open */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 z-10"
+          onClick={handleOverlayClick}
+          aria-hidden="true"
+        />
+      )}
+
       <nav
-        className="bg-[#3b2e1e] header border-b border-[#624f38]"
+        className="bg-[#3b2e1e] header border-b border-[#624f38] relative z-20"
         ref={navRef}
       >
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
@@ -208,16 +207,10 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
               <button name="user account icon" title="user account icon">
                 <User className="w-5 h-5" />
               </button>
-              <button
-                name="shopping bag icon"
-                title="shopping bag icon"
-                className="relative"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                <span className="absolute -top-2 -right-2 bg-white text-[#3b2e1e] text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
-                  0
-                </span>
-              </button>
+              <ShoppingCart
+                isCartOpen={isCartOpen}
+                setIsCartOpen={setIsCartOpen}
+              />
               {/* Mobile Menu Button */}
               <button
                 className="md:hidden text-white"
@@ -317,13 +310,19 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
                 />
               </Link>
             )}
-            <button
-              name="close menu icon"
-              className="text-white hover:bg-[#4a3b29]"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <X className="w-6 h-6" />
-            </button>
+            <div className="flex items-center space-x-4">
+              <ShoppingCart
+                isCartOpen={isCartOpen}
+                setIsCartOpen={setIsCartOpen}
+              />
+              <button
+                name="close menu icon"
+                className="text-white hover:bg-[#4a3b29]"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
           </div>
           {/* Mobile Category Navigation */}
           <div className="space-y-6 mb-12">

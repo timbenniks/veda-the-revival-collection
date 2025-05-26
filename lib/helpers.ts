@@ -73,5 +73,12 @@ export function createOgTags(content: Page | Pdp | Product): Metadata {
   };
 }
 
+export function renderCurrency(price: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(price / 100);
+}
+
 export const isPreview = process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === "true";
 export const useCloudinary = process.env.NEXT_PUBLIC_CONTENTSTACK_CLOUDINARY === "true";
