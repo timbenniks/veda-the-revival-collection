@@ -24,8 +24,15 @@ export default function Hero({
           loop
           muted
           playsInline
-          src={video?.url}
-          poster={image?.url}
+          src={`https://res.cloudinary.com/dwfcofnrd/video/fetch/f_auto,q_auto/c_crop,w_${1440},h_${635}/${
+            video?.url
+          }`}
+          poster={
+            image?.url &&
+            `https://res.cloudinary.com/dwfcofnrd/image/fetch/f_auto,q_auto/c_crop,c_auto,w_${1440},h_${635}/${
+              image?.url
+            }`
+          }
           className="h-full w-full object-cover object-center"
         />
       ) : (

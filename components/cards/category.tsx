@@ -27,9 +27,9 @@ export default function CategoryCard({
             width={293}
             height={440}
             ratio={293 / 440}
-            sizes="100vw, md:20vw"
+            sizes="50vw, md:20vw"
             loading={loading}
-            widths={[267, 480, 700]}
+            widths={[150, 267, 480, 700]}
             className="w-full h-auto aspect-[293/440] transition-transform duration-1200 ease-out group-hover:scale-105"
           />
         )}

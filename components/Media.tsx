@@ -12,8 +12,8 @@ export default function Media({ image, width, height, widths, $ }: MediaProps) {
       ratio={(width || 500) / (height || 500)}
       loading="lazy"
       fit={"crop"}
-      sizes="100vw,lg:50vw"
-      widths={widths || [480, 680, 960, 1200, 1440, 1800]}
+      sizes="100vw,md:50vw"
+      widths={widths || [380, 480, 680, 960, 1200, 1440, 1800]}
     />
   );
 }

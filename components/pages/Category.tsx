@@ -7,6 +7,7 @@ import List from "@/components/List";
 import MediaItem from "@/components/atoms/MediaItem";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "../MegaMenu";
+import Footer from "../Footer";
 
 export default function Category({
   entry,
@@ -60,6 +61,7 @@ export default function Category({
           />
         </>
       )}
+      <Footer />
     </>
   );
 }

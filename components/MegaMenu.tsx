@@ -202,13 +202,17 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
             </div>
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <Link href="/products">
+              <Link href="/products" title="search icon">
                 <Search className="w-5 h-5" />
               </Link>
-              <button>
+              <button name="user account icon" title="user account icon">
                 <User className="w-5 h-5" />
               </button>
-              <button className="relative">
+              <button
+                name="shopping bag icon"
+                title="shopping bag icon"
+                className="relative"
+              >
                 <ShoppingBag className="w-5 h-5" />
                 <span className="absolute -top-2 -right-2 bg-white text-[#3b2e1e] text-xs rounded-full w-4 h-4 flex items-center justify-center font-medium">
                   0
@@ -217,6 +221,7 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
               {/* Mobile Menu Button */}
               <button
                 className="md:hidden text-white"
+                name="toggle menu icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 {isMobileMenuOpen ? (
@@ -300,10 +305,20 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
         <div className="p-6 h-full overflow-y-auto">
           {/* Mobile Header */}
           <div className="flex items-center justify-between mb-12">
-            <h1 className="text-2xl font-normal tracking-wider text-white">
-              VEDA
-            </h1>
+            {logo && (
+              <Link href="/">
+                <Image
+                  {...($ && $.logo)}
+                  src={logo.url}
+                  alt="Veda Logo"
+                  width={69}
+                  height={26}
+                  loading="lazy"
+                />
+              </Link>
+            )}
             <button
+              name="close menu icon"
               className="text-white hover:bg-[#4a3b29]"
               onClick={() => setIsMobileMenuOpen(false)}
             >

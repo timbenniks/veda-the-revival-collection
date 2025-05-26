@@ -35,8 +35,8 @@ export default function ProductCard({
             height={300}
             ratio={1}
             loading={loading}
-            sizes="100vw, md:20vw"
-            widths={[267, 480, 700]}
+            sizes="50vw, md:20vw"
+            widths={[150, 267, 480, 700]}
             className="w-full h-auto aspect-square transition-transform duration-1200 ease-out group-hover:scale-105"
           />
         )}
