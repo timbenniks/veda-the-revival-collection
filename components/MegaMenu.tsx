@@ -8,7 +8,6 @@ import { MegaMenu as MegaMenuProps } from "@/types/types";
 import React from "react";
 import Title from "./atoms/Title";
 import MediaItem from "./atoms/MediaItem";
-import { useCart } from "@/app/providers/cartContext";
 import ShoppingCart from "./ShoppingCart";
 
 function FeaturedProductDisplay({
