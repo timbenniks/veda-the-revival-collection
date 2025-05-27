@@ -46,6 +46,21 @@ export interface Taxonomy {
   non_localizable: boolean;
 }
 
+export interface Card {
+  _metadata: any;
+  uid: string;
+  $: { [key: string]: CSLPAttribute | undefined; }
+  _version: number;
+  title?: string;
+  description?: string;
+  image?: File | null;
+  link?: Link;
+}
+
+export interface Cards {
+  card: Card;
+}
+
 export interface List {
   uid: string;
   $: { [key: string]: CSLPAttribute | undefined; }
@@ -54,7 +69,8 @@ export interface List {
   title_tag?: "h1" | "h2" | "h3" | "h4";
   description?: string;
   load_first_image_eager: boolean;
-  reference: (ProductLine | Product | Category)[];
+  reference?: (ProductLine | Product | Category)[];
+  cards?: Cards[];
 }
 
 export interface Media {
@@ -65,7 +81,7 @@ export interface Media {
   width?: number | null;
   height?: number | null;
   crop?: boolean;
-  widths?: number[];
+  widths?: number[] | null;
 }
 
 export type Cta = {
@@ -119,7 +135,13 @@ export interface RichText {
   _version?: number;
   title?: string;
   title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
-  content?: any;
+  content?: {
+    type: string;
+    uid: string;
+    _version: number;
+    attrs: Record<string, any>;
+    children: JSONRTENode[];
+  };
   alternative_content?: string;
   ctas?: Ctas[];
 }
@@ -226,4 +248,26 @@ export interface Pdp {
 export interface MegaMenu {
   header: Header,
   product_lines: ProductLine[]
+}
+
+export interface JSONRTENode {
+  type: string;
+  uid: string;
+  _version: number;
+  attrs: Record<string, any>;
+  children?: JSONRTENode[];
+  text?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  src?: string;
+  alt?: string;
+  href?: string;
+  target?: string;
+  embed?: {
+    type: string;
+    uid: string;
+    _version: number;
+    attrs: Record<string, any>;
+  };
 }

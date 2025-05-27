@@ -7,3 +7,6 @@
   - UTM Campaign for valentines day change content on homepage
 - Let Lytics inform audiences and variants
 - Become known user and send data to Lytics
+
+- image for: Lovestruck Ring + Orbit Ring stacked on a hand, forming a modern heart.
+- image for: Memory Charm Bracelet nestled in a white box tied with a red ribbon.

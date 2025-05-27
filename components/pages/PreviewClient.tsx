@@ -40,7 +40,7 @@ const LoadingState = () => (
       className="mb-2"
       priority={true}
     />
-    <p className="text-xs font-light">Something went wrong</p>
+    <p className="text-xs font-light">Loading...</p>
   </div>
 );
 

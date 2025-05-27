@@ -96,7 +96,7 @@ export interface List {
   title_tag?: ("h1" | "h2" | "h3" | "h4") | null;
   description?: string;
   load_first_image_eager: boolean;
-  reference: (ProductLine | Product | Category)[];
+  reference?: (ProductLine | Product | Category)[];
   cards?: Cards[];
 }
 

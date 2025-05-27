@@ -5,6 +5,7 @@ import CategoryCard from "./cards/category";
 import { List as BaseListProps, Product, Category } from "@/types/types";
 import { twMerge } from "tailwind-merge";
 import React from "react";
+import Static from "./cards/static";
 
 interface ListProps extends BaseListProps {
   cslpName?: string;
@@ -16,18 +17,11 @@ export default function List({
   title_tag,
   description,
   reference,
+  cards,
   load_first_image_eager,
   $,
   cslpName = "reference",
 }: ListProps) {
-  const getGridColumns = () => {
-    if (reference.length <= 3) {
-      return `md:grid-cols-3`;
-    }
-
-    return "md:grid-cols-4";
-  };
-
   return (
     <div className="mx-auto bg-white text-center p-10">
       {title && (
@@ -51,11 +45,30 @@ export default function List({
         </p>
       )}
 
-      {reference && reference.length && (
+      {cards && (
         <ul
           className={twMerge(
             "mt-8 grid grid-cols-2 gap-5 md:gap-10",
-            getGridColumns(),
+            cards.length <= 3 ? "md:grid-cols-3" : "md:grid-cols-4",
+            "justify-around md:px-24"
+          )}
+          {...($ && $[cslpName])}
+        >
+          {cards.map((card) => (
+            <Static
+              key={card.card._metadata.uid}
+              $={card.card.$}
+              card={card.card}
+            />
+          ))}
+        </ul>
+      )}
+
+      {reference && (
+        <ul
+          className={twMerge(
+            "mt-8 grid grid-cols-2 gap-5 md:gap-10",
+            reference.length <= 3 ? "md:grid-cols-3" : "md:grid-cols-4",
             "justify-around md:px-24"
           )}
           {...($ && $[cslpName])}
