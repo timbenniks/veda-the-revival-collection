@@ -30,7 +30,7 @@ export default function RichText({
         <div
           {...($ && $.alternative_content)}
           dangerouslySetInnerHTML={{ __html: alternative_content }}
-          className="font-light"
+          className="font-light richtext-content"
         />
       ) : (
         <>
@@ -38,7 +38,7 @@ export default function RichText({
             <RichTextRenderer
               json={content}
               {...($ && $.content)}
-              className="font-light"
+              className="font-light richtext-content"
             />
           ) : null}
         </>

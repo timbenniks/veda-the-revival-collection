@@ -40,6 +40,12 @@
   .header {
     backdrop-filter: blur(6px);
   }
+
+  .richtext-content {
+    p {
+      margin-bottom: 1rem;
+    }
+  }
 }
 
 @theme inline {
