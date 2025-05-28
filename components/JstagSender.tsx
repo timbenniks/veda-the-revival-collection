@@ -10,9 +10,8 @@ interface JstagSenderProps {
 type Entity = any;
 
 export function JstagSender({ data }: JstagSenderProps) {
+  const jstag = useJstag();
   useEffect(() => {
-    const jstag = useJstag();
-
     if (data && Object.keys(data).length > 0) {
       jstag.send(data);
     }
@@ -23,7 +22,7 @@ export function JstagSender({ data }: JstagSenderProps) {
     });
 
     console.log("[lytics: sending data]", data);
-  }, [data]);
+  }, [data, jstag]);
 
   return null;
 }
