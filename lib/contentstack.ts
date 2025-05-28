@@ -41,13 +41,14 @@ export async function getPage(url: string, variantParam?: string): Promise<Page>
     .contentType("page")
     .entry()
 
+  pageQuery.addParams({ include_all: true });
+  pageQuery.addParams({ include_all_depth: 2 });
+
   if (variantParam) {
     const variantAlias = Personalize.variantParamToVariantAliases(variantParam).join(',');
 
     pageQuery.addParams({ include_dimension: true });
     pageQuery.addParams({ include_applied_variants: true });
-    pageQuery.addParams({ include_all: true });
-    pageQuery.addParams({ include_all_depth: 2 });
     pageQuery.variants(variantAlias);
   }
 

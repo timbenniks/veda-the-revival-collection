@@ -8,6 +8,7 @@ import MediaItem from "@/components/atoms/MediaItem";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "../MegaMenu";
 import Footer from "../Footer";
+import JstagSender from "../JstagSender";
 
 export default function Category({
   entry,
@@ -31,6 +32,12 @@ export default function Category({
       />
       {entry && (
         <>
+          <JstagSender
+            data={{
+              category: entry.title.toLowerCase(),
+            }}
+          />
+
           <div className="md:aspect-[1440/635] relative w-full overflow-hidden bg-white">
             {entry.media?.url && (
               <MediaItem

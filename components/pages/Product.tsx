@@ -9,6 +9,7 @@ import List from "@/components/List";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "../MegaMenu";
 import Footer from "../Footer";
+import JstagSender from "@/components/JstagSender";
 
 export default function Page({
   entry,
@@ -44,11 +45,22 @@ export default function Page({
         <MegaMenu header={header.header} product_lines={header.product_lines} />
       )}
 
+      <JstagSender
+        data={{
+          category:
+            entry && "category" in entry && Array.isArray(entry.category)
+              ? entry.category?.[0]?.title?.toLowerCase()
+              : undefined,
+        }}
+      />
+
       <Breadcrumb links={breadcrumbLinks} />
       {entry && (
-        <ProductDetails
-          product={"product" in entry ? entry.product?.[0] || entry : entry}
-        />
+        <>
+          <ProductDetails
+            product={"product" in entry ? entry.product?.[0] || entry : entry}
+          />
+        </>
       )}
 
       {contentType === "product" && entry && "product_line" in entry && (
@@ -88,6 +100,7 @@ export default function Page({
           )}
         </>
       )}
+
       <Footer />
     </>
   );
