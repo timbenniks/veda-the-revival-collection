@@ -46,7 +46,8 @@ export const useJstag = (): Jstag => {
             disabled: false,
           },
           disabled: false,
-          personalizeProjectId: process.env.NEXT_PUBLIC_CONTENTSTACK_LYTICS_TAG,
+          personalizeProjectId:
+            process.env.NEXT_PUBLIC_CONTENTSTACK_PERSONALIZE_UID,
           baseUrl: "https://eu-personalize-edge.contentstack.com",
         },
       },
