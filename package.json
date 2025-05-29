@@ -17,7 +17,12 @@
     "lint": "next lint",
     "tsgen": "npx @contentstack/cli tsgen -o ./types/contentstack.d.ts -a delivery --no-doc --include-system-fields",
     "update-launch-config": "node updateLaunchConfig.mjs",
-    "prebuild": "npm run update-launch-config"
+    "prebuild": "npm run update-launch-config",
+    "install-browsers": "npx ts-node --project scripts/traffic-simulation/tsconfig.json scripts/traffic-simulation/install-browsers.ts",
+    "simulate-traffic": "npx ts-node --project scripts/traffic-simulation/tsconfig.json scripts/traffic-simulation/simulate-visitors.ts",
+    "simulate-traffic:headless": "cross-env HEADLESS=true npx ts-node --project scripts/traffic-simulation/tsconfig.json scripts/traffic-simulation/simulate-visitors.ts",
+    "simulate-profiles": "./scripts/traffic-simulation/run-profiles.sh",
+    "simulate-profiles:install": "./scripts/traffic-simulation/run-profiles.sh --install-browsers"
   },
   "dependencies": {
     "@contentstack/delivery-sdk": "^4.7.0",
@@ -36,14 +41,19 @@
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.37.0",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/node": "^22.15.24",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
+    "@types/xml2js": "^0.4.12",
+    "axios": "^1.4.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.27.0",
     "eslint-config-next": "^15.3.2",
     "postcss": "^8.5.4",
     "tailwindcss": "^4.1.8",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "xml2js": "^0.6.2"
   }
 }

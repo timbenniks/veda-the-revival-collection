@@ -10,7 +10,7 @@ import Title from "@/components/atoms/Title";
 import MediaItem from "@/components/atoms/MediaItem";
 import ShoppingCart from "@/components/ShoppingCart";
 import LyticsExtension from "@/components/LyticsExtension";
-import { useLyticsDevTools } from "@/lib/helpers";
+import { isPreview, useLyticsDevTools } from "@/lib/helpers";
 
 function FeaturedProductDisplay({
   featuredProduct,
@@ -213,7 +213,7 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
                 isCartOpen={isCartOpen}
                 setIsCartOpen={setIsCartOpen}
               />
-              {useLyticsDevTools && (
+              {useLyticsDevTools && !isPreview && (
                 <LyticsExtension
                   isStatsOpen={isStatsOpen}
                   setIsStatsOpen={setIsStatsOpen}

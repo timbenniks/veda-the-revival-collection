@@ -238,7 +238,7 @@ interface LinkEntry extends BaseEntry {
 }
 
 export async function getAllLinks(): Promise<string[]> {
-  const [pages, products, productLines] = await Promise.all([
+  const [pages, products, productLines, categories] = await Promise.all([
     stack
       .contentType('page')
       .entry()
@@ -271,6 +271,7 @@ export async function getAllLinks(): Promise<string[]> {
   const pageUrls = pages.entries?.map(e => e.url) || []
   const productUrls = products.entries?.map(e => e.url) || []
   const productLineUrls = productLines.entries?.map(e => e.url) || []
+  const categoryUrls = categories.entries?.map(e => e.url) || []
 
-  return [...pageUrls, ...productUrls, ...productLineUrls]
+  return [...pageUrls, ...productUrls, ...productLineUrls, ...categoryUrls]
 }
