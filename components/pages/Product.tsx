@@ -9,7 +9,7 @@ import List from "@/components/List";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "../MegaMenu";
 import Footer from "../Footer";
-import JstagSender from "@/components/JstagSender";
+import SendDataToLytics from "@/components/SendDataToLytics";
 
 export default function Page({
   entry,
@@ -45,8 +45,14 @@ export default function Page({
         <MegaMenu header={header.header} product_lines={header.product_lines} />
       )}
 
-      <JstagSender
+      <SendDataToLytics
         data={{
+          product_line:
+            entry &&
+            "product_line" in entry &&
+            Array.isArray(entry.product_line)
+              ? entry.product_line?.[0]?.title?.toLowerCase()
+              : undefined,
           category:
             entry && "category" in entry && Array.isArray(entry.category)
               ? entry.category?.[0]?.title?.toLowerCase()

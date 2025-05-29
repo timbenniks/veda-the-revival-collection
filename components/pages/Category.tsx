@@ -8,7 +8,7 @@ import MediaItem from "@/components/atoms/MediaItem";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "../MegaMenu";
 import Footer from "../Footer";
-import JstagSender from "../JstagSender";
+import SendDataToLytics from "@/components/SendDataToLytics";
 
 export default function Category({
   entry,
@@ -32,7 +32,7 @@ export default function Category({
       />
       {entry && (
         <>
-          <JstagSender
+          <SendDataToLytics
             data={{
               category: entry.title.toLowerCase(),
             }}

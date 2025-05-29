@@ -3,13 +3,13 @@
 import { useEffect } from "react";
 import { useJstag } from "./lytics";
 
-interface JstagSenderProps {
+interface SendDataToLyticsProps {
   data: Record<string, any>;
 }
 
 type Entity = any;
 
-export function JstagSender({ data }: JstagSenderProps) {
+export default function SendDataToLytics({ data }: SendDataToLyticsProps) {
   const jstag = useJstag();
   useEffect(() => {
     if (data && Object.keys(data).length > 0) {
@@ -26,5 +26,3 @@ export function JstagSender({ data }: JstagSenderProps) {
 
   return null;
 }
-
-export default JstagSender;

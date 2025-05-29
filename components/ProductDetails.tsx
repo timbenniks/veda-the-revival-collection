@@ -7,6 +7,7 @@ import Link from "next/link";
 import { isPreview, renderCurrency } from "@/lib/helpers";
 import React from "react";
 import { useCart } from "@/app/providers/cartContext";
+import SendDataToLytics from "./SendDataToLytics";
 
 export default function ProductDetails({ product }: { product: ProductProps }) {
   const { addToCart } = useCart();
@@ -53,6 +54,11 @@ export default function ProductDetails({ product }: { product: ProductProps }) {
                 return (
                   <li key={`material--${index}`} className="text-xs font-light">
                     {material}
+                    <SendDataToLytics
+                      data={{
+                        material,
+                      }}
+                    />
                   </li>
                 );
               })}

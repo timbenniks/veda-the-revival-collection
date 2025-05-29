@@ -7,7 +7,8 @@ import List from "@/components/List";
 import MediaItem from "@/components/atoms/MediaItem";
 import Breadcrumb from "@/components/Breadcrumb";
 import MegaMenu from "@/components/MegaMenu";
-import Footer from "../Footer";
+import Footer from "@/components/Footer";
+import SendDataToLytics from "@/components/SendDataToLytics";
 
 export default function ProductLine({
   entry,
@@ -27,6 +28,11 @@ export default function ProductLine({
           { title: "Products", url: "/products" },
           { title: entry?.title || "", url: entry?.url || "" },
         ]}
+      />
+      <SendDataToLytics
+        data={{
+          product_line: entry.title.toLowerCase(),
+        }}
       />
       {entry && (
         <>
