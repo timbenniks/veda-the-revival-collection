@@ -1,6 +1,6 @@
 {
   "name": "veda-jewelry",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "repository": {
     "type": "git",
@@ -22,27 +22,28 @@
   "dependencies": {
     "@contentstack/delivery-sdk": "^4.7.0",
     "@contentstack/live-preview-utils": "^3.2.2",
-    "@contentstack/personalize-edge-sdk": "^1.0.12",
-    "@timbenniks/contentstack-endpoints": "^1.0.9",
+    "@contentstack/personalize-edge-sdk": "^1.0.15",
+    "@timbenniks/contentstack-endpoints": "^1.0.10",
+    "@uiw/react-json-view": "^2.0.0-alpha.32",
     "algoliasearch": "^5.25.0",
     "dotenv": "^16.5.0",
     "lucide-react": "^0.511.0",
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-instantsearch": "^7.15.7",
-    "react-instantsearch-nextjs": "^0.4.8",
+    "react-instantsearch": "^7.15.8",
+    "react-instantsearch-nextjs": "^0.4.9",
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.7",
-    "@types/node": "^22.15.21",
-    "@types/react": "^19.1.4",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/node": "^22.15.24",
+    "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
     "eslint": "^9.27.0",
     "eslint-config-next": "^15.3.2",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.7",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8",
     "typescript": "^5.8.3"
   }
 }

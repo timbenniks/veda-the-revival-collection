@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { X, LockIcon, Info } from "lucide-react";
-// import { JsonViewer } from "@textea/json-viewer";
+import JsonView from "@uiw/react-json-view";
 
 import { useJstag } from "./lytics";
 type Entity = any;
@@ -415,16 +415,14 @@ export default function LyticsExtension({
                   selectedTab === "All Attributes" ? "" : "hidden"
                 } p-4`}
               >
-                {/* <JsonViewer
-                  value={lyticsProfileData?.data?.user}
-                  rootName={"user"}
-                  enableClipboard={false}
-                  displayDataTypes={false}
-                  theme={"light"}
-                /> */}
-                <pre className="whitespace-pre-wrap break-words">
-                  {JSON.stringify(lyticsProfileData?.data?.user, null, 2)}
-                </pre>
+                {lyticsProfileData && (
+                  <JsonView
+                    collapsed={1}
+                    enableClipboard={false}
+                    displayObjectSize={false}
+                    value={lyticsProfileData?.data?.user}
+                  />
+                )}
               </div>
             </div>
           </div>
