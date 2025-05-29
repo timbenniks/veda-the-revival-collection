@@ -15,7 +15,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Veda: The Revival Collection",
-  metadataBase: new URL("https://veda.eu-contentstackapps.com"),
+  metadataBase: new URL(
+    "https://veda-the-revival-collection-production.eu-contentstackapps.com"
+  ),
   openGraph: {
     siteName: "Veda: The Revival Collection",
     locale: "en_US",

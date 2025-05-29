@@ -82,3 +82,4 @@ export function renderCurrency(price: number) {
 
 export const isPreview = process.env.NEXT_PUBLIC_CONTENTSTACK_PREVIEW === "true";
 export const useCloudinary = process.env.NEXT_PUBLIC_CONTENTSTACK_CLOUDINARY === "true";
+export const useLyticsDevTools = process.env.NEXT_PUBLIC_CONTENTSTACK_LYTICS_DEVTOOLS === "true";

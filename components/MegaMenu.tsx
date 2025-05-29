@@ -6,9 +6,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { MegaMenu as MegaMenuProps } from "@/types/types";
 import React from "react";
-import Title from "./atoms/Title";
-import MediaItem from "./atoms/MediaItem";
-import ShoppingCart from "./ShoppingCart";
+import Title from "@/components/atoms/Title";
+import MediaItem from "@/components/atoms/MediaItem";
+import ShoppingCart from "@/components/ShoppingCart";
+import LyticsExtension from "@/components/LyticsExtension";
+import { useLyticsDevTools } from "@/lib/helpers";
 
 function FeaturedProductDisplay({
   featuredProduct,
@@ -72,6 +74,7 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isStatsOpen, setIsStatsOpen] = useState(false);
 
   const { $, logo, links } = header;
   const megaMenuData = links?.map((link: any) => {
@@ -210,6 +213,12 @@ export default function MegaMenu({ header, product_lines }: MegaMenuProps) {
                 isCartOpen={isCartOpen}
                 setIsCartOpen={setIsCartOpen}
               />
+              {useLyticsDevTools && (
+                <LyticsExtension
+                  isStatsOpen={isStatsOpen}
+                  setIsStatsOpen={setIsStatsOpen}
+                />
+              )}
               {/* Mobile Menu Button */}
               <button
                 className="md:hidden text-white"

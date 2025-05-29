@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/app/providers/cartContext";
 import Link from "next/link";
@@ -14,10 +13,9 @@ export default function ShoppingCart({
   setIsCartOpen,
 }: ShoppingCartProps) {
   const { cartCount, cartItems, removeFromCart } = useCart();
-  const cartRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="relative" data-cart-component="true">
+    <div className="relative">
       <button
         name="shopping bag icon"
         title="shopping bag icon"
@@ -32,11 +30,7 @@ export default function ShoppingCart({
 
       {/* Mini Cart Dropdown */}
       {isCartOpen && (
-        <div
-          ref={cartRef}
-          className="absolute right-0 mt-2 w-72 bg-white shadow-lg overflow-hidden z-50"
-          data-cart-component="true"
-        >
+        <div className="absolute right-0 mt-2 w-72 bg-white shadow-lg overflow-hidden z-50">
           <div className="p-4">
             <div className="flex justify-between items-center mb-4">
               <p className="text-[#3b2e1e] font-medium">
@@ -46,7 +40,7 @@ export default function ShoppingCart({
                 onClick={() => setIsCartOpen(false)}
                 className="text-gray-600 cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 

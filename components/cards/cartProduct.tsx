@@ -20,10 +20,7 @@ export default function CartProductCard({
   onRemove,
 }: CartProductProps) {
   return (
-    <div
-      className="flex items-center py-2 border-b border-gray-100"
-      data-cart-component="true"
-    >
+    <div className="flex items-center py-2 border-b border-gray-100">
       {media && media[0] && (
         <div className="w-12 h-12 flex-shrink-0 mr-4 bg-gray-100">
           <MediaItem
@@ -50,11 +47,7 @@ export default function CartProductCard({
           </p>
         )}
       </div>
-      <button
-        onClick={() => onRemove(uid)}
-        className="text-gray-600 ml-2"
-        data-cart-component="true"
-      >
+      <button onClick={() => onRemove(uid)} className="text-gray-600 ml-2">
         <X className="w-4 h-4 cursor-pointer" />
       </button>
     </div>
