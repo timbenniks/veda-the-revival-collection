@@ -22,7 +22,11 @@
     "simulate-traffic": "npx ts-node --project scripts/traffic-simulation/tsconfig.json scripts/traffic-simulation/simulate-visitors.ts",
     "simulate-traffic:headless": "cross-env HEADLESS=true npx ts-node --project scripts/traffic-simulation/tsconfig.json scripts/traffic-simulation/simulate-visitors.ts",
     "simulate-profiles": "./scripts/traffic-simulation/run-profiles.sh",
-    "simulate-profiles:install": "./scripts/traffic-simulation/run-profiles.sh --install-browsers"
+    "simulate-profiles:install": "./scripts/traffic-simulation/run-profiles.sh --install-browsers",
+    "simulate-categories": "./scripts/traffic-simulation/run-category-profiles.sh",
+    "simulate-categories:install": "./scripts/traffic-simulation/run-category-profiles.sh --install-browsers",
+    "simulate-quick": "./scripts/traffic-simulation/run-quick-test.sh",
+    "simulate-earrings": "./scripts/traffic-simulation/run-earrings-test.sh"
   },
   "dependencies": {
     "@contentstack/delivery-sdk": "^4.7.0",

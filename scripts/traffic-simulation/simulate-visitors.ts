@@ -46,6 +46,7 @@ interface GroupedUrls {
   home: string[];
   collections: Record<string, string[]>;
   products: Record<string, Record<string, string[]>>;
+  categories: Record<string, string[]>;
   other: string[];
 }
 
@@ -68,6 +69,7 @@ function groupUrlsByType(urls: string[]): GroupedUrls {
     home: [],
     collections: {},
     products: {},
+    categories: {},
     other: [],
   };
 
@@ -83,6 +85,16 @@ function groupUrlsByType(urls: string[]): GroupedUrls {
     // Our story page
     if (urlPath === '/our-story') {
       grouped.other.push(url);
+      continue;
+    }
+
+    // Category pages
+    if (urlPath.match(/^\/category\/[^/]+$/)) {
+      const category = urlPath.split('/').pop() || '';
+      if (!grouped.categories[category]) {
+        grouped.categories[category] = [];
+      }
+      grouped.categories[category].push(url);
       continue;
     }
 
@@ -161,34 +173,51 @@ function generateVisitorJourney(groupedUrls: GroupedUrls, visitsCount: number): 
   // Start from home page
   journey.push(groupedUrls.home[0]);
 
-  // Get available collections
-  const collections = Object.keys(groupedUrls.collections);
+  // Decide if this visitor will browse by category or by collection
+  // Use weighted selection if browseMethodWeights is defined
+  const browseMethodWeights = CONFIG.browseMethodWeights || { 'by-collection': 1, 'by-category': 1 };
+  const browseMethods = Object.keys(browseMethodWeights);
+  const browseMethod = weightedRandom(browseMethods, browseMethodWeights);
 
-  // Choose a primary collection for this visitor using weighted selection
-  const primaryCollection = weightedRandom(
-    collections,
-    CONFIG.collectionWeights
-  );
+  const browseByCategory = browseMethod === 'by-category' && Object.keys(groupedUrls.categories).length > 0;
 
-  // Add collection page
-  journey.push(groupedUrls.collections[primaryCollection][0]);
+  if (browseByCategory) {
+    // CATEGORY-BASED BROWSING
 
-  // Get available product types for this collection
-  const productTypes = Object.keys(groupedUrls.products[primaryCollection] || {});
+    // Get available categories
+    const categories = Object.keys(groupedUrls.categories);
 
-  // Choose a primary product type using weighted selection
-  const primaryProductType = weightedRandom(
-    productTypes,
-    CONFIG.productTypeWeights,
-    1
-  );
+    // Choose a primary category for this visitor using weighted selection
+    const primaryCategory = weightedRandom(
+      categories,
+      CONFIG.categoryWeights || CONFIG.productTypeWeights,
+      1
+    );
 
-  // Add products of the primary type from the primary collection
-  const primaryProducts = groupedUrls.products[primaryCollection]?.[primaryProductType] || [];
+    // Add category page
+    journey.push(groupedUrls.categories[primaryCategory][0]);
 
-  if (primaryProducts.length > 0) {
+    // Find products that match this category
+    const categoryProducts: string[] = [];
+
+    // Loop through all collections and product types to find matching products
+    Object.keys(groupedUrls.products).forEach(collection => {
+      const productTypeMap = groupedUrls.products[collection];
+
+      // Map category name to product type
+      let productType = primaryCategory;
+      if (primaryCategory === 'rings') productType = 'ring';
+      if (primaryCategory === 'necklaces') productType = 'necklace';
+      if (primaryCategory === 'bracelets') productType = 'bracelet';
+      if (primaryCategory === 'earrings') productType = 'earrings';
+
+      // Get products of this type
+      const products = productTypeMap[productType] || [];
+      categoryProducts.push(...products);
+    });
+
     // Shuffle products to get random ones
-    const shuffledProducts = [...primaryProducts].sort(() => Math.random() - 0.5);
+    const shuffledProducts = [...categoryProducts].sort(() => Math.random() - 0.5);
 
     // Add products to journey (at least 1, but no more than visitsCount-2)
     const productsToAdd = Math.min(
@@ -199,70 +228,170 @@ function generateVisitorJourney(groupedUrls: GroupedUrls, visitsCount: number): 
     for (let i = 0; i < productsToAdd; i++) {
       journey.push(shuffledProducts[i]);
     }
-  }
 
-  // If we need more pages, add from other collections or other pages
-  while (journey.length < visitsCount) {
-    // Decide what to do next
-    const nextAction = Math.random();
+    // If we need more pages, add other categories or collections
+    while (journey.length < visitsCount) {
+      const nextAction = Math.random();
 
-    if (nextAction < 0.4) {
-      // 40% chance: Visit another product from the same collection but different type
-      const otherProductTypes = productTypes.filter(pt => pt !== primaryProductType);
-
-      if (otherProductTypes.length > 0) {
-        const randomType = weightedRandom(
-          otherProductTypes,
-          CONFIG.productTypeWeights,
+      if (nextAction < 0.4 && categories.length > 1) {
+        // 40% chance: Visit another category
+        const otherCategories = categories.filter(c => c !== primaryCategory);
+        const randomCategory = weightedRandom(
+          otherCategories,
+          CONFIG.categoryWeights || CONFIG.productTypeWeights,
           1
         );
 
-        const typeProducts = groupedUrls.products[primaryCollection]?.[randomType] || [];
+        journey.push(groupedUrls.categories[randomCategory][0]);
+      } else if (nextAction < 0.7) {
+        // 30% chance: Visit a collection
+        const collections = Object.keys(groupedUrls.collections);
+        if (collections.length > 0) {
+          const randomCollection = weightedRandom(
+            collections,
+            CONFIG.collectionWeights,
+            1
+          );
 
-        if (typeProducts.length > 0) {
-          journey.push(typeProducts[Math.floor(Math.random() * typeProducts.length)]);
-          continue;
-        }
-      }
-    } else if (nextAction < 0.7) {
-      // 30% chance: Visit another collection
-      const otherCollections = collections.filter(c => c !== primaryCollection);
-
-      if (otherCollections.length > 0) {
-        const randomCollection = weightedRandom(
-          otherCollections,
-          CONFIG.collectionWeights
-        );
-
-        // First visit the collection page
-        if (Math.random() < 0.7 && journey.length < visitsCount - 1) {
           journey.push(groupedUrls.collections[randomCollection][0]);
+        } else {
+          // If no collections, add home again
+          journey.push(groupedUrls.home[0]);
         }
+      } else if (nextAction < 0.85 && groupedUrls.other.length > 0) {
+        // 15% chance: Visit an "other" page
+        journey.push(groupedUrls.other[Math.floor(Math.random() * groupedUrls.other.length)]);
+      } else {
+        // 15% chance: Go back to home
+        journey.push(groupedUrls.home[0]);
+      }
+    }
+  } else {
+    // COLLECTION-BASED BROWSING
 
-        // Then visit a product from that collection
-        const collectionProductTypes = Object.keys(groupedUrls.products[randomCollection] || {});
+    // Get available collections
+    const collections = Object.keys(groupedUrls.collections);
 
-        if (collectionProductTypes.length > 0) {
+    // Choose a primary collection for this visitor using weighted selection
+    const primaryCollection = weightedRandom(
+      collections,
+      CONFIG.collectionWeights
+    );
+
+    // Add collection page
+    journey.push(groupedUrls.collections[primaryCollection][0]);
+
+    // Get available product types for this collection
+    const productTypes = Object.keys(groupedUrls.products[primaryCollection] || {});
+
+    // Choose a primary product type using weighted selection
+    const primaryProductType = weightedRandom(
+      productTypes,
+      CONFIG.productTypeWeights,
+      1
+    );
+
+    // Add products of the primary type from the primary collection
+    const primaryProducts = groupedUrls.products[primaryCollection]?.[primaryProductType] || [];
+
+    if (primaryProducts.length > 0) {
+      // Shuffle products to get random ones
+      const shuffledProducts = [...primaryProducts].sort(() => Math.random() - 0.5);
+
+      // Add products to journey (at least 1, but no more than visitsCount-2)
+      const productsToAdd = Math.min(
+        Math.max(1, Math.floor(Math.random() * (visitsCount - 2)) + 1),
+        shuffledProducts.length
+      );
+
+      for (let i = 0; i < productsToAdd; i++) {
+        journey.push(shuffledProducts[i]);
+      }
+    }
+
+    // If we need more pages, add from other collections or other pages
+    while (journey.length < visitsCount) {
+      // Decide what to do next
+      const nextAction = Math.random();
+
+      if (nextAction < 0.3) {
+        // 30% chance: Visit another product from the same collection but different type
+        const otherProductTypes = productTypes.filter(pt => pt !== primaryProductType);
+
+        if (otherProductTypes.length > 0) {
           const randomType = weightedRandom(
-            collectionProductTypes,
+            otherProductTypes,
             CONFIG.productTypeWeights,
             1
           );
 
-          const typeProducts = groupedUrls.products[randomCollection]?.[randomType] || [];
+          const typeProducts = groupedUrls.products[primaryCollection]?.[randomType] || [];
 
           if (typeProducts.length > 0) {
             journey.push(typeProducts[Math.floor(Math.random() * typeProducts.length)]);
             continue;
           }
         }
+      } else if (nextAction < 0.5) {
+        // 20% chance: Visit a category page
+        const categories = Object.keys(groupedUrls.categories);
+        if (categories.length > 0) {
+          // Choose a category that matches the primary product type if possible
+          let matchingCategory = '';
+          if (primaryProductType === 'ring') matchingCategory = 'rings';
+          else if (primaryProductType === 'necklace') matchingCategory = 'necklaces';
+          else if (primaryProductType === 'bracelet') matchingCategory = 'bracelets';
+          else if (primaryProductType === 'earrings') matchingCategory = 'earrings';
+
+          if (matchingCategory && groupedUrls.categories[matchingCategory]) {
+            journey.push(groupedUrls.categories[matchingCategory][0]);
+          } else {
+            // Otherwise pick a random category
+            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+            journey.push(groupedUrls.categories[randomCategory][0]);
+          }
+          continue;
+        }
+      } else if (nextAction < 0.7) {
+        // 20% chance: Visit another collection
+        const otherCollections = collections.filter(c => c !== primaryCollection);
+
+        if (otherCollections.length > 0) {
+          const randomCollection = weightedRandom(
+            otherCollections,
+            CONFIG.collectionWeights
+          );
+
+          // First visit the collection page
+          if (Math.random() < 0.7 && journey.length < visitsCount - 1) {
+            journey.push(groupedUrls.collections[randomCollection][0]);
+          }
+
+          // Then visit a product from that collection
+          const collectionProductTypes = Object.keys(groupedUrls.products[randomCollection] || {});
+
+          if (collectionProductTypes.length > 0) {
+            const randomType = weightedRandom(
+              collectionProductTypes,
+              CONFIG.productTypeWeights,
+              1
+            );
+
+            const typeProducts = groupedUrls.products[randomCollection]?.[randomType] || [];
+
+            if (typeProducts.length > 0) {
+              journey.push(typeProducts[Math.floor(Math.random() * typeProducts.length)]);
+              continue;
+            }
+          }
+        }
+      } else if (nextAction < 0.85 && groupedUrls.other.length > 0) {
+        // 15% chance: Visit an "other" page
+        journey.push(groupedUrls.other[Math.floor(Math.random() * groupedUrls.other.length)]);
+      } else {
+        // 15% chance: Go back to home
+        journey.push(groupedUrls.home[0]);
       }
-    } else if (nextAction < 0.85 && groupedUrls.other.length > 0) {
-      // 15% chance: Visit an "other" page
-      journey.push(groupedUrls.other[Math.floor(Math.random() * groupedUrls.other.length)]);
-    } else {
-      // 15% chance: Go back to home
-      journey.push(groupedUrls.home[0]);
     }
   }
 
@@ -398,6 +527,34 @@ async function simulateVisitor(visitorId: number, journey: string[]) {
                 break;
               }
             }
+          } else if (url.includes('/category/')) {
+            // Category page - click on product cards
+            const categorySelectors = [
+              '.product-card',
+              '.product-card img',
+              '.product-title',
+              '.category-item a',
+              '.product-link'
+            ];
+
+            for (const selector of categorySelectors) {
+              const elements = await page.$$(selector);
+              if (elements.length > 0) {
+                const randomElement = elements[Math.floor(Math.random() * elements.length)];
+
+                // Don't actually navigate by clicking, as we want to follow our journey
+                // Just simulate the click for tracking purposes
+                await page.evaluate((el) => {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  // Highlight the element to simulate hover
+                  el.style.outline = '2px solid rgba(255, 255, 0, 0.5)';
+                  setTimeout(() => { el.style.outline = ''; }, 500);
+                }, randomElement);
+
+                await page.waitForTimeout(1000);
+                break;
+              }
+            }
           }
         } catch (error) {
           // Ignore errors from interaction attempts
@@ -429,7 +586,10 @@ async function main() {
 
     // Log grouped URLs info
     const collections = Object.keys(groupedUrls.collections);
+    const categories = Object.keys(groupedUrls.categories);
+
     logger.log(`Found ${collections.length} collections: ${collections.join(', ')}`);
+    logger.log(`Found ${categories.length} categories: ${categories.join(', ')}`);
 
     for (const collection of collections) {
       const productTypes = Object.keys(groupedUrls.products[collection] || {});

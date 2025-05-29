@@ -31,7 +31,21 @@ export const CONFIG = {
     'ring': 1,
     'necklace': 1,
     'bracelet': 1,
-    'earrings': 5,
+    'earrings': 15, // Much higher weight for earrings
+  },
+
+  // Category preferences - higher weight means more likely to be visited
+  categoryWeights: {
+    'rings': 1,
+    'necklaces': 1,
+    'bracelets': 1,
+    'earrings': 15, // Much higher weight for earrings
+  },
+
+  // Browse method weights - higher weight means more likely to be used
+  browseMethodWeights: {
+    'by-collection': 1, // Browse by collection (Digital Dawn, Urban Armor, etc.)
+    'by-category': 3,   // Increased preference for category browsing to favor earrings category
   },
 
   // Logging configuration
