@@ -51,12 +51,12 @@ node -e "
 "
 
 # Run the simulation with the temporary config
-HEADLESS=false \
-TOTAL_VISITORS=10 \
+HEADLESS=true \
+TOTAL_VISITORS=1000 \
 CONCURRENT_VISITORS=3 \
 VISITS_PER_VISITOR=5 \
-MIN_TIME_ON_PAGE=3000 \
-MAX_TIME_ON_PAGE=8000 \
+MIN_TIME_ON_PAGE=500 \
+MAX_TIME_ON_PAGE=1000 \
 LOG_FILE="earrings-focus.log" \
 TEMP_CONFIG=true \
 npx ts-node --project scripts/traffic-simulation/tsconfig.json scripts/traffic-simulation/simulate-visitors.ts
